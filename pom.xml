@@ -13,7 +13,9 @@
   <modules>
   	<module>matrix-service1</module>
   	<module>matrix-admin</module>
-  	<module>matrix-test-bridge-service</module>
+  	<!-- <module>matrix-test-bridge-service</module> -->
   	<module>matrix-gateway</module>
+  	<module>matrix-security</module>
+  	<module>matrix-service2</module>
   </modules>
 </project>
