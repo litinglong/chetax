@@ -1,0 +1,40 @@
+server:
+  port: 0
+spring:
+  application:
+    name: matrix-gateway
+  cloud:
+    nacos:
+      discovery:
+        username: nacos
+        password: nacos
+        server-addr: 127.0.0.1:8849
+        namespace: public
+    sentinel:
+      transport:
+        dashboard: 127.0.0.1:8091
+        client-ip: 127.0.0.1
+        port: 8091
+      eager: true  
+    gateway: 
+      discovery:
+        locator:
+          enabled: true
+          lower-case-service-id: true
+      routes:
+      - id: consumer
+        uri: lb://matrix-service1
+        predicates:
+        - Path=/consumer/v1/**
+        filters:
+        - StripPrefix=2
+management:
+  endpoints:
+    web:
+      exposure:
+        include: gateway
+  endpoint:
+    health:
+      show-details: ALWAYS
+    gateway:
+      enabled: true 
