@@ -17,5 +17,8 @@
   	<module>matrix-gateway</module>
   	<module>matrix-security</module>
   	<module>matrix-service2</module>
+  	<module>matrix-kafka</module>
+  	<module>matrix-rocketmq</module>
+  	<module>matrix-service3</module>
   </modules>
 </project>
