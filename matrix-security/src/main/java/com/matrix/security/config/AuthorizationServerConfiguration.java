@@ -60,5 +60,10 @@ public class AuthorizationServerConfiguration extends AuthorizationServerConfigu
 	public void configure(AuthorizationServerSecurityConfigurer security) throws Exception {
 		// 允许表单认证
 		security.allowFormAuthenticationForClients();
+
+		// 开启/oauth/token_key验证端口无权限访问		 
+		security.tokenKeyAccess("permitAll()");
+		// 开启/oauth/check_token验证端口认证权限访问
+		security.checkTokenAccess("isAuthenticated()");
 	}
 }
