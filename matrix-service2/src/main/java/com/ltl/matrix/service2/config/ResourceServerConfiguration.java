@@ -20,9 +20,9 @@ public class ResourceServerConfiguration extends ResourceServerConfigurerAdapter
                 .antMatchers("/order/**").authenticated(); // 配置order访问控制，必须认证后才可以访问
     }
 	
-    @Bean(name="myRestTemplate")
-    @LoadBalanced
-    public RestTemplate getRestTemplate() {
-        return new RestTemplate();
-    }
+//    @Bean(name="myRestTemplate")
+//    @LoadBalanced
+//    public RestTemplate getRestTemplate() {
+//        return new RestTemplate();
+//    }
 }

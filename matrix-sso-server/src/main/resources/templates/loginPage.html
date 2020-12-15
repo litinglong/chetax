@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <link rel="stylesheet" href="../static/css/loginPage.css" th:href="@{~/css/loginPage.css}">
+    <script src="../static/js/loginPage.js" th:src="@{~/js/loginPage.js}"></script>
+</head>
+<body>
+  <form action="subscribe.html" th:action="@{/subscribe}">
+  	<table>
+  		<tbody>
+  			<tr>
+  				<td>用户名：</td><td><input type="text" name="username"></td>
+  			</tr>
+  			<tr>
+  				<td>密码：</td><td><input type="password" name="password"></td>
+  			</tr>
+  			<tr>
+  				<td><input type="submit"></td><td><input type="reset"></td>
+  			</tr>
+  		</tbody>
+  	</table>
+  </form>
+</body>

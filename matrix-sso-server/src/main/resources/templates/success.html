@@ -1,0 +1,11 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <link rel="stylesheet" href="../static/css/success.css" th:href="@{~/css/success.css}">
+    <script src="../static/js/success.js" th:src="@{~/js/success.js}"></script>
+</head>
+<body>
+  <div th:text="${message}">Success!</div>
+</body>

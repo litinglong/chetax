@@ -20,5 +20,7 @@
   	<module>matrix-kafka</module>
   	<module>matrix-rocketmq</module>
   	<module>matrix-service3</module>
+  	<module>matrix-sso-server</module>
+  	<module>matrix-sso-client</module>
   </modules>
 </project>

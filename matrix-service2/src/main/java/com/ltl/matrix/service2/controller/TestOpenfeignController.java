@@ -24,15 +24,15 @@ public class TestOpenfeignController {
         return Service1client.echo(message);
     }
     
-    @Autowired
-    @Qualifier(value="myRestTemplate")
-    RestTemplate restTemplate;
-    
-    @GetMapping("/test333/{message}")
-    public String test333(@PathVariable(value="message") String message) {
-    	String result = restTemplate.getForObject("http://matrix-service1/echo/333", String.class);
-        return result;
-    }
+//    @Autowired
+//    @Qualifier(value="myRestTemplate")
+//    RestTemplate restTemplate;
+//    
+//    @GetMapping("/test333/{message}")
+//    public String test333(@PathVariable(value="message") String message) {
+//    	String result = restTemplate.getForObject("http://matrix-service1/echo/333", String.class);
+//        return result;
+//    }
 
 }
 

@@ -11,11 +11,12 @@ spring:
         server-addr: 127.0.0.1:8849
         namespace: public
 security:
+  basic: false
   oauth2:
     resource:
       user-info-uri: http://localhost:9098/users/current
     client:
-      id: client_2
+      client-id: client_2
       client-secret: 123456
       access-token-uri: http://localhost:9098/oauth/token
       user-authorization-uri: http://localhost:9098/oauth/authorize
