@@ -17,18 +17,18 @@ import org.springframework.security.provisioning.InMemoryUserDetailsManager;
 @Configuration
 @EnableWebSecurity
 @Order(1)
-public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
-	@Bean
-	@Override
-	protected UserDetailsService userDetailsService() {
-		BCryptPasswordEncoder bCryptPasswordEncoder = new BCryptPasswordEncoder();
-
-		String finalPassword = "{bcrypt}" + bCryptPasswordEncoder.encode("123456");
-		InMemoryUserDetailsManager manager = new InMemoryUserDetailsManager();
-		manager.createUser(User.withUsername("user_1").password(finalPassword).authorities("USER").build());
-		manager.createUser(User.withUsername("user_2").password(finalPassword).authorities("USER").build());
-		return manager;
-	}
+public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
+//	@Bean
+//	@Override
+//	protected UserDetailsService userDetailsService() {
+//		BCryptPasswordEncoder bCryptPasswordEncoder = new BCryptPasswordEncoder();
+//
+//		String finalPassword = "{bcrypt}" + bCryptPasswordEncoder.encode("123456");
+//		InMemoryUserDetailsManager manager = new InMemoryUserDetailsManager();
+//		manager.createUser(User.withUsername("user_1").password(finalPassword).authorities("USER").build());
+//		manager.createUser(User.withUsername("user_2").password(finalPassword).authorities("USER").build());
+//		return manager;
+//	}
 
 	@Bean
 	PasswordEncoder passwordEncoder() {
@@ -38,8 +38,7 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
 	@Bean
 	@Override
 	public AuthenticationManager authenticationManagerBean() throws Exception {
-		AuthenticationManager manager = super.authenticationManagerBean();
-		return manager;
+		return super.authenticationManagerBean();
 	}
 
 	@Override

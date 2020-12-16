@@ -94,3 +94,5 @@ Service1client.class
 /imatrix4j-demo1-spring-boot-starter/target/classes/META-INF/maven/com.imatrix4j/imatrix4j-demo1-spring-boot-starter/pom.xml
 /imatrix4j-demo1-spring-boot-starter/target/classes/META-INF/spring-configuration-metadata.json
 /imatrix4j-demo1-spring-boot-starter/target/classes/META-INF/spring.factories
+/matrix-spring-boot-starter-demo/.factorypath
+/matrix-spring-boot-starter-demo/.settings/org.eclipse.jdt.apt.core.prefs
