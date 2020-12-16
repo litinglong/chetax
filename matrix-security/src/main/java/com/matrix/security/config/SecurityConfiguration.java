@@ -2,6 +2,7 @@ package com.matrix.security.config;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.core.annotation.Order;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
@@ -15,6 +16,7 @@ import org.springframework.security.provisioning.InMemoryUserDetailsManager;
 
 @Configuration
 @EnableWebSecurity
+@Order(1)
 public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
 	@Bean
 	@Override
@@ -42,6 +44,29 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
 
 	@Override
 	protected void configure(HttpSecurity http) throws Exception {
-		http.requestMatchers().anyRequest().and().authorizeRequests().antMatchers("/oauth/**").permitAll();
+//        http.requestMatchers()
+//        .antMatchers("/login", "/oauth/**")
+//        .and()
+//        .authorizeRequests()
+//        .anyRequest()
+//        .authenticated()
+//        .and()
+//        .formLogin()
+//        .permitAll()
+//        .and().csrf().disable();
+		
+//		http.requestMatchers()
+//		.anyRequest().and().authorizeRequests().antMatchers("/login","/oauth/**").permitAll()
+//		.and()
+//        .formLogin().permitAll()
+//        .and()
+        http.csrf().disable();
+        //打开表单登录；
+        //web应用或第三方授权时，允许使用用户名密码登录
+        http.formLogin();
+        //oauth相关接口不做权限校验
+        http.requestMatchers().antMatchers("/login", "/oauth/authorize", "/oauth/token");
+        //其他接口需要鉴权
+        http.authorizeRequests().anyRequest().authenticated();
 	}
 }

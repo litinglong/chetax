@@ -22,12 +22,18 @@ spring:
           enabled: true
           lower-case-service-id: true
       routes:
-      - id: consumer
+      - id: service1
         uri: lb://matrix-service1
         predicates:
-        - Path=/consumer/v1/**
+        - Path=/service1/v1/**
         filters:
         - StripPrefix=2
+      - id: service2
+        uri: lb://matrix-service2
+        predicates:
+        - Path=/service2/v1/**
+        filters:
+        - StripPrefix=2  
 management:
   endpoints:
     web:

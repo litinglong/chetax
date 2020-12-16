@@ -25,14 +25,24 @@ public class AuthorizationServerConfiguration extends AuthorizationServerConfigu
 		String finalSecret = "{bcrypt}" + new BCryptPasswordEncoder().encode("123456");
 
 		// 配置两个客户端，一个用于password认证一个用于client认证
-		clients.inMemory().withClient("client_1").resourceIds(Utils.RESOURCEIDS.ORDER)
-				.authorizedGrantTypes("client_credentials", "refresh_token", "code").scopes("select").authorities("oauth2")
-				.secret(finalSecret).and().withClient("client_2").resourceIds(Utils.RESOURCEIDS.ORDER)
+		clients.inMemory()
+				.withClient("client_1").resourceIds(Utils.RESOURCEIDS.ORDER)
+				.authorizedGrantTypes("client_credentials", "refresh_token", "authorization_code").scopes("select").authorities("oauth2")
+				.secret(finalSecret)
+				.and()
+				.withClient("client_2").resourceIds(Utils.RESOURCEIDS.ORDER)
 				.authorizedGrantTypes("password", "refresh_token", "authorization_code").scopes("server").authorities("oauth2")
-				.secret(finalSecret).and().withClient("client_3") // client_id
-				.secret(finalSecret) // client_secret
-				.authorizedGrantTypes("authorization_code") // 该client允许的授权类型
-				.scopes("app");
+				.secret(finalSecret)
+				.and()
+				.withClient("client_3").resourceIds(Utils.RESOURCEIDS.ORDER)
+				.secret(finalSecret)
+				.authorizedGrantTypes("authorization_code")
+				.scopes("app").redirectUris("http://www.baidu.com")
+				.and()
+				.withClient("client_4").resourceIds(Utils.RESOURCEIDS.ORDER)
+				.secret(finalSecret)
+				.authorizedGrantTypes("implicit")
+				.scopes("test1").redirectUris("http://www.baidu.com");
 //		String[] permissions = "ADMIN2,ROLE_ADMIN".split(",");
 //		List<GrantedAuthority> authorities = new ArrayList<>();
 //		for (String permission : permissions) {
@@ -60,7 +70,6 @@ public class AuthorizationServerConfiguration extends AuthorizationServerConfigu
 	public void configure(AuthorizationServerSecurityConfigurer security) throws Exception {
 		// 允许表单认证
 		security.allowFormAuthenticationForClients();
-
 		// 开启/oauth/token_key验证端口无权限访问		 
 		security.tokenKeyAccess("permitAll()");
 		// 开启/oauth/check_token验证端口认证权限访问
