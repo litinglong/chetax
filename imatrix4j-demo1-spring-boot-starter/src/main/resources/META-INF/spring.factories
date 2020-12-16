@@ -1,2 +1,0 @@
-org.springframework.boot.autoconfigure.EnableAutoConfiguration=\
-  com.imatrix4j.demo1.spring.boot.DemoServerAutoConfiguration
