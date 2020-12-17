@@ -8,6 +8,7 @@
   <artifactId>matrix-gateway</artifactId>
   
     <properties>
+    	<maven-jar-plugin.version>3.0.0</maven-jar-plugin.version>
         <matrix-dependecies.version>0.0.1-SNAPSHOT</matrix-dependecies.version>
     </properties>
 

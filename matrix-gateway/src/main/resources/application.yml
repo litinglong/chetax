@@ -3,6 +3,12 @@ server:
 spring:
   application:
     name: matrix-gateway
+  security:
+    oauth2:
+      resourceserver:
+        jwt:
+          # 获取JWT验签公钥请求路径
+          jwk-set-uri: 'http://localhost:9098/matrix-security/rsa/publicKey'
   cloud:
     nacos:
       discovery:
@@ -33,19 +39,25 @@ spring:
         predicates:
         - Path=/service2/**
         filters:
-        - StripPrefix=1  
-security:
-  basic: false
-  oauth2:
-    resource:
-      user-info-uri: http://localhost:9098/users/current
-    client:
-      client-id: client1
-      client-secret: 123456
-      access-token-uri: http://localhost:9098/oauth/token
-      user-authorization-uri: http://localhost:9098/oauth/authorize
-      grant-type: client_credentials,password
-      scope: server
+        - StripPrefix=1 
+      - id: matrix-security
+        uri: lb://matrix-security
+        predicates:
+        - Path=/matrix-security/**
+        filters:
+        - StripPrefix=1   
+#security:
+#  basic: false
+#  oauth2:
+#    resource:
+#      user-info-uri: http://localhost:9098/users/current
+#    client:
+#      client-id: client1
+#      client-secret: 123456
+#      access-token-uri: http://localhost:9098/oauth/token
+#      user-authorization-uri: http://localhost:9098/oauth/authorize
+#      grant-type: client_credentials,password
+#      scope: server
 management:
   endpoints:
     web:
@@ -56,4 +68,9 @@ management:
       show-details: ALWAYS
     gateway:
       enabled: true 
+# 配置白名单路径
+white-list:
+    urls:
+      - "/matrix-security/oauth/token"
+      - "/matrix-security/rsa/publicKey"
       

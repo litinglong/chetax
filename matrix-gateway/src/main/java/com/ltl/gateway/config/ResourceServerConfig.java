@@ -2,38 +2,44 @@ package com.ltl.gateway.config;
 
 import java.nio.charset.Charset;
 import java.util.Arrays;
-import java.util.Collections;
 
+import org.springframework.boot.autoconfigure.security.oauth2.resource.OAuth2ResourceServerProperties.Jwt;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.core.convert.converter.Converter;
 import org.springframework.core.io.buffer.DataBuffer;
 import org.springframework.core.io.buffer.DataBufferUtils;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
+import org.springframework.security.authentication.AbstractAuthenticationToken;
 import org.springframework.security.config.annotation.web.reactive.EnableWebFluxSecurity;
 import org.springframework.security.config.web.server.ServerHttpSecurity;
+import org.springframework.security.oauth2.server.resource.authentication.JwtAuthenticationConverter;
+import org.springframework.security.oauth2.server.resource.authentication.JwtGrantedAuthoritiesConverter;
+import org.springframework.security.oauth2.server.resource.authentication.ReactiveJwtAuthenticationConverterAdapter;
 import org.springframework.security.web.server.SecurityWebFilterChain;
 import org.springframework.security.web.server.ServerAuthenticationEntryPoint;
 import org.springframework.security.web.server.authorization.ServerAccessDeniedHandler;
 
-import io.netty.handler.codec.http.HttpContentEncoder.Result;
+import lombok.AllArgsConstructor;
 import reactor.core.publisher.Mono;
 
+//@AllArgsConstructor
 @Configuration
 @EnableWebFluxSecurity
 //@EnableGlobalMethodSecurity(prePostEnabled = true)https://www.cnblogs.com/haoxianrui/p/13719356.html
 public class ResourceServerConfig{
 
     private AuthorizationManager authorizationManager;
+//    private CustomServerAccessDeniedHandler customServerAccessDeniedHandler;
+//    private CustomServerAuthenticationEntryPoint customServerAuthenticationEntryPoint;
     private WhiteListConfig whiteListConfig;
-
     @Bean
     public SecurityWebFilterChain securityWebFilterChain(ServerHttpSecurity http) {
 		http.oauth2ResourceServer().authenticationEntryPoint(authenticationEntryPoint());
-		;
 		http.authorizeExchange()
-		        .pathMatchers((String[])whiteListConfig.getUrls().toArray()).permitAll()
+		        .pathMatchers("/matrix-security/oauth/token","/matrix-security/rsa/publicKey").permitAll()
 		        .anyExchange().access(authorizationManager)
 		        .and()
 		        .exceptionHandling()
@@ -90,5 +96,22 @@ public class ResourceServerConfig{
                     });
             return mono;
         };
+    }
+    
+    /**
+     * @linkhttps://blog.csdn.net/qq_24230139/article/details/105091273
+     * ServerHttpSecurity没有将jwt中authorities的负载部分当做Authentication
+     * 需要把jwt的Claim中的authorities加入
+     * 方案：重新定义ReactiveAuthenticationManager权限管理器，默认转换器JwtGrantedAuthoritiesConverter
+     */
+    @Bean
+    public Converter<Jwt, ? extends Mono<? extends AbstractAuthenticationToken>> jwtAuthenticationConverter() {
+        JwtGrantedAuthoritiesConverter jwtGrantedAuthoritiesConverter = new JwtGrantedAuthoritiesConverter();
+        jwtGrantedAuthoritiesConverter.setAuthorityPrefix("prefix");
+        jwtGrantedAuthoritiesConverter.setAuthoritiesClaimName("ClaimName");
+
+        JwtAuthenticationConverter jwtAuthenticationConverter = new JwtAuthenticationConverter();
+        jwtAuthenticationConverter.setJwtGrantedAuthoritiesConverter(jwtGrantedAuthoritiesConverter);
+        return new ReactiveJwtAuthenticationConverterAdapter(jwtAuthenticationConverter);
     }
 }

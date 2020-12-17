@@ -7,6 +7,7 @@
   </parent>
   <artifactId>matrix-security</artifactId>
     <properties>
+    	<maven-jar-plugin.version>3.0.0</maven-jar-plugin.version>
         <matrix-dependecies.version>0.0.1-SNAPSHOT</matrix-dependecies.version>
     </properties>
 
@@ -27,7 +28,10 @@
             <groupId>org.springframework.cloud</groupId>
             <artifactId>spring-cloud-starter-oauth2</artifactId>
         </dependency>
-
+	    <dependency>
+	        <groupId>org.springframework.security</groupId>
+	        <artifactId>spring-security-oauth2-jose</artifactId>
+	    </dependency>
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-test</artifactId>
