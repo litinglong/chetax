@@ -1,6 +1,8 @@
 package com.ltl.gateway.config;
 
 import java.nio.charset.Charset;
+import java.util.Arrays;
+import java.util.Collections;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -28,18 +30,18 @@ public class ResourceServerConfig{
 
     @Bean
     public SecurityWebFilterChain securityWebFilterChain(ServerHttpSecurity http) {
-        http.oauth2ResourceServer().authenticationEntryPoint(authenticationEntryPoint());
-        String[] mm=new String[] {"/a"};
-        http.authorizeExchange()
-                .pathMatchers("/a").permitAll()
-                .anyExchange().access(authorizationManager)
-                .and()
-                .exceptionHandling()
-                .accessDeniedHandler(accessDeniedHandler()) // 处理未授权
-                .authenticationEntryPoint(authenticationEntryPoint()) //处理未认证
-                .and().csrf().disable();
-
-        return http.build();
+		http.oauth2ResourceServer().authenticationEntryPoint(authenticationEntryPoint());
+		;
+		http.authorizeExchange()
+		        .pathMatchers((String[])whiteListConfig.getUrls().toArray()).permitAll()
+		        .anyExchange().access(authorizationManager)
+		        .and()
+		        .exceptionHandling()
+		        .accessDeniedHandler(accessDeniedHandler()) // 处理未授权
+		        .authenticationEntryPoint(authenticationEntryPoint()) //处理未认证
+		        .and().csrf().disable();
+		
+		return http.build();
     }
 
 
@@ -57,7 +59,8 @@ public class ResourceServerConfig{
                         response.getHeaders().set(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_JSON_VALUE);
                         response.getHeaders().set("Access-Control-Allow-Origin", "*");
                         response.getHeaders().set("Cache-Control", "no-cache");
-                        String body = JSONUtil.toJsonStr(Result.failed(ResultCode.USER_ACCESS_UNAUTHORIZED));
+//                        String body = JSONUtil.toJsonStr(Result.failed(ResultCode.USER_ACCESS_UNAUTHORIZED));
+                        String body = "USER_ACCESS_UNAUTHORIZED";
                         DataBuffer buffer = response.bufferFactory().wrap(body.getBytes(Charset.forName("UTF-8")));
                         return response.writeWith(Mono.just(buffer))
                                 .doOnError(error -> DataBufferUtils.release(buffer));
@@ -79,7 +82,8 @@ public class ResourceServerConfig{
                         response.getHeaders().set(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_JSON_VALUE);
                         response.getHeaders().set("Access-Control-Allow-Origin", "*");
                         response.getHeaders().set("Cache-Control", "no-cache");
-                        String body = JSONUtil.toJsonStr(Result.failed(ResultCode.TOKEN_INVALID_OR_EXPIRED));
+//                        String body = JSONUtil.toJsonStr(Result.failed(ResultCode.TOKEN_INVALID_OR_EXPIRED));
+                        String body = "TOKEN_INVALID_OR_EXPIRED";
                         DataBuffer buffer = response.bufferFactory().wrap(body.getBytes(Charset.forName("UTF-8")));
                         return response.writeWith(Mono.just(buffer))
                                 .doOnError(error -> DataBufferUtils.release(buffer));
