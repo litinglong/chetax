@@ -1,7 +1,8 @@
 package com.matrix.security.config;
 
-import java.util.ArrayList;
 import java.util.List;
+
+import javax.annotation.Resource;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -14,32 +15,34 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Component;
 
-@Component(value = "myUserDetailsService")
-public class MyUserDetailsService implements UserDetailsService {
+import com.matrix.security.entity.OauthUserDetails;
+import com.matrix.security.mapper.OauthUserDetailsMapper;
+import com.matrix.security.mapper.OauthUserRoleMapper;
 
-	Logger logger = LoggerFactory.getLogger(MyUserDetailsService.class);
+@Component(value = "myUserDetailsService")
+public class MatrixUserDetailsService implements UserDetailsService {
+
+	Logger logger = LoggerFactory.getLogger(MatrixUserDetailsService.class);
 	
     @Autowired
     private PasswordEncoder passwordEncoder;
+    
+    @Resource
+    OauthUserDetailsMapper oauthUserDetailsMapper;
+    
+    @Resource
+    OauthUserRoleMapper oauthUserRoleMapper;
 
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-    	logger.info("usernameis:" + username);
+    	logger.info("username:" + username);
+    	OauthUserDetails oauthUserDetails = oauthUserDetailsMapper.findByUsername(username);
         // 查询数据库操作
-        if(!username.equals("admin")){
+        if(oauthUserDetails == null){
             throw new UsernameNotFoundException("用户不存在");
         }else{
-            // 用户角色也应在数据库中获取
-            String role = "ROLE_ADMIN";
-            List<SimpleGrantedAuthority> authorities = new ArrayList<>();
-            authorities.add(new SimpleGrantedAuthority(role));
-            // 线上环境应该通过用户名查询数据库获取加密后的密码
-            String password = passwordEncoder.encode("123456");
-            // 返回默认的 User
-            // return new org.springframework.security.core.userdetails.User(username,password, authorities);
-
-            // 返回自定义的 KiteUserDetails
-            User user = new User(username,password,authorities);
+        	List<SimpleGrantedAuthority> authorities = oauthUserRoleMapper.findByUserId(oauthUserDetails.getId());
+            User user = new User(username,oauthUserDetails.getPassword(),authorities);
             return user;
         }
     }

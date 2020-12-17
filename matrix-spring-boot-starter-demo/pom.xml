@@ -7,13 +7,7 @@
   </parent>
   <artifactId>matrix-spring-boot-starter-demo</artifactId>
     <properties>
-    	<maven-jar-plugin.version>3.0.0</maven-jar-plugin.version>
-        <java.version>1.8</java.version>
-        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-        <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
-        <spring-boot.version>2.3.4.RELEASE</spring-boot.version>
-        <spring-cloud-alibaba.version>2.2.2.RELEASE</spring-cloud-alibaba.version>
-        <spring-cloud.version>Hoxton.SR8</spring-cloud.version>
+        <matrix-dependecies.version>0.0.1-SNAPSHOT</matrix-dependecies.version>
     </properties>
     <dependencies>
         <!--引入spring‐boot‐starter；所有starter的基本配置-->
@@ -36,4 +30,16 @@
         </dependency>
         
     </dependencies>
+    
+   <dependencyManagement>
+        <dependencies>
+            <dependency>
+                <groupId>com.ltl.matrix</groupId>
+                <artifactId>matrix-dependecies</artifactId>
+                <version>${matrix-dependecies.version}</version>
+                <type>pom</type>
+                <scope>import</scope>
+            </dependency>
+        </dependencies>
+    </dependencyManagement>
 </project>

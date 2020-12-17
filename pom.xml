@@ -12,17 +12,18 @@
   </parent>
   <modules>
   	<module>matrix-service1</module>
+  	<module>matrix-service2</module>
+  	<module>matrix-service3</module>
   	<module>matrix-admin</module>
   	<!-- <module>matrix-test-bridge-service</module> -->
   	<module>matrix-gateway</module>
   	<module>matrix-security</module>
-  	<module>matrix-service2</module>
   	<module>matrix-kafka</module>
   	<module>matrix-rocketmq</module>
-  	<module>matrix-service3</module>
   	<module>matrix-sso-server</module>
   	<module>matrix-sso-client</module>
   	<module>matrix-spring-boot-starter-demo</module>
   	<module>matrix-oauth2-server-demo</module>
+  	<module>matrix-dependecies</module>
   </modules>
 </project>

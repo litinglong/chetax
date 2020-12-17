@@ -13,7 +13,7 @@ import org.springframework.security.oauth2.provider.token.store.redis.JdkSeriali
 import org.springframework.security.oauth2.provider.token.store.redis.RedisTokenStoreSerializationStrategy;
 import java.util.*;
 
-public class MyRedisTokenStore implements TokenStore {
+public class MatrixRedisTokenStore implements TokenStore {
 	public static final String ACCESS = "access:";
 	public static final String AUTH_TO_ACCESS = "auth_to_access:";
 	public static final String AUTH = "auth:";
@@ -28,7 +28,7 @@ public class MyRedisTokenStore implements TokenStore {
 	private RedisTokenStoreSerializationStrategy serializationStrategy = new JdkSerializationStrategy();
 	private String prefix = "";
 
-	public MyRedisTokenStore(RedisConnectionFactory connectionFactory) {
+	public MatrixRedisTokenStore(RedisConnectionFactory connectionFactory) {
 		this.connectionFactory = connectionFactory;
 	}
 

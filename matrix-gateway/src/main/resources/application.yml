@@ -10,12 +10,12 @@ spring:
         password: nacos
         server-addr: 127.0.0.1:8849
         namespace: public
-    sentinel:
-      transport:
-        dashboard: 127.0.0.1:8091
-        client-ip: 127.0.0.1
-        port: 8091
-      eager: true  
+#    sentinel:
+#      transport:
+#        dashboard: 127.0.0.1:8091
+#        client-ip: 127.0.0.1
+#        port: 8091
+#      eager: true  
     gateway: 
       discovery:
         locator:
@@ -25,15 +25,27 @@ spring:
       - id: service1
         uri: lb://matrix-service1
         predicates:
-        - Path=/service1/v1/**
+        - Path=/service1/**
         filters:
-        - StripPrefix=2
+        - StripPrefix=1
       - id: service2
         uri: lb://matrix-service2
         predicates:
-        - Path=/service2/v1/**
+        - Path=/service2/**
         filters:
-        - StripPrefix=2  
+        - StripPrefix=1  
+security:
+  basic: false
+  oauth2:
+    resource:
+      user-info-uri: http://localhost:9098/users/current
+    client:
+      client-id: client1
+      client-secret: 123456
+      access-token-uri: http://localhost:9098/oauth/token
+      user-authorization-uri: http://localhost:9098/oauth/authorize
+      grant-type: client_credentials,password
+      scope: server
 management:
   endpoints:
     web:
@@ -44,3 +56,4 @@ management:
       show-details: ALWAYS
     gateway:
       enabled: true 
+      

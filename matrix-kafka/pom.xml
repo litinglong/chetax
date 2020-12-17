@@ -8,13 +8,7 @@
   <artifactId>matrix-kafka</artifactId>
   
     <properties>
-    	<maven-jar-plugin.version>3.0.0</maven-jar-plugin.version>
-        <java.version>1.8</java.version>
-        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-        <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
-        <spring-boot.version>2.3.4.RELEASE</spring-boot.version>
-        <spring-cloud-alibaba.version>2.2.2.RELEASE</spring-cloud-alibaba.version>
-        <spring-cloud.version>Hoxton.SR8</spring-cloud.version>
+        <matrix-dependecies.version>0.0.1-SNAPSHOT</matrix-dependecies.version>
     </properties>
 
     <dependencies>
@@ -48,18 +42,15 @@
         <dependency>
 		    <groupId>de.codecentric</groupId>
 		    <artifactId>spring-boot-admin-starter-client</artifactId>
-		    <version>2.1.5</version>
 		</dependency>
 		 <!-- Swagger核心包 start -->
 		 <dependency>
 		   <groupId>io.springfox</groupId>
 		   <artifactId>springfox-swagger2</artifactId>
-		   <version>2.6.1</version>
 		 </dependency>
 		 <dependency>
 		    <groupId>io.springfox</groupId>
 		    <artifactId>springfox-swagger-ui</artifactId>
-		    <version>2.6.1</version>
 		 </dependency>
 		<!-- Swagger核心包 end -->
     </dependencies>
@@ -67,23 +58,9 @@
     <dependencyManagement>
         <dependencies>
             <dependency>
-                <groupId>org.springframework.cloud</groupId>
-                <artifactId>spring-cloud-dependencies</artifactId>
-                <version>${spring-cloud.version}</version>
-                <type>pom</type>
-                <scope>import</scope>
-            </dependency>
-            <dependency>
-                <groupId>org.springframework.boot</groupId>
-                <artifactId>spring-boot-dependencies</artifactId>
-                <version>${spring-boot.version}</version>
-                <type>pom</type>
-                <scope>import</scope>
-            </dependency>
-            <dependency>
-                <groupId>com.alibaba.cloud</groupId>
-                <artifactId>spring-cloud-alibaba-dependencies</artifactId>
-                <version>${spring-cloud-alibaba.version}</version>
+                <groupId>com.ltl.matrix</groupId>
+                <artifactId>matrix-dependecies</artifactId>
+                <version>${matrix-dependecies.version}</version>
                 <type>pom</type>
                 <scope>import</scope>
             </dependency>
@@ -95,7 +72,6 @@
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-compiler-plugin</artifactId>
-                <version>3.8.1</version>
                 <configuration>
                     <source>1.8</source>
                     <target>1.8</target>
@@ -105,7 +81,6 @@
             <plugin>
                 <groupId>org.springframework.boot</groupId>
                 <artifactId>spring-boot-maven-plugin</artifactId>
-                <version>2.3.4.RELEASE</version>
                 <configuration>
                     <mainClass>com.example.demo.DemoApplication</mainClass>
                 </configuration>
