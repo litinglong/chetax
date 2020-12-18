@@ -1,9 +1,12 @@
 package com.ltl.gateway.config;
 
-import java.nio.charset.Charset;
-import java.util.Arrays;
-
-import org.springframework.boot.autoconfigure.security.oauth2.resource.OAuth2ResourceServerProperties.Jwt;
+//import cn.hutool.core.util.ArrayUtil;
+//import cn.hutool.json.JSONUtil;
+//import com.youlai.common.core.constant.AuthConstants;
+//import com.youlai.common.core.result.Result;
+//import com.youlai.common.core.result.ResultCode;
+//import com.youlai.gateway.security.AuthorizationManager;
+//import lombok.AllArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.core.convert.converter.Converter;
@@ -15,15 +18,18 @@ import org.springframework.http.MediaType;
 import org.springframework.security.authentication.AbstractAuthenticationToken;
 import org.springframework.security.config.annotation.web.reactive.EnableWebFluxSecurity;
 import org.springframework.security.config.web.server.ServerHttpSecurity;
+import org.springframework.security.oauth2.jwt.Jwt;
 import org.springframework.security.oauth2.server.resource.authentication.JwtAuthenticationConverter;
 import org.springframework.security.oauth2.server.resource.authentication.JwtGrantedAuthoritiesConverter;
 import org.springframework.security.oauth2.server.resource.authentication.ReactiveJwtAuthenticationConverterAdapter;
 import org.springframework.security.web.server.SecurityWebFilterChain;
 import org.springframework.security.web.server.ServerAuthenticationEntryPoint;
 import org.springframework.security.web.server.authorization.ServerAccessDeniedHandler;
-
-import lombok.AllArgsConstructor;
 import reactor.core.publisher.Mono;
+
+import java.nio.charset.Charset;
+
+//import reactor.core.publisher.Mono;
 
 //@AllArgsConstructor
 @Configuration
