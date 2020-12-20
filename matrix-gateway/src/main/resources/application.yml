@@ -8,7 +8,7 @@ spring:
       resourceserver:
         jwt:
           # 获取JWT验签公钥请求路径
-          jwk-set-uri: 'http://localhost:9098/matrix-security/rsa/publicKey'
+          jwk-set-uri: 'http://localhost:9098/rsa/publicKey'
   cloud:
     nacos:
       discovery:
@@ -69,8 +69,8 @@ management:
     gateway:
       enabled: true 
 # 配置白名单路径
-white-list:
-    urls:
-      - "/matrix-security/oauth/token"
-      - "/matrix-security/rsa/publicKey"
+#white-list:
+#    urls:
+#      - "/matrix-security/oauth/token"
+#      - "/matrix-security/rsa/publicKey"
       

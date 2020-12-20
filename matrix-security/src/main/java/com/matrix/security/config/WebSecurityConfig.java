@@ -64,7 +64,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
         //web应用或第三方授权时，允许使用用户名密码登录
         http.formLogin();
         //oauth相关接口不做权限校验
-        http.requestMatchers().antMatchers("/login", "/oauth/authorize", "/oauth/token","/rsa/publicKey");
+        http.authorizeRequests().antMatchers("/login", "/oauth/authorize", "/oauth/token","/rsa/publicKey").permitAll();
         //其他接口需要鉴权
         http.authorizeRequests().anyRequest().authenticated();
 	}
