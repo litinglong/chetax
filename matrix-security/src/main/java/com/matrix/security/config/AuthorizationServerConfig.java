@@ -45,7 +45,7 @@ public class AuthorizationServerConfig extends AuthorizationServerConfigurerAdap
 	RedisConnectionFactory redisConnectionFactory;
 
 	@Autowired(required = true)
-	@Qualifier("myUserDetailsService")
+	@Qualifier("matrixUserDetailsService")
 	public UserDetailsService userDetailsService;
 
 	@Resource
@@ -180,8 +180,10 @@ public class AuthorizationServerConfig extends AuthorizationServerConfigurerAdap
 			Map<String, Object> map = new HashMap<>(1);
 //			User user = (User) authentication.getUserAuthentication().getPrincipal();
 			Map<String, Object> custumer = new HashMap<>(1);
-			map.put("custumer", custumer);
-			custumer.put("name", authentication.getName());
+			map.put("user_info", custumer);
+			custumer.put("userName", authentication.getName());
+			custumer.put("telephone", "13349935750");
+			custumer.put("email", "328172957@qq.com");
 //			map.put("JWT_USER_ID_KEY", "test1");
 //			map.put("JWT_CLIENT_ID_KEY", "test2");
 			((DefaultOAuth2AccessToken) accessToken).setAdditionalInformation(map);

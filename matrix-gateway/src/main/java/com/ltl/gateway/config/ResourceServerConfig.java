@@ -30,7 +30,7 @@ import reactor.core.publisher.Mono;
 public class ResourceServerConfig{
 
 	@Autowired
-    AuthorizationManager2 authorizationManager2;
+    AuthorizationManager authorizationManager2;
 //    private final IgnoreUrlsConfig ignoreUrlsConfig;
     @Autowired
     CustomServerAccessDeniedHandler customServerAccessDeniedHandler;

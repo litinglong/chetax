@@ -25,5 +25,6 @@
   	<module>matrix-spring-boot-starter-demo</module>
   	<module>matrix-oauth2-server-demo</module>
   	<module>matrix-dependecies</module>
+  	<module>matrix-spring-life-test</module>
   </modules>
 </project>

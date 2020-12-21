@@ -1,3 +1,4 @@
+package com.ltl.gateway.tmp;
 //package com.ltl.gateway.config;
 //
 //import org.springframework.beans.factory.annotation.Autowired;

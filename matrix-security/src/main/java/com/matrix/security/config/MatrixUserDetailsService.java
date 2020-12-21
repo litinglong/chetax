@@ -19,7 +19,7 @@ import com.matrix.security.entity.OauthUserDetails;
 import com.matrix.security.mapper.OauthUserDetailsMapper;
 import com.matrix.security.mapper.OauthUserRoleMapper;
 
-@Component(value = "myUserDetailsService")
+@Component(value = "matrixUserDetailsService")
 public class MatrixUserDetailsService implements UserDetailsService {
 
 	Logger logger = LoggerFactory.getLogger(MatrixUserDetailsService.class);
