@@ -1,5 +1,7 @@
 package com.ltl.matrix.spring.life.test.demo;
 
+import java.lang.annotation.Annotation;
+
 import javax.annotation.PostConstruct;
 import javax.annotation.PreDestroy;
 
@@ -34,6 +36,21 @@ public class TestBeanPostProcessor implements BeanFactoryPostProcessor,BeanPostP
 	@Override
 	public Object postProcessAfterInitialization(Object bean, String beanName) throws BeansException {
 		log.info(CLZZ_NAME+":postProcessAfterInitialization:"+beanName);
+		Class<?> clazz;
+		try {
+			clazz = Class.forName(bean.getClass().getName());
+//			TestAnnotation testAnnotation=(TestAnnotation) clazz.getAnnotation(TestAnnotation.class);
+			TestAnnotation testAnnotation = bean.getClass().getAnnotation(TestAnnotation.class);
+			
+			if(testAnnotation!=null) {
+				log.info(CLZZ_NAME+":TestAnnotation:"+testAnnotation.valuex());
+			}
+		} catch (ClassNotFoundException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+
+		
 		return bean;
 	}
 

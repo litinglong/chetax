@@ -15,6 +15,7 @@ import lombok.extern.slf4j.Slf4j;
 
 @Component
 @Slf4j
+@TestAnnotation(valuex="444")
 public class DemoClass implements InitializingBean,DisposableBean,BeanNameAware,BeanFactoryAware{
 	public static final String CLZZ_NAME="DemoClass";
 	private String name;
