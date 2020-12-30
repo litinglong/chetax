@@ -1,0 +1,48 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
+  <modelVersion>4.0.0</modelVersion>
+  <parent>
+    <groupId>com.ltl.matrix</groupId>
+    <artifactId>matrix-dubbo-service1</artifactId>
+    <version>0.0.1-SNAPSHOT</version>
+  </parent>
+  <packaging>jar</packaging>
+  <artifactId>matrix-dubbo-service1-impl</artifactId>
+  	<dependencies>
+	  <dependency>
+        <groupId>com.ltl.matrix</groupId>
+        <artifactId>matrix-dubbo-service1-api</artifactId>
+        <version>0.0.1-SNAPSHOT</version>
+ 	  </dependency>
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter</artifactId>
+        </dependency>
+ 	      <!-- Dubbo dependency -->
+	    <dependency>
+	        <groupId>com.alibaba</groupId>
+	        <artifactId>dubbo</artifactId>
+	        <version>2.5.3</version>
+	        <exclusions>
+				<exclusion>
+					<artifactId>spring</artifactId>
+					<groupId>org.springframework</groupId>
+				</exclusion>
+			</exclusions>
+	    </dependency>
+	<!-- Dubbo Nacos registry dependency -->
+    <dependency>
+        <groupId>com.alibaba</groupId>
+        <artifactId>dubbo-registry-nacos</artifactId>
+        <version>0.0.2</version>
+    </dependency>   
+    
+	<!-- https://mvnrepository.com/artifact/com.alibaba.nacos/nacos-client -->
+	<dependency>
+	    <groupId>com.alibaba.nacos</groupId>
+	    <artifactId>nacos-client</artifactId>
+	    <version>0.6.1</version>
+	</dependency>
+
+
+  	</dependencies>
+</project>

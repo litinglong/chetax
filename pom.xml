@@ -15,7 +15,7 @@
   	<module>matrix-service2</module>
   	<module>matrix-service3</module>
   	<module>matrix-admin</module>
-  	<!-- <module>matrix-test-bridge-service</module> -->
+  	<module>matrix-test-bridge-service</module>
   	<module>matrix-gateway</module>
   	<module>matrix-security</module>
   	<module>matrix-kafka</module>
@@ -26,5 +26,6 @@
   	<module>matrix-oauth2-server-demo</module>
   	<module>matrix-dependecies</module>
   	<module>matrix-spring-life-test</module>
+  	<module>matrix-dubbo-test</module>
   </modules>
 </project>

@@ -47,8 +47,8 @@
 		</dependency>
 		
 	  <dependency>
-        <groupId>com.test</groupId>
-        <artifactId>test4-api</artifactId>
+        <groupId>com.ltl.matrix</groupId>
+        <artifactId>matrix-dubbo-service4-api</artifactId>
     	<version>0.0.1-SNAPSHOT</version>
  	  </dependency>
   
