@@ -2,7 +2,7 @@
   <modelVersion>4.0.0</modelVersion>
   <parent>
     <groupId>com.ltl.matrix</groupId>
-    <artifactId>matrix-parent</artifactId>
+    <artifactId>matrix</artifactId>
     <version>0.0.1-SNAPSHOT</version>
   </parent>
   <artifactId>matrix-oauth2-server-demo</artifactId>
