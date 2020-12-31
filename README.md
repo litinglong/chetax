@@ -1,4 +1,5 @@
 # matrix
+```puml
 * matrix
     * matrix-admin
 * matrix-cloud-service
