@@ -11,10 +11,7 @@
     <version>2.3.5.RELEASE</version>
   </parent>
   <modules>
-  	<module>matrix-admin</module>
-  	<module>matrix-gateway</module>
-  	<module>matrix-security</module>
-  	<module>matrix-oauth2-server-demo</module>
+  	<module>matrix-cloud-component</module>
   	<module>matrix-dependecies-home</module>
   	<module>matrix-dubbo-service</module>
 	<module>matrix-cloud-service</module>

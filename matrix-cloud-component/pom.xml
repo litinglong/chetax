@@ -5,11 +5,11 @@
     <artifactId>matrix</artifactId>
     <version>0.0.1-SNAPSHOT</version>
   </parent>
-  <artifactId>matrix-demo</artifactId>
+  <artifactId>matrix-cloud-component</artifactId>
   <packaging>pom</packaging>
   <modules>
-  	<module>matrix-mq-demo</module>
-	<module>matrix-spring-boot-starter-demo</module>
-	<module>matrix-oauth2-server-demo</module>
+  	<module>matrix-admin</module>
+	<module>matrix-gateway</module>
+	<module>matrix-security</module>
   </modules>
 </project>

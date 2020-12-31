@@ -1,7 +1,10 @@
 # matrix
 ```puml
 matrix
-    matrix-admin
+	matrix-cloud-component
+    	matrix-admin
+        matrix-gateway
+    	matrix-security
     matrix-cloud-service
         matrix-cloud-service1
             matrix-cloud-service1-api
@@ -19,6 +22,7 @@ matrix
         matrix-mq-demo
             matrix-mq-demo-kafka
             matrix-mq-demo-rocketmq
+        matrix-oauth2-server-demo    
         matrix-spring-boot-starter-demo
     matrix-dependecies-home
         matrix-dependecies
@@ -35,9 +39,6 @@ matrix
         matrix-dubbo-service4
             matrix-dubbo-service4-api
             matrix-dubbo-service4-impl
-    matrix-gateway
-    matrix-oauth2-server-demo
-    matrix-security
     matrix-sso
         matrix-sso-client
         matrix-sso-server

@@ -2,11 +2,10 @@
   <modelVersion>4.0.0</modelVersion>
   <parent>
     <groupId>com.ltl.matrix</groupId>
-    <artifactId>matrix</artifactId>
+    <artifactId>matrix-cloud-component</artifactId>
     <version>0.0.1-SNAPSHOT</version>
   </parent>
-  <artifactId>matrix-gateway</artifactId>
-  
+  <artifactId>matrix-admin</artifactId>
     <properties>
     	<maven-jar-plugin.version>3.0.0</maven-jar-plugin.version>
         <matrix-dependecies.version>0.0.1-SNAPSHOT</matrix-dependecies.version>
@@ -14,21 +13,27 @@
 
     <dependencies>
         <dependency>
-            <groupId>com.alibaba.cloud</groupId>
-            <artifactId>spring-cloud-alibaba-sentinel-gateway</artifactId>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-web</artifactId>
         </dependency>
         <dependency>
-            <groupId>com.alibaba.cloud</groupId>
-            <artifactId>spring-cloud-starter-alibaba-sentinel</artifactId>
+		    <groupId>org.springframework.boot</groupId>
+		    <artifactId>spring-boot-starter-security</artifactId>
+		</dependency>
+        <dependency>
+            <groupId>de.codecentric</groupId>
+            <artifactId>spring-boot-admin-starter-server</artifactId>
         </dependency>
         <dependency>
             <groupId>org.springframework.cloud</groupId>
-            <artifactId>spring-cloud-starter-gateway</artifactId>
+            <artifactId>spring-cloud-starter-openfeign</artifactId>
         </dependency>
+        
         <dependency>
             <groupId>com.alibaba.cloud</groupId>
             <artifactId>spring-cloud-starter-alibaba-nacos-discovery</artifactId>
         </dependency>
+
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-test</artifactId>
@@ -40,27 +45,6 @@
                 </exclusion>
             </exclusions>
         </dependency>
-        <dependency>
-		    <groupId>de.codecentric</groupId>
-		    <artifactId>spring-boot-admin-starter-client</artifactId>
-		</dependency>
-		<dependency>
-            <groupId>org.springframework.security</groupId>
-            <artifactId>spring-security-config</artifactId>
-        </dependency>
-        <dependency>
-            <groupId>org.springframework.security</groupId>
-            <artifactId>spring-security-oauth2-resource-server</artifactId>
-        </dependency>
-        <dependency>
-            <groupId>org.springframework.security</groupId>
-            <artifactId>spring-security-oauth2-jose</artifactId>
-        </dependency>
-        <dependency>
-	        <groupId>org.projectlombok</groupId>
-	        <artifactId>lombok</artifactId>
-	        <optional>true</optional>
-    	</dependency>
     </dependencies>
 
     <dependencyManagement>
@@ -90,7 +74,7 @@
                 <groupId>org.springframework.boot</groupId>
                 <artifactId>spring-boot-maven-plugin</artifactId>
                 <configuration>
-                    <mainClass>com.ltl.gateway.GatewayApplication</mainClass>
+                    <mainClass>com.example.demo.DemoApplication</mainClass>
                 </configuration>
                 <executions>
                     <execution>
