@@ -1,2 +1,0 @@
-org.springframework.boot.autoconfigure.EnableAutoConfiguration=\
-  com.ltl.matrix.spring.boot.starter.demo.config.DemoServerAutoConfiguration

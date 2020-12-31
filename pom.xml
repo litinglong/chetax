@@ -1,7 +1,7 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
   <modelVersion>4.0.0</modelVersion>
-  <groupId>com.ltl.matrix</groupId>
-  <artifactId>matrix</artifactId>
+  <groupId>com.silva.chetax</groupId>
+  <artifactId>chetax</artifactId>
   <version>0.0.1-SNAPSHOT</version>
   <packaging>pom</packaging>
     <!-- https://mvnrepository.com/artifact/org.springframework.boot/spring-boot-starter-parent -->
@@ -11,12 +11,12 @@
     <version>2.3.5.RELEASE</version>
   </parent>
   <modules>
-  	<module>matrix-cloud-component</module>
-  	<module>matrix-dependecies-home</module>
-  	<module>matrix-dubbo-service</module>
-	<module>matrix-cloud-service</module>
-	<module>matrix-sso</module>
-	<module>matrix-demo</module>
-	<module>matrix-test</module>
+  	<module>chetax-cloud-component</module>
+  	<module>chetax-dependecies-home</module>
+  	<module>chetax-dubbo-service</module>
+    <module>chetax-cloud-service</module>
+    <module>chetax-sso</module>
+    <module>chetax-demo</module>
+    <module>chetax-test</module>
   </modules>
 </project>
