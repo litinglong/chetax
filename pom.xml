@@ -11,21 +11,15 @@
     <version>2.3.5.RELEASE</version>
   </parent>
   <modules>
-  	<module>matrix-service1</module>
-  	<module>matrix-service2</module>
-  	<module>matrix-service3</module>
   	<module>matrix-admin</module>
-  	<module>matrix-test-bridge-service</module>
   	<module>matrix-gateway</module>
   	<module>matrix-security</module>
-  	<module>matrix-kafka</module>
-  	<module>matrix-rocketmq</module>
-  	<module>matrix-sso-server</module>
-  	<module>matrix-sso-client</module>
-  	<module>matrix-spring-boot-starter-demo</module>
   	<module>matrix-oauth2-server-demo</module>
-  	<module>matrix-dependecies</module>
-  	<module>matrix-spring-life-test</module>
-  	<module>matrix-dubbo-test</module>
+  	<module>matrix-dependecies-home</module>
+  	<module>matrix-dubbo-service</module>
+	<module>matrix-cloud-service</module>
+	<module>matrix-sso</module>
+	<module>matrix-demo</module>
+	<module>matrix-test</module>
   </modules>
 </project>
