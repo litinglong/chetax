@@ -1,7 +1,7 @@
 # matrix
 ```puml
 matrix
-	matrix-cloud-component
+    matrix-cloud-component
     	matrix-admin
         matrix-gateway
     	matrix-security
