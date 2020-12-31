@@ -2,9 +2,45 @@
 ```puml
 matrix
     matrix-admin
-matrix-cloud-service
-    matrix-cloud-service1
-        matrix-cloud-service-dubbo-impl
-matrix-dubbo-service
-    matrix-dubbo-service1
+    matrix-cloud-service
+        matrix-cloud-service1
+            matrix-cloud-service1-api
+            matrix-cloud-service1-impl
+        matrix-cloud-service2
+            matrix-cloud-service2-api
+            matrix-cloud-service2-impl
+        matrix-cloud-service3
+            matrix-cloud-service3-api
+            matrix-cloud-service3-impl
+        matrix-cloud-service-dubbo
+            matrix-cloud-service-dubbo-api
+            matrix-cloud-service-dubbo-impl
+    matrix-demo
+        matrix-mq-demo
+            matrix-mq-demo-kafka
+            matrix-mq-demo-rocketmq
+        matrix-spring-boot-starter-demo
+    matrix-dependecies-home
+        matrix-dependecies
+    matrix-dubbo-service
+        matrix-dubbo-service1
+            matrix-dubbo-service1-api
+            matrix-dubbo-service1-impl
+        matrix-dubbo-service2
+            matrix-dubbo-service2-api
+            matrix-dubbo-service2-impl
+        matrix-dubbo-service3
+            matrix-dubbo-service3-api
+            matrix-dubbo-service3-impl
+        matrix-dubbo-service4
+            matrix-dubbo-service4-api
+            matrix-dubbo-service4-impl
+    matrix-gateway
+    matrix-oauth2-server-demo
+    matrix-security
+    matrix-sso
+        matrix-sso-client
+        matrix-sso-server
+    matrix-test
+        matrix-test-spring-life
 ```
