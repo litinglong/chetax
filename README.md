@@ -2,9 +2,9 @@
 ```puml
 chetax
     chetax-cloud-component
-    	chetax-admin
-        chetax-gateway
-    	chetax-security
+    	chetax-admin-server 容器管理监控服务器
+    	chetax-authorization-server 认证服务器
+    	chetax-gateway-server 资源网关服务器
     chetax-cloud-service
         chetax-cloud-service1
             chetax-cloud-service1-api

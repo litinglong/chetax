@@ -1,0 +1,31 @@
+package com.silva.chetax.auth.controller;
+
+import java.security.KeyPair;
+import java.security.interfaces.RSAPublicKey;
+import java.util.Map;
+
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RestController;
+
+import com.nimbusds.jose.jwk.JWKSet;
+import com.nimbusds.jose.jwk.RSAKey;
+
+import lombok.AllArgsConstructor;
+
+/**
+ * RSA公钥开放接口
+ */
+@RestController
+@AllArgsConstructor
+public class PublicKeyController {
+
+    private KeyPair keyPair;
+
+    @GetMapping("/rsa/publicKey")
+    public Map<String, Object> getKey() {
+        RSAPublicKey publicKey = (RSAPublicKey) keyPair.getPublic();
+        RSAKey key = new RSAKey.Builder(publicKey).build();
+        return new JWKSet(key).toJSONObject();
+    }
+
+}
