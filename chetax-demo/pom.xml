@@ -11,5 +11,6 @@
   	<module>chetax-mq-demo</module>
 	<module>chetax-spring-boot-starter-demo</module>
 	<module>chetax-oauth2-server-demo</module>
+	<module>chetax-demo-cache</module>
   </modules>
 </project>

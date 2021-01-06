@@ -2,10 +2,10 @@
 ```puml
 chetax
     chetax-cloud-component
-    	chetax-admin-server 容器管理监控服务器
-    	chetax-authorization-server 认证服务器
-    	chetax-gateway-server 资源网关服务器
-    chetax-cloud-service
+    	chetax-admin-server ： 容器监控管理服务器
+    	chetax-authorization-server ： 身份认证服务器，基于oauth2.0
+    	chetax-gateway-server ： 资源网关服务器，基于oauth2.0
+    chetax-cloud-service ： springcloud微服务子模块
         chetax-cloud-service1
             chetax-cloud-service1-api
             chetax-cloud-service1-impl
@@ -15,18 +15,18 @@ chetax
         chetax-cloud-service3
             chetax-cloud-service3-api
             chetax-cloud-service3-impl
-        chetax-cloud-service-dubbo
+        chetax-cloud-service-dubbo ： 由dubbo提供业务服务的springcloud微服务子模块
             chetax-cloud-service-dubbo-api
             chetax-cloud-service-dubbo-impl
     chetax-demo
-        chetax-mq-demo
-            chetax-mq-demo-kafka
-            chetax-mq-demo-rocketmq
+        chetax-mq-demo：MQ相关测试样例
+            chetax-mq-demo-kafka：kafka相关测试样例
+            chetax-mq-demo-rocketmq：rocketmq相关测试样例
         chetax-oauth2-server-demo    
-        chetax-spring-boot-starter-demo
+        chetax-spring-boot-starter-demo：springboot启动器样例
     chetax-dependecies-home
         chetax-dependecies
-    chetax-dubbo-service
+    chetax-dubbo-service ： dubbo rpc服务子模块
         chetax-dubbo-service1
             chetax-dubbo-service1-api
             chetax-dubbo-service1-impl

@@ -12,7 +12,7 @@
   </parent>
   <modules>
   	<module>chetax-cloud-component</module>
-  	<module>chetax-dependecies-home</module>
+  	<module>chetax-dependency-home</module>
   	<module>chetax-dubbo-service</module>
     <module>chetax-cloud-service</module>
     <module>chetax-sso</module>

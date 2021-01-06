@@ -1,0 +1,21 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
+  <modelVersion>4.0.0</modelVersion>
+  <parent>
+    <groupId>com.silva.chetax</groupId>
+    <artifactId>chetax-dependency-home</artifactId>
+    <version>0.0.1-SNAPSHOT</version>
+  </parent>
+  <artifactId>chetax-dependency-dubbo</artifactId>
+  <packaging>pom</packaging>
+  <properties>
+  		<maven-jar-plugin.version>3.0.0</maven-jar-plugin.version>
+    	<chetax-dependency-base.version>0.0.1-SNAPSHOT</chetax-dependency-base.version>
+  </properties>
+   <dependencies>
+       <dependency>
+           <groupId>com.silva.chetax</groupId>
+           <artifactId>chetax-dependency-base</artifactId>
+           <version>${chetax-dependency-base.version}</version>
+       </dependency>
+   </dependencies>
+</project>

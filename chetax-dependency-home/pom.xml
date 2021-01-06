@@ -2,9 +2,16 @@
   <modelVersion>4.0.0</modelVersion>
   <parent>
     <groupId>com.silva.chetax</groupId>
-    <artifactId>chetax-dependecies-home</artifactId>
+    <artifactId>chetax</artifactId>
     <version>0.0.1-SNAPSHOT</version>
   </parent>
-  <artifactId>chatax-dependecy-common</artifactId>
+  <artifactId>chetax-dependency-home</artifactId>
   <packaging>pom</packaging>
+  <modules>
+  	<module>chetax-dependency-base</module>
+  	<module>chetax-dependency-dubbo</module>
+  	<module>chetax-dependency-dubbo-with-web</module>
+  	<module>chetax-dependency-web</module>
+  	<module>chetax-dependency-management</module>
+  </modules>
 </project>

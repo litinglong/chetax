@@ -9,7 +9,7 @@
   
     <properties>
     	<maven-jar-plugin.version>3.0.0</maven-jar-plugin.version>
-        <chetax-dependecies.version>0.0.1-SNAPSHOT</chetax-dependecies.version>
+        <chetax-dependency-management.version>0.0.1-SNAPSHOT</chetax-dependency-management.version>
     </properties>
     
     <dependencies>
@@ -31,8 +31,8 @@
         <dependencies>
             <dependency>
                 <groupId>com.silva.chetax</groupId>
-                <artifactId>chetax-dependecies</artifactId>
-                <version>${chetax-dependecies.version}</version>
+                <artifactId>chetax-dependency-management</artifactId>
+                <version>${chetax-dependency-management.version}</version>
                 <type>pom</type>
                 <scope>import</scope>
             </dependency>
