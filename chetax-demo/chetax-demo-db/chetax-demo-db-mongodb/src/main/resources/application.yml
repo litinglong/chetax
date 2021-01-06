@@ -1,0 +1,8 @@
+server:
+  port: 0
+spring:
+  application:
+    name: chetax-demo-cache-radis
+  data:
+    mongodb:
+      uri: mongodb://name:pass@localhost:27017/test
