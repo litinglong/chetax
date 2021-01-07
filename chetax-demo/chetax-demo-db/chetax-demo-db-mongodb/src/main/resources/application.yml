@@ -5,4 +5,4 @@ spring:
     name: chetax-demo-cache-radis
   data:
     mongodb:
-      uri: mongodb://name:pass@localhost:27017/test
+      uri: mongodb://localhost:27017/test

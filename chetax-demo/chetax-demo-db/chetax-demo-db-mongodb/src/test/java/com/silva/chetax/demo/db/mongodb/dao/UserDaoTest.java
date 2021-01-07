@@ -15,9 +15,9 @@ public class UserDaoTest {
     @Test
     public void testSaveUser() throws Exception {
         UserEntity user=new UserEntity();
-        user.setId(2l);
-        user.setUserName("小明");
-        user.setPassWord("fffooo123");
+        user.setId(3l);
+        user.setUserName("小明4");
+        user.setPassWord("fffooo124");
         userDao.saveUser(user);
     }
 
