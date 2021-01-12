@@ -1,0 +1,17 @@
+server:
+  port: 0
+spring:
+  application:
+    name: chetax-demo-db-mysql
+  cloud:
+    nacos:
+      discovery:
+        username: nacos
+        password: nacos
+        server-addr: 127.0.0.1:8849
+        namespace: public
+  datasource:
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    url: jdbc:mysql://localhost:3306/manage?useUnicode=true&characterEncoding=utf8&serverTimezone=UTC
+    username: root
+    password: root

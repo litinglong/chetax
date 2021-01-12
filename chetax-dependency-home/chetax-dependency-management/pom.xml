@@ -17,7 +17,9 @@
         <spring-cloud.version>Hoxton.SR8</spring-cloud.version>
         <spring-cloud-alibaba.version>2.2.2.RELEASE</spring-cloud-alibaba.version>
         <mybatis-spring-boot-starter.version>2.1.1</mybatis-spring-boot-starter.version>
-  		<springfox-swagger2.version>2.6.1</springfox-swagger2.version>
+  		<springfox-swagger2.version>2.10.5</springfox-swagger2.version>
+  		<knife4j-spring-boot-starter.version>2.0.7</knife4j-spring-boot-starter.version>
+  		<dubbo.version>2.7.4.1</dubbo.version>
   </properties>
   <dependencyManagement>
     <dependencies>
@@ -55,7 +57,7 @@
             <version>${mybatis-spring-boot-starter.version}</version>
         </dependency>
 		<!-- Swagger核心包 start -->
-		 <dependency>
+ 		 <dependency>
 		   <groupId>io.springfox</groupId>
 		   <artifactId>springfox-swagger2</artifactId>
 		   <version>${springfox-swagger2.version}</version>
@@ -66,6 +68,23 @@
 		    <version>${springfox-swagger2.version}</version>
 		 </dependency>
 		<!-- Swagger核心包 end -->
+		<dependency>
+		    <groupId>com.github.xiaoymin</groupId>
+		    <artifactId>knife4j-spring-boot-starter</artifactId>
+		    <version>${knife4j-spring-boot-starter.version}</version>
+		</dependency>
+		
+        <dependency>
+            <groupId>org.apache.dubbo</groupId>
+            <artifactId>dubbo-spring-boot-starter</artifactId>
+            <version>${dubbo.version}</version>
+        </dependency>
+        <!-- https://mvnrepository.com/artifact/org.apache.dubbo/dubbo-registry-nacos -->
+		<dependency>
+		    <groupId>org.apache.dubbo</groupId>
+		    <artifactId>dubbo-registry-nacos</artifactId>
+		    <version>${dubbo.version}</version>
+		</dependency>
     </dependencies>
   </dependencyManagement>
 </project>

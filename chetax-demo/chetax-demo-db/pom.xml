@@ -9,5 +9,6 @@
   <packaging>pom</packaging>
   <modules>
   	<module>chetax-demo-db-mongodb</module>
+  	<module>chetax-demo-db-mysql</module>
   </modules>
 </project>

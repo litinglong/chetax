@@ -1,40 +1,42 @@
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
   <modelVersion>4.0.0</modelVersion>
   <parent>
     <groupId>com.silva.chetax</groupId>
-    <artifactId>chetax-cloud-service2</artifactId>
+    <artifactId>chetax-demo-db</artifactId>
     <version>0.0.1-SNAPSHOT</version>
   </parent>
-  <artifactId>chetax-cloud-service2-impl</artifactId>
-  
-    <properties>
-    	<maven-jar-plugin.version>3.0.0</maven-jar-plugin.version>
-    	<chetax-dependency-web.version>0.0.1-SNAPSHOT</chetax-dependency-web.version>
-        <chetax-dependency-management.version>0.0.1-SNAPSHOT</chetax-dependency-management.version>
-    </properties>
-    <dependencies>
+  <artifactId>chetax-demo-db-mysql</artifactId>
+  <properties>
+	<maven-jar-plugin.version>3.0.0</maven-jar-plugin.version>
+  	<chetax-dependency-web.version>0.0.1-SNAPSHOT</chetax-dependency-web.version>
+  </properties>
+	<dependencies>
 		<dependency>
 			<groupId>com.silva.chetax</groupId>
 			<artifactId>chetax-dependency-web</artifactId>
 			<version>${chetax-dependency-web.version}</version>
       	</dependency>
 		<dependency>
-            <groupId>org.springframework.cloud</groupId>
-            <artifactId>spring-cloud-starter-oauth2</artifactId>
-        </dependency>
-    </dependencies>
-    <dependencyManagement>
-        <dependencies>
-            <dependency>
-                <groupId>com.silva.chetax</groupId>
-                <artifactId>chetax-dependency-management</artifactId>
-                <version>${chetax-dependency-management.version}</version>
-                <type>pom</type>
-                <scope>import</scope>
-            </dependency>
-        </dependencies>
-    </dependencyManagement>
-
+		    <groupId>mysql</groupId>
+		    <artifactId>mysql-connector-java</artifactId>
+		</dependency>
+      	<dependency>
+		    <groupId>com.baomidou</groupId>
+		    <artifactId>mybatis-plus-boot-starter</artifactId>
+		    <version>3.4.1</version>
+		</dependency>
+   	<dependency>
+        <groupId>org.springframework.boot</groupId>
+        <artifactId>spring-boot-starter-test</artifactId>
+        <scope>test</scope>
+        <exclusions>
+            <exclusion>
+                <groupId>org.junit.vintage</groupId>
+                <artifactId>junit-vintage-engine</artifactId>
+            </exclusion>
+        </exclusions>
+    </dependency>
+	</dependencies>
     <build>
         <plugins>
             <plugin>
@@ -50,7 +52,7 @@
                 <groupId>org.springframework.boot</groupId>
                 <artifactId>spring-boot-maven-plugin</artifactId>
                 <configuration>
-                    <mainClass>com.example.demo.DemoApplication</mainClass>
+                    <mainClass>com.silva.chetax.demo.db.mongodb.MongoDBApplication</mainClass>
                 </configuration>
                 <executions>
                     <execution>

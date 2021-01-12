@@ -6,97 +6,55 @@
     <version>0.0.1-SNAPSHOT</version>
   </parent>
   <artifactId>chetax-cloud-service-dubbo-impl</artifactId>
+
     <properties>
-        <java.version>1.8</java.version>
-        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-        <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
-        <spring-boot.version>2.3.4.RELEASE</spring-boot.version>
-        <spring-cloud-alibaba.version>2.2.2.RELEASE</spring-cloud-alibaba.version>
+    	<maven-jar-plugin.version>3.0.0</maven-jar-plugin.version>
+    	<chetax-dependency-web.version>0.0.1-SNAPSHOT</chetax-dependency-web.version>
+    	<chetax-dependency-management.version>0.0.1-SNAPSHOT</chetax-dependency-management.version>
     </properties>
-
     <dependencies>
-        <dependency>
-            <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-starter</artifactId>
-        </dependency>
-        <dependency>
-	        <groupId>org.springframework.boot</groupId>
-	        <artifactId>spring-boot-starter-web</artifactId>
- 	    </dependency>
-        <dependency>
-            <groupId>com.alibaba.cloud</groupId>
-            <artifactId>spring-cloud-starter-alibaba-nacos-discovery</artifactId>
-        </dependency>
-
-        <dependency>
-            <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-starter-test</artifactId>
-            <scope>test</scope>
-            <exclusions>
-                <exclusion>
-                    <groupId>org.junit.vintage</groupId>
-                    <artifactId>junit-vintage-engine</artifactId>
-                </exclusion>
-            </exclusions>
-        </dependency>
-        
-        <dependency>
-		    <groupId>de.codecentric</groupId>
-		    <artifactId>spring-boot-admin-starter-client</artifactId>
-		    <version>2.1.5</version>
-		</dependency>
-		
+		<dependency>
+			<groupId>com.silva.chetax</groupId>
+			<artifactId>chetax-dependency-web</artifactId>
+			<version>${chetax-dependency-web.version}</version>
+      	</dependency>
+      	
 	  <dependency>
         <groupId>com.silva.chetax</groupId>
         <artifactId>chetax-dubbo-service4-api</artifactId>
     	<version>0.0.1-SNAPSHOT</version>
  	  </dependency>
   
-        <!-- dubbo 2.7.x引入-->
         <dependency>
             <groupId>org.apache.dubbo</groupId>
             <artifactId>dubbo-spring-boot-starter</artifactId>
-            <version>2.7.4.1</version>
         </dependency>
-        <!-- https://mvnrepository.com/artifact/org.apache.dubbo/dubbo-registry-nacos -->
 		<dependency>
 		    <groupId>org.apache.dubbo</groupId>
 		    <artifactId>dubbo-registry-nacos</artifactId>
-		    <version>2.7.4.1</version>
 		</dependency>
 		
-		<!-- https://mvnrepository.com/artifact/com.alibaba.nacos/nacos-client -->
 		<dependency>
 		    <groupId>com.alibaba.nacos</groupId>
 		    <artifactId>nacos-client</artifactId>
 		</dependency>
     </dependencies>
-
-    <dependencyManagement>
+   <dependencyManagement>
         <dependencies>
             <dependency>
-                <groupId>org.springframework.boot</groupId>
-                <artifactId>spring-boot-dependencies</artifactId>
-                <version>${spring-boot.version}</version>
-                <type>pom</type>
-                <scope>import</scope>
-            </dependency>
-            <dependency>
-                <groupId>com.alibaba.cloud</groupId>
-                <artifactId>spring-cloud-alibaba-dependencies</artifactId>
-                <version>${spring-cloud-alibaba.version}</version>
+                <groupId>com.silva.chetax</groupId>
+                <artifactId>chetax-dependency-management</artifactId>
+                <version>${chetax-dependency-management.version}</version>
                 <type>pom</type>
                 <scope>import</scope>
             </dependency>
         </dependencies>
     </dependencyManagement>
-
     <build>
         <plugins>
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-compiler-plugin</artifactId>
-                <version>3.8.1</version>
                 <configuration>
                     <source>1.8</source>
                     <target>1.8</target>
@@ -106,7 +64,6 @@
             <plugin>
                 <groupId>org.springframework.boot</groupId>
                 <artifactId>spring-boot-maven-plugin</artifactId>
-                <version>2.3.4.RELEASE</version>
                 <configuration>
                     <mainClass>com.example.demo.DemoApplication</mainClass>
                 </configuration>
