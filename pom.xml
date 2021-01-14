@@ -18,5 +18,6 @@
     <module>chetax-sso</module>
     <module>chetax-demo</module>
     <module>chetax-test</module>
+    <module>chetax-utils</module>
   </modules>
 </project>

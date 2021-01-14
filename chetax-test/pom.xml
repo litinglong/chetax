@@ -9,5 +9,6 @@
   <packaging>pom</packaging>
   <modules>
   	<module>chetax-test-spring-life</module>
+  	<module>chetax-test-spring-source-comments</module>
   </modules>
 </project>

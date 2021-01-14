@@ -13,5 +13,6 @@
 	<module>chetax-oauth2-server-demo</module>
 	<module>chetax-demo-cache</module>
 	<module>chetax-demo-db</module>
+	<module>chetax-demo-design-patterns</module>
   </modules>
 </project>

@@ -11,5 +11,6 @@
   	<module>chetax-admin-server</module>
 	<module>chetax-gateway-server</module>
 	<module>chetax-authorization-server</module>
+	<module>chetax-zipkin-server</module>
   </modules>
 </project>

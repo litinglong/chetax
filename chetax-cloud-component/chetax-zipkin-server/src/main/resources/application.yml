@@ -1,0 +1,6 @@
+server:
+  port: 9411
+spring:
+  application:
+    name: service-zipkin
+##sentinel 限流

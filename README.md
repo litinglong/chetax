@@ -48,4 +48,6 @@ chetax
         chetax-sso-server
     chetax-test
         chetax-test-spring-life
+    chetax-utils：【工具类工程】
+    chetax-vue：【vue前端页面工程】  
 ```
