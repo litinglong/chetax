@@ -1,4 +1,4 @@
-package com.silva.chetax.demo.design.patterns.singleton;
+package com.silva.chetax.demo.design.patterns.creational.singleton;
 
 public class Demo {
 

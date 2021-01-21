@@ -1,4 +1,4 @@
-package com.silva.chetax.demo.design.patterns.singleton;
+package com.silva.chetax.demo.design.patterns.creational.singleton;
 
 public class SingleObject {
 	// 创建 SingleObject 的一个对象

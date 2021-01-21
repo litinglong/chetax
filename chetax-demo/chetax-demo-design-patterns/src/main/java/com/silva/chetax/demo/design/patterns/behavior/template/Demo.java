@@ -1,4 +1,4 @@
-package com.silva.chetax.demo.design.patterns.template;
+package com.silva.chetax.demo.design.patterns.behavior.template;
 
 import java.io.File;
 import java.io.FilenameFilter;

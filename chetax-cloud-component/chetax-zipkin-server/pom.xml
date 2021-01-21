@@ -17,7 +17,7 @@
 			<artifactId>chetax-dependency-web</artifactId>
 			<version>${chetax-dependency-web.version}</version>
       	</dependency>
-      	<dependency>
+      	<!-- <dependency>
             <groupId>io.zipkin.java</groupId>
             <artifactId>zipkin-server</artifactId>
         </dependency>
@@ -25,18 +25,8 @@
         <dependency>
             <groupId>io.zipkin.java</groupId>
             <artifactId>zipkin-autoconfigure-ui</artifactId>
-        </dependency>
+        </dependency> -->
     </dependencies>
-    
-  <dependencyManagement>
-    <dependencies>
-        <dependency>
-            <groupId>com.silva.chetax</groupId>
-            <artifactId>chetax-denpendency-management</artifactId>
-            <version>${chetax-denpendency-management.version}</version>
-        </dependency>
-    </dependencies>
-  </dependencyManagement>
     
     <build>
         <plugins>
