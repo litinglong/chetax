@@ -66,7 +66,8 @@ import org.springframework.util.Assert;
 import org.springframework.util.ClassUtils;
 
 /**
- * {@link BeanFactoryPostProcessor} used for bootstrapping processing of
+ * ConfigurationClassParser中的doProcessConfigurationClass方法有注解ComponentScans和ComponentScan的运用。
+ * <p>{@link BeanFactoryPostProcessor} used for bootstrapping processing of
  * {@link Configuration @Configuration} classes.
  *
  * <p>Registered by default when using {@code <context:annotation-config/>} or

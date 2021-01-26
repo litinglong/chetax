@@ -127,16 +127,23 @@ public class ServletWebServerApplicationContext extends GenericWebApplicationCon
 	}
 
 	/**
+	 * <p>添加ServletContext和ServletConfig感知器的后置处理器
+	 * <p>注册web应用的范围类型
 	 * Register ServletContextAwareProcessor.
 	 * @see ServletContextAwareProcessor
 	 */
 	@Override
 	protected void postProcessBeanFactory(ConfigurableListableBeanFactory beanFactory) {
+		// 添加ServletContext和ServletConfig感知器的后置处理器
 		beanFactory.addBeanPostProcessor(new WebApplicationContextServletContextAwareProcessor(this));
 		beanFactory.ignoreDependencyInterface(ServletContextAware.class);
+		// 注册web应用的范围类型
 		registerWebApplicationScopes();
 	}
 
+	/**
+	 *刷新spring上下文，如果出现异常则关闭webServer
+	 */
 	@Override
 	public final void refresh() throws BeansException, IllegalStateException {
 		try {

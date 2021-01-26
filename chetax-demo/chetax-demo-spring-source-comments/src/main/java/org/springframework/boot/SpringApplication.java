@@ -223,6 +223,9 @@ public class SpringApplication {
 
 	private boolean headless = true;
 
+	/**
+	 * 注册器是否已关闭
+	 */
 	private boolean registerShutdownHook = true;
 
 	private List<ApplicationContextInitializer<?>> initializers;
@@ -322,7 +325,7 @@ public class SpringApplication {
 			configureIgnoreBeanInfo(environment);
 			Banner printedBanner = printBanner(environment);
 			
-			// 与通过ClassPathXmlApplicationContext类创建spring上下文同理
+			// 根据应用程序环境类型创建特定的应用程序上下文实例,但是不会refresh
 			context = createApplicationContext();
 			// 启动过程中的异常报告器
 			exceptionReporters = getSpringFactoriesInstances(SpringBootExceptionReporter.class,
@@ -400,7 +403,9 @@ public class SpringApplication {
 			SpringApplicationRunListeners listeners, ApplicationArguments applicationArguments, Banner printedBanner) {
 		context.setEnvironment(environment);
 		postProcessApplicationContext(context);
-		applyInitializers(context); //调用所有ApplicationContextInitializer接口的initialize方法
+		//调用所有ApplicationContextInitializer接口的initialize方法
+		//比如SharedMetadataReaderFactoryContextInitializer,ConfigurationWarningsApplicationContextInitializer
+		applyInitializers(context); 
 		listeners.contextPrepared(context);// 发布springboot的contextPrepared事件（EventPublishingRunListener）
 		if (this.logStartupInfo) {
 			logStartupInfo(context.getParent() == null);// 打印日志开启信息
@@ -620,7 +625,7 @@ public class SpringApplication {
 	}
 
 	/**
-	 * 根据应用程序环境类型创建不同的应用程序上下文实例
+	 * 根据应用程序环境类型创建特定的应用程序上下文实例
 	 * servlet：AnnotationConfigServletWebServerApplicationContext
 	 * reactive：AnnotationConfigReactiveWebServerApplicationContext
 	 * default：AnnotationConfigApplicationContext

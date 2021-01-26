@@ -70,6 +70,7 @@ public class AnnotationConfigServletWebServerApplicationContext extends ServletW
 	 * {@linkplain #refresh refreshed}.
 	 */
 	public AnnotationConfigServletWebServerApplicationContext() {
+		// 会隐式调用父类构造器的无参构造函数
 		this.reader = new AnnotatedBeanDefinitionReader(this);
 		this.scanner = new ClassPathBeanDefinitionScanner(this);
 	}
