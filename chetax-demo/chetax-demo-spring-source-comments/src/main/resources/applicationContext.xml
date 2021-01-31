@@ -5,5 +5,39 @@
     <bean id="testBean004" class="com.silva.chetax.demo.spring.source.comments.TestBean004">
         <property name="name401" value="name401value"></property>
         <property name="name402" value="name402value"></property>
+        <property name="map">
+           <map>
+               <entry key="someValue">
+                   <value>Hello World!</value>
+               </entry>
+               <entry key="someBean">
+                   <value>Hello World!++1</value>
+                </entry>
+           </map>
+       </property>
+       <property name="props">
+           <props>
+               <prop key="firstName">
+                   Rob
+               </prop>
+               <prop key="secondName">
+                   Harrop
+               </prop>
+           </props>
+       </property>
+       <property name="set">
+           <set>
+               <value>Hello World!</value>
+               <value>Hello World!+1</value>
+           </set>
+       </property>
+       <property name="list">
+           <list>
+                <value>config/settings.properties</value>
+                <value>classpath:c3p0.properties</value>
+                <value>classpath:mchange-log.properties</value>
+                <value>classpath:mchange-commons.properties</value>
+            </list>
+       </property>
     </bean>
 </beans>
