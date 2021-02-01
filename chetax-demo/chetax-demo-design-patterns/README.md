@@ -1,2 +1,11 @@
-http://c.biancheng.net/view/1335.html
-https://www.runoob.com/design-pattern/design-pattern-tutorial.html
+* [设计模式－菜鸟教程](https://www.runoob.com/design-pattern/design-pattern-tutorial.html)
+* [软件设计模式概述](http://c.biancheng.net/view/1317.html)
+* [GoF 的 23 种设计模式的分类和功能](http://c.biancheng.net/view/1320.html)
+* [UML中的类图及类图之间的关系](http://c.biancheng.net/view/1319.html)
+* [开闭原则](http://c.biancheng.net/view/1322.html)
+* [里氏替换原则](http://c.biancheng.net/view/1324.html)
+* [依赖倒置原则](http://c.biancheng.net/view/1326.html)
+* [单一职责原则](http://c.biancheng.net/view/1327.html)
+* [接口隔离原则](http://c.biancheng.net/view/1330.html)
+* [迪米特法则](http://c.biancheng.net/view/1331.html)
+* [合成复用原则](http://c.biancheng.net/view/1333.html)
