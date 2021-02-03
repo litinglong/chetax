@@ -374,7 +374,8 @@ public class WebMvcAutoConfiguration {
 	 * <p>8.DispatcherServlet的实例在调用init方法里会将spring容器中所有实现了HandlerMapping接口（包括RequestMappingHandlerMapping）的类实例找出来，缓存到this.handlerMappings中，并用AnnotationAwareOrderComparator对其进行排序
 	 * <p>9.DispatcherServlet的实例的属性this.handlerMappings用于之后的寻找匹配的HandlerExecutionChain（包括Mapping处理方法和拦截器方法）动作。
 	 * <p>10.当由URL符合DispatcherServlet拦截路径前缀规则时，则调用其doService方法，doService方法中调用doDispatch方法对请求路径的后缀路径进行分发处理。分发处理的大致过程时通过请求的URL找到匹配的HandlerExecutionChain（中包含@controller的@RequestMapping方法和HandlerInterceptor拦截器链），然后分别执行拦截器链的applyPreHandle，handle（@controller的@RequestMapping方法），拦截器链的applyPostHandle
-	 * <p>?参数绑定和视图解析
+	 * <p>?参数绑定和视图解析 参考文档：https://www.cnblogs.com/w-y-c-m/p/8443892.html
+	 * 
 	 * <p>Configuration equivalent to {@code @EnableWebMvc}.
 	 */
 	@Configuration(proxyBeanMethods = false)
