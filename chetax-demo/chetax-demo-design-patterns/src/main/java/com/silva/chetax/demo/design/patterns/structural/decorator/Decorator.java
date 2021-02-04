@@ -5,7 +5,7 @@ package com.silva.chetax.demo.design.patterns.structural.decorator;
  * @author Administrator
  *
  */
-public class Decorator implements Component {
+public abstract class Decorator implements Component {
 	private Component component;
 
 	public Decorator(Component component) {
