@@ -2,11 +2,17 @@ package com.silva.chetax.demo.spring.source.comments.service.impl;
 
 import javax.annotation.Resource;
 
+import org.springframework.scheduling.annotation.Async;
+import org.springframework.scheduling.annotation.EnableScheduling;
+import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
 
 import com.silva.chetax.demo.spring.source.comments.dao.Test001Dao;
 import com.silva.chetax.demo.spring.source.comments.service.Test001Service;
 
+import lombok.extern.slf4j.Slf4j;
+
+@Slf4j
 @Service // 业务层，一般对于接口和实现
 public class Test001ServiceImpl implements Test001Service{
 	/**
@@ -20,20 +26,36 @@ public class Test001ServiceImpl implements Test001Service{
 	@Resource(name = "test001Dao") //bean的注入，同Autowired 有相同的功能。
 	Test001Dao test001Dao;
 	
+	// 由@EnableScheduling注解进行支持
+	@Scheduled(fixedDelay = 50000) //以下的方法将以一个固定延迟时间50s调用一次执行，这个周期是以上一个调用任务的完成时间为基准，在上一个任务完成之后，50s后再次执行
+//	@Scheduled(fixedRate = 50000) //以下方法将以一个固定速率50s来调用一次执行，这个周期是以上一个任务开始时间为基准，从上一任务开始执行后50s再次调用：
+//	@Scheduled(cron = "0 0 2 * * ?") //每天凌晨两点执行
 	@Override
 	public void test001() {
-		// TODO Auto-generated method stub
-		
+		log.info("--------start-service1------------");
+		try {
+			Thread.sleep(5000);
+		} catch (InterruptedException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} // 模拟耗时
+	    log.info("--------end-service1------------");
 	}
 
+	@Async("taskExecutor") //ThreadPoolTaskConfig#getAsyncExecutor()
 	@Override
-	public String test002() {
-		// TODO Auto-generated method stub
+	public String test002() throws InterruptedException {
+		log.info("--------start-test002------------");
+		Thread.sleep(5000); // 模拟耗时
+	    log.info("--------end-test002------------");
 		return null;
 	}
 	
-	public String test003() {
-		// TODO Auto-generated method stub
+	@Async("taskExecutor") //ThreadPoolTaskConfig#getAsyncExecutor()
+	public String test003() throws InterruptedException {
+		log.info("--------start-test003------------");
+		Thread.sleep(2000); // 模拟耗时
+	    log.info("--------end-test003------------");
 		return null;
 	}
 
