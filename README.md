@@ -24,6 +24,7 @@ chetax
             chetax-mq-demo-rocketmq：【rocketmq相关测试样例】
         chetax-oauth2-server-demo    
         chetax-spring-boot-starter-demo：【springboot启动器样例】
+        chetax-demo-spring-source-comments：【spring、springboot、springmvc源码解析及注释，spring常用注解使用Demo程序】
     chetax-dependecies-home：【外部依赖管理】
     	chetax-dependency-base
         chetax-dependency-dubbo
