@@ -1,5 +1,5 @@
 spring:
   profiles:
-    active: dev  #dev、test、prod
+    include: devCommon,devMy
 #关于spring.profiles.include和spring.profiles.active的使用：
 #https://blog.csdn.net/jasnet_u/article/details/82995845

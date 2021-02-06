@@ -10,10 +10,11 @@ import com.silva.chetax.demo.spring.source.comments.interceptor.TestHandlerInter
 @Configuration
 public class WebAppConfigurer implements WebMvcConfigurer {
 	
-	@Bean
+	@Bean(initMethod="init",destroyMethod="destroy")
 	public TestHandlerInterceptor001 getTestHandlerInterceptor001() {
 		return new TestHandlerInterceptor001();
 	}
+	
 	
 	@Override
 	public void addInterceptors(InterceptorRegistry registry) {

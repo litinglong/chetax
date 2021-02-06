@@ -21,8 +21,20 @@ import org.springframework.web.bind.annotation.RestController;
 import com.silva.chetax.demo.spring.source.comments.entity.in.EntityReq;
 import com.silva.chetax.demo.spring.source.comments.entity.out.EntityResp;
 
+/**
+ * <p>GET：无副作用，幂等，不可带 Request Body
+<p>PUT：副作用，幂等，可以带 Request Body
+<p>POST：副作用，非幂等，可以带 Request Body
+<p>DELETE：副作用，幂等，不可带 Request Body
+
+<p>consumes： 指定处理请求的提交内容类型（Content-Type），例如application/json,text/html; 
+
+<p>produces： 指定返回的内容类型，仅当request请求头中的(Accept)类型中包含该指定类型才返回；
+ * @author litinglong
+ *
+ */
 @RestController
-@RequestMapping("testController002")
+@RequestMapping("testController002") // 绑定url
 public class TestController002 {
 
 	@GetMapping("getMappingTest")
@@ -60,6 +72,11 @@ public class TestController002 {
 		return new Date().toString() + ":" + text;
 	}
 
+	/**
+	 * 绑定参数,将客户端请求中的参数值映射到相应方法的参数上;
+	 * @param text
+	 * @return
+	 */
 	@RequestMapping("requestParamTest1")
 	public String requestParamTest1(@RequestParam("text") String text) {
 		return new Date().toString() + ":" + text;
