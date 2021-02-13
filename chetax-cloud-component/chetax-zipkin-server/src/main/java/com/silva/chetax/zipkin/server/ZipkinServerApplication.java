@@ -3,7 +3,7 @@ package com.silva.chetax.zipkin.server;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 @SpringBootApplication
-@EnableZipkinServer
+//@EnableZipkinServer
 public class ZipkinServerApplication {
 
 }
