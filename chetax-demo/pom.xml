@@ -15,5 +15,6 @@
 	<module>chetax-demo-db</module>
 	<module>chetax-demo-design-patterns</module>
 	<module>chetax-demo-spring-source-comments</module>
+	<module>chetax-demo-docker</module>
   </modules>
 </project>
