@@ -13,8 +13,10 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 public class HelloController {
 
-	private static final Log log = LogFactory.getLog(HelloController.class);
-
+	/**
+	 * 会用类似下面这样的请求地址向k8s api服务器发请求。
+	 * <p>https://10.96.0.1/api/v1/namespaces/default/services
+	 */
 	@Autowired
 	private DiscoveryClient discoveryClient;
 	
