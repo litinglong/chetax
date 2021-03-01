@@ -17,7 +17,10 @@ public class SortUtil {
 		return result;
 	}
 	
-	/* 冒泡排序算法 */
+	/**
+	 * 冒泡排序算法
+	 * @param data
+	 */
 	public static void sortByBubbling(int[] data) {
 		int l = data.length;
 		for (int j = 0; j < l; j++) {
@@ -35,7 +38,10 @@ public class SortUtil {
 
 	}
 
-	/* 插入排序算法 */
+	/**
+	 * 插入排序算法
+	 * @param data
+	 */
 	public static void sortByInsert(int[] data) {
 		// 循环取元素来插入
 		for (int i = 0; i < data.length; i++) {
@@ -53,7 +59,10 @@ public class SortUtil {
 			}
 		}
 	}
-	/* 快速排序算法 */
+	/**
+	 * 快速排序算法
+	 * @param data
+	 */
 	public static void sortByFast(int[] data) {
 		int start = 0; 
 		int end = data.length-1;
@@ -92,9 +101,9 @@ public class SortUtil {
 			}
 		}
 		// 对基准值左边的无序列表重复上述操作
-		//doSortByFast(data, start, left);
+		doSortByFast(data, start, left);
 		// 对基准值右边的无序列表重复上述操作
-		//doSortByFast(data, right, end);
+		doSortByFast(data, right, end);
 	}
 	/* 希尔排序算法 */
 
