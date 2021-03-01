@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.silva.chetax.demo.db.mysql.mapper.BookLendRecordMapper" >
+    <resultMap type="com.silva.chetax.demo.db.mysql.entity.TUser" id="TBookLendRecordRM">
+        <id column="id" property="id"/>
+        <result column="BOOK_NAME" property="bookName"/>
+        <result column="LAST_LEND_TIME" property="lastLendtime"/>
+        <collection column="id" property="userList" select="com.silva.chetax.demo.db.mysql.mapper.BookLendRecordMapper.selectUserListByBookId" />
+    </resultMap>
+    <select id="selectbookLendRecordByUserId" parameterType="String" resultMap="TBookLendRecordRM">
+        SELECT * from t_book_lend_record ST
+		where id=#{id}
+    </select>
+    id user_id book_id 
+</mapper>

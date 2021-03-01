@@ -1,0 +1,100 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" >
+<!--- 命名空间 namespace -->
+<!--- mybatis标签说明：https://blog.csdn.net/weixin_40950778/article/details/78655288 -->
+<mapper namespace="com.silva.chetax.demo.db.mysql.mapper.UserMapper" >
+    <resultMap type="com.silva.chetax.demo.db.mysql.entity.TUser" id="TUserRM">
+        <id column="id" property="id"/>
+        <result column="user_name" property="userName"/>
+        <result column="sex" property="sex"/>
+        <association column="id" property="bookLendRecord" select="com.silva.chetax.demo.db.mysql.mapper.BookLendRecordMapper.selectbookLendRecordByUserId" />
+    </resultMap>
+    <!-- insert -->
+    <insert id="insert">
+    </insert>
+    <!-- delete -->
+    <delete id="delete" parameterType="int">
+        delete from <include refid="table"/>
+　　　　　　where id = #{id} 
+    </delete>
+    <!-- sql标签 -->
+    <sql id="table">
+    	t_user
+    </sql>
+    <select id="selectUserListByBookId"  parameterType="int" resultMap="TUserRM">
+        SELECT * from t_user ST
+		where id=#{id}
+    </select>
+    <!-- if标签 -->
+    <select id="select2"  parameterType="TUser" resultMap="TUserRM">
+        SELECT * from t_user ST      
+	    <if test="userName!=null and userName!=''">
+	        WHERE ST.user_name LIKE CONCAT(CONCAT('%', #{userName}),'%')      
+	    </if>   
+    </select>
+    <!-- foreach标签 -->   
+    <select id="select3"  parameterType="TUser" resultMap="TUserRM">
+        SELECT * from t_user ST      
+	　　　　<foreach collection="ids" item="id" index="index" open="(" close=")" separator=",">
+	　　　　　　#{id}
+	　　　　</foreach>
+    </select>
+    <!-- choose、when、otherwise，where标签，自动去除前置多余的AND或者OR -->   
+    <select id="select4"  parameterType="TUser" resultMap="TUserRM">
+        SELECT * from t_user ST   
+	    <where>     
+	        <choose>     
+	            <when test="userName!=null and userName!='' ">     
+	                ST.USER_NAME LIKE CONCAT(CONCAT('%', #{userName}),'%')      
+	            </when>     
+	            <when test="sex!= null and sex!= '' ">     
+	                AND ST.sex = #{sex}      
+	            </when>     
+	            <otherwise>     
+	            </otherwise>     
+	        </choose>     
+	    </where>
+    </select>
+	<!-- set标签，自动去除结尾多余的,逗号 -->   
+	<update id="updateStudent" parameterType="TUser">     
+	    UPDATE t_user tu 
+	    <set>     
+	        <if test="userName!=null and userName!='' ">     
+	            tu.user_name = #{userName},      
+	        </if>     
+	        <if test="sex!=null and sex!='' ">     
+	            tu.sex = #{sex},      
+	        </if>     
+	    </set>     
+	    WHERE tu.id = #{id}     
+	</update>
+	<!-- trim标签 -->
+	<select id="getStudentListWhere" parameterType="TUser" resultMap="TUserRM">     
+	    SELECT * from t_user ST      
+		<!-- trim标签，以WHERE关键字开头，自动去除前置多余的AND或者OR -->   
+	    <trim prefix="WHERE" prefixOverrides="AND|OR">     
+	        <if test="userName!=null and userName!='' ">     
+	            AND ST.user_name LIKE CONCAT(CONCAT('%', #{userName}),'%')      
+	        </if>     
+	        <if test="sex!= null and sex!= '' ">     
+	            AND ST.sex = #{sex}      
+	        </if>     
+	    </trim>     
+	</select> 
+	<!-- trim标签 -->
+	<update id="updateStudent" parameterType="TUser">     
+	    WHERE STUDENT_TBL.STUDENT_ID = #{studentID};     
+	    UPDATE t_user tu  
+		<!-- trim标签，以SET关键字开头，自动去除结尾多余的,逗号 -->   
+	    <trim prefix="SET" suffixOverrides=",">     
+	        <if test="userName!=null and userName!='' ">     
+	            tu.user_name = #{userName},      
+	        </if>     
+	        <if test="sex!=null and sex!='' ">     
+	            tu.sex = #{sex},      
+	        </if>     
+	    </trim>     
+	    WHERE tu.id = #{id}; 
+	</update>  
+</mapper>
