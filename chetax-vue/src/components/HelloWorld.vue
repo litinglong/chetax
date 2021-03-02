@@ -90,6 +90,14 @@ export default {
     return {
       msg: 'Welcome to Your Vue.js App'
     }
+  },
+  beforeCreate: function () {
+    // `this` 指向 vm 实例
+    console.log('a is:beforeCreate ')
+  },
+  created: function () {
+    // `this` 指向 vm 实例
+    console.log('a is:created ')
   }
 }
 </script>
