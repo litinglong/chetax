@@ -2,6 +2,21 @@ package com.silva.chetax.spring.life.test.demo.inherit;
 
 public class Lv2 extends AbstractLv1{
 	private String markLv2;
+	
+	{
+		System.out.println("Lv2 non-static-block1");
+	}
+	{
+		System.out.println("Lv2 non-static-block2");
+	}
+	
+	static{
+		System.out.println("Lv2 static-block1");
+	}
+	static{
+		System.out.println("Lv2 static-block2");
+	}
+	
 	Lv2(){
 		System.out.println("Lv2 non-args");
 	}
