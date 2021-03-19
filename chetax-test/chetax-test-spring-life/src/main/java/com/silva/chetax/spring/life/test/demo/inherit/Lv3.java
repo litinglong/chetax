@@ -4,7 +4,7 @@ public class Lv3 extends Lv2{
 	private String markLv3;
 	
 	{
-		System.out.println("Lv3 non-static-block");
+		System.out.println("Lv3 common-block");
 	}
 	
 	static{

@@ -4,10 +4,10 @@ public class Lv2 extends AbstractLv1{
 	private String markLv2;
 	
 	{
-		System.out.println("Lv2 non-static-block1");
+		System.out.println("Lv2 common-block1");
 	}
 	{
-		System.out.println("Lv2 non-static-block2");
+		System.out.println("Lv2 common-block2");
 	}
 	
 	static{
