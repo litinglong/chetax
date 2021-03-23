@@ -120,11 +120,15 @@ public class AuthorizationManager implements ReactiveAuthorizationManager<Author
 //                            return true;
 //                        }
                         if(authority==null&&"".equals(authority)) {
-                        	return true;
+                        	return false;
                         }
-                        return false;
+                        return true;
                     })
-                    .map(hasAuthority ->  new AuthorizationDecision(hasAuthority)).defaultIfEmpty(new AuthorizationDecision(false));
+                    .map(hasAuthority ->  
+                    	new AuthorizationDecision(hasAuthority)
+                    ).defaultIfEmpty(
+                    	new AuthorizationDecision(false)
+                    );
     }
 
 }
