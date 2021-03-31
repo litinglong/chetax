@@ -1,0 +1,14 @@
+com:
+  mqtt:
+    inbound:
+      url: tcp://127.0.0.1:61613
+      clientId: familyServerIn
+      topics: topic1,topic2
+      username: admin
+      password: password
+    outbound:
+      urls: tcp://127.0.0.1:61613
+      clientId: familyServerOut
+      topic: topic1
+      username: admin
+      password: password

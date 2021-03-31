@@ -1,0 +1,23 @@
+input { 
+	file { 
+		path => "/home/elk/elk/teaching/elasticsearch-7.7.0/logs/my-elk.log" 
+		start_position => "beginning" 
+		codec => multiline { 
+			pattern => "^\[" 
+			negate => true 
+			what => "previous" 
+		} 
+	} 
+}
+filter{ 
+	grok { 
+		match => {
+			message => "\[%{TIMESTAMP_ISO8601:time}\]\[%{LOGLEVEL:level}%{SPACE}\]\[%{NOT 
+			SPACE:loggerclass}%{SPACE}\]%{SPACE}\[%{DATA:nodename}\]%{SPACE} 
+			%{GREEDYDATA:msg}" 
+		} #通过grok插件将元数据message分解成子数据，TIMESTAMP_ISO8601等是预定义的格式
+	} 
+}
+output { 
+	stdout{} 
+}
