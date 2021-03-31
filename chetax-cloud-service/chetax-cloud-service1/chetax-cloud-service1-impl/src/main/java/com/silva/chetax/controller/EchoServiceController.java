@@ -11,6 +11,12 @@ public class EchoServiceController {
 
     @GetMapping("/echo/{message}")
     public String echo(@PathVariable String message) {
+    	try {
+			Thread.sleep(2500);
+		} catch (InterruptedException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
         return "[ECHO] : " + message;
     }
     
