@@ -10,5 +10,6 @@
   <modules>
   	<module>chetax-mq-demo-rocketmq</module>
 	<module>chetax-mq-demo-kafka</module>
+	<module>chetax-demo-mq-mqtt</module>
   </modules>
 </project>
