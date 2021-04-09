@@ -1,5 +1,5 @@
 server:
-  port: 0
+  port: 8080
 spring:
   application:
     name: chetax-service3
@@ -8,7 +8,7 @@ spring:
       discovery:
         username: nacos
         password: nacos
-        server-addr: 127.0.0.1:8849
+        server-addr: http://chetax.top:8849
         namespace: public
     sentinel:
       eager: true #Sentinel 控制台地址

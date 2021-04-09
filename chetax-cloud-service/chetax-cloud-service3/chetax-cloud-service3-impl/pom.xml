@@ -43,6 +43,42 @@
                     </execution>
                 </executions>
             </plugin>
+            <plugin>
+                <groupId>com.google.cloud.tools</groupId>
+                <artifactId>jib-maven-plugin</artifactId>
+                <version>1.8.0</version>
+                <configuration>
+                    <!--配置基本镜像-->
+                    <from>
+                        <image>openjdk:8-jdk-alpine</image>
+                    </from>
+                    <!--配置最终推送的地址，仓库名，镜像名-->
+                    <to>
+                        <image>registry.hub.docker.com/litinglong/chetax-cloud-service3</image>
+                        <tags>
+                            <tag>0.01</tag>
+                        </tags>
+                    </to>
+                    <!-- 其他配置参考 https://www.cnblogs.com/yhhu/p/12148187.html -->
+                    <container>
+                        <ports>
+                            <port>8080</port>
+                        </ports>
+                        <useCurrentTimestamp>true</useCurrentTimestamp>
+                        <mainClass>com.silva.chetax.service3.Service3Application</mainClass>
+                    </container>
+                    <allowInsecureRegistries>true</allowInsecureRegistries>
+                </configuration>
+                <!--绑定到maven lifecicle-->
+                <executions>
+                    <execution>
+                        <phase>package</phase>
+                        <goals>
+                            <goal>build</goal>
+                        </goals>
+                    </execution>
+                </executions>
+            </plugin>
         </plugins>
     </build>
 </project>
