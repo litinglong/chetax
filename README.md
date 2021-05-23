@@ -5,6 +5,7 @@ chetax
     	chetax-admin-server ： 【容器监控管理服务器】
     	chetax-authorization-server ：【 身份认证服务器，基于oauth2.0】
     	chetax-gateway-server ： 【资源网关服务器，基于oauth2.0】
+    	chetax-zipkin-server ： 【链路追踪服务器】
     chetax-cloud-service ：【 SpringCloud微服务子模块集】
         chetax-cloud-service1
             chetax-cloud-service1-api
