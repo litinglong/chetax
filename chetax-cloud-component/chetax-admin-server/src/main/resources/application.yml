@@ -1,0 +1,33 @@
+server:
+  port: 8769
+spring:
+  application:
+    name: chetax-admin
+  cloud:
+    inetutils:
+      #ignored-interfaces: eth.* #忽略的网卡
+      preferred-networks: 192.168.2  #以指定的网段ip注册
+    nacos:
+      discovery:
+        username: nacos
+        password: nacos
+        server-addr: 192.168.2.165:8880
+        namespace: public
+    sentinel:
+      eager: true #取消Sentinel控制台懒加载
+      transport: 
+        dashboard: 192.168.2.165:8091 #Sentinel 控制台地址
+  security:
+    user:
+     name: admin
+     password: admin
+#开放端点提供服务健康监控        
+management:
+  endpoints:
+    web:
+      exposure:
+        include: '*'
+  endpoint:
+    health:
+      show-details: ALWAYS
+

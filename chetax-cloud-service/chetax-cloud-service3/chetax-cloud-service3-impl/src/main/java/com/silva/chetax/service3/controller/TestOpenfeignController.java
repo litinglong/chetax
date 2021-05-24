@@ -21,5 +21,22 @@ public class TestOpenfeignController {
     public String echo(@PathVariable(value="message") String message) {
         return Service1client.echo(message);
     }
+    
+//    @GetMapping("/test/{message}")
+//    @SentinelResource(value = "test", blockHandler = "flowException")
+//    public String test(@PathVariable(value="message") String message) {
+//		try {
+//			Thread.sleep(4500);
+//		} catch (InterruptedException e) {
+//			e.printStackTrace();
+//		}
+//		return "Hello I'm nacos_provide degrade";
+//    }
+//    
+//    
+//    @SuppressWarnings("unused")
+//	private String flowException(BlockException e) {
+//    	return "降級了";
+//    }
 }
 

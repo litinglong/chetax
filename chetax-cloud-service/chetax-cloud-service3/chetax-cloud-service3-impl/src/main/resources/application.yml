@@ -1,5 +1,5 @@
 server:
-  port: 0
+  port: 8080
 spring:
   application:
     name: chetax-service3
@@ -8,12 +8,18 @@ spring:
       discovery:
         username: nacos
         password: nacos
-        server-addr: 127.0.0.1:8849
+        server-addr: http://chetax.top:8849
         namespace: public
+    sentinel:
+      eager: true #Sentinel 控制台地址
+      transport: 
+        dashboard: localhost:7777 #取消Sentinel控制台懒加载
 feign:
- client: 
-   config:  
-     default: 
-       connect-timeout: 5000
-       read-timeout: 5000
-       logger-level: full
+  sentinel:
+    enabled: true
+  client: 
+    config:  
+      default: 
+        connect-timeout: 5000
+        read-timeout: 5000
+        logger-level: full

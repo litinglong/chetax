@@ -2,6 +2,7 @@ import Vue from 'vue'
 import Router from 'vue-router'
 import HelloWorld from '@/components/HelloWorld'
 import ChetaxTest from '@/components/ChetaxTest'
+import SearchIndexPage from '@/components/SearchIndexPage'
 
 Vue.use(Router)
 
@@ -9,8 +10,8 @@ export default new Router({
   routes: [
     {
       path: '/',
-      name: 'HelloWorld',
-      component: HelloWorld
+      name: 'SearchIndexPage',
+      component: SearchIndexPage
     },
     {
       path: '/HelloWorld',
@@ -21,6 +22,11 @@ export default new Router({
       path: '/ChetaxTest',
       name: 'ChetaxTest',
       component: ChetaxTest
+    },
+    {
+      path: '/SearchIndexPage',
+      name: 'SearchIndexPage',
+      component: SearchIndexPage
     }
   ]
 })

@@ -1,7 +1,13 @@
 <template>
   <div id="app">
-    <img src="./assets/logo.png">
-    <router-view/>
+    <el-row :gutter="40">
+      <el-col :span="18">
+        <div class="grid-content bg-purple">
+          <img src="./assets/search_logo.png">
+          <router-view/>
+        </div>
+      </el-col>
+    </el-row>
   </div>
 </template>
 

@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" >
+<!--- 命名空间 namespace -->
+<!--- mybatis标签说明：https://blog.csdn.net/weixin_40950778/article/details/78655288 -->
+<mapper namespace="com.silva.chetax.demo.db.mysql.mapper.TestMapper" >
+<select id="testSQl" resultType="java.lang.String">
+	select * from user
+</select>
+</mapper>

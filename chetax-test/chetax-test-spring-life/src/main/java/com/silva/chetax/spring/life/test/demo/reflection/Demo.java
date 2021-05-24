@@ -8,7 +8,7 @@ import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.util.Optional;
 
-public class Demo {
+public final class Demo {
 	public static void main(String[] args) {
 		String classPath = "com.silva.chetax.spring.life.test.demo.reflection.Test001Bean";
 		try {
@@ -60,7 +60,7 @@ public class Demo {
 						System.out.println("实例:赋值:" + object1);
 						String methodName = "smethod";
 						Method method = clazz.getMethod(methodName, String.class);
-						Object result = method.invoke(object1, methodName);
+						Object result = method.invoke(object1, methodName); //如果method是静态方法，则invoke的第一个参数传null即可
 						System.out.println("方法:执行:" + result);
 					}else {
 						@SuppressWarnings("rawtypes")
