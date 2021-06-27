@@ -19,5 +19,6 @@
     <module>chetax-demo</module>
     <module>chetax-test</module>
     <module>chetax-utils</module>
+    <module>chetax-schedule-center</module>
   </modules>
 </project>
