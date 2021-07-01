@@ -7,7 +7,7 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 //@EnableScheduling
 //@EnableDiscoveryClient
 //@EnableFeignClients
-@MapperScan("com.silva.chetax.schedule.center.sys.mapper")
+@MapperScan("com.silva.chetax.schedule.center.*.mapper")
 @SpringBootApplication
 public class ScheduleCenterApplication {
 
