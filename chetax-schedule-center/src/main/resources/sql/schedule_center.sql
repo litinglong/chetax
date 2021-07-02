@@ -1,6 +1,6 @@
 /*
 SQLyog Community v13.1.6 (64 bit)
-MySQL - 5.7.32 : Database - schedule_center
+MySQL - 5.7.33 : Database - schedule_center
 *********************************************************************
 */
 
@@ -16,42 +16,42 @@ CREATE DATABASE /*!32312 IF NOT EXISTS*/`schedule_center` /*!40100 DEFAULT CHARA
 
 USE `schedule_center`;
 
-/*Table structure for table `plan` */
+/*Table structure for table `inv_plus_plan` */
 
-DROP TABLE IF EXISTS `plan`;
+DROP TABLE IF EXISTS `inv_plus_plan`;
 
-CREATE TABLE `plan` (
+CREATE TABLE `inv_plus_plan` (
   `id` bigint(20) NOT NULL AUTO_INCREMENT,
   `product_id` bigint(20) DEFAULT NULL,
   `name` varchar(256) DEFAULT NULL,
   `total_num` bigint(20) DEFAULT NULL,
-  `add_total` bigint(20) DEFAULT NULL,
+  `total_add` bigint(20) DEFAULT NULL,
   `day_num` bigint(20) DEFAULT NULL,
-  `add_day` bigint(20) DEFAULT NULL,
-  `last_add_day_date` date DEFAULT NULL,
+  `day_add` bigint(20) DEFAULT NULL,
+  `last_add_day` date DEFAULT NULL,
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8;
 
-/*Data for the table `plan` */
+/*Data for the table `inv_plus_plan` */
 
-insert  into `plan`(`id`,`product_id`,`name`,`total_num`,`add_total`,`day_num`,`add_day`,`last_add_day_date`) values 
-(1,1,'商品1阶段1',500,500,100,50,'2021-07-02');
+insert  into `inv_plus_plan`(`id`,`product_id`,`name`,`total_num`,`total_add`,`day_num`,`day_add`,`last_add_day`) values 
+(1,1,'商品1阶段1',500,100,100,100,'2021-07-02');
 
-/*Table structure for table `product` */
+/*Table structure for table `inv_product` */
 
-DROP TABLE IF EXISTS `product`;
+DROP TABLE IF EXISTS `inv_product`;
 
-CREATE TABLE `product` (
+CREATE TABLE `inv_product` (
   `id` bigint(20) NOT NULL AUTO_INCREMENT,
   `name` varchar(256) DEFAULT NULL,
-  `num` bigint(20) DEFAULT NULL,
+  `inventory_num` bigint(20) DEFAULT NULL,
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8;
 
-/*Data for the table `product` */
+/*Data for the table `inv_product` */
 
-insert  into `product`(`id`,`name`,`num`) values 
-(1,'商品1',500),
+insert  into `inv_product`(`id`,`name`,`inventory_num`) values 
+(1,'商品1',600),
 (2,'商品2',0);
 
 /*Table structure for table `sys_schedule_info` */
@@ -80,19 +80,7 @@ CREATE TABLE `sys_schedule_info` (
 insert  into `sys_schedule_info`(`id`,`url`,`request_body`,`cron`,`status`,`create_time`,`create_user`,`update_time`,`update_user`,`group_name`,`job_name`,`description`,`concurrent_tag`) values 
 (1,'http://www.baidu.com',NULL,'0/5 * * * * ? *',0,NULL,NULL,NULL,NULL,'gg','nn',NULL,0),
 (2,'http://www.baidu.com',NULL,'0/10 * * * * ? *',0,NULL,NULL,NULL,NULL,'gg','nnn',NULL,0),
-(4,'http://127.0.0.1:8989/inv/plan/inventoryAdd','{\"addList\":[{\"planId\":\"1\",\"num\":\"50\"}]}','0/30 * * * * ? *',1,NULL,NULL,NULL,NULL,'加庫存','30秒加一次',NULL,0);
-
-/*Table structure for table `test1` */
-
-DROP TABLE IF EXISTS `test1`;
-
-CREATE TABLE `test1` (
-  `id` decimal(11,0) NOT NULL,
-  `name` varchar(255) DEFAULT NULL,
-  PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
-
-/*Data for the table `test1` */
+(4,'http://127.0.0.1:8989/inv/plus-plan/inventoryAdd','{\"addList\":[{\"planId\":\"1\",\"num\":\"10\"}]}','0/10 * * * * ? *',1,NULL,NULL,NULL,NULL,'加庫存','30秒加一次',NULL,0);
 
 /*!40101 SET SQL_MODE=@OLD_SQL_MODE */;
 /*!40014 SET FOREIGN_KEY_CHECKS=@OLD_FOREIGN_KEY_CHECKS */;

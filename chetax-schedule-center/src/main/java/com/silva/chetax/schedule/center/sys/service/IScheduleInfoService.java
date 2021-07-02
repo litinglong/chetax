@@ -8,7 +8,7 @@ import com.baomidou.mybatisplus.extension.service.IService;
  *  服务类
  * </p>
  *
- * @author jobob
+ * @author litinglong
  * @since 2021-06-27
  */
 public interface IScheduleInfoService extends IService<ScheduleInfo> {

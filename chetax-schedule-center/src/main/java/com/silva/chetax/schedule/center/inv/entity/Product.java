@@ -2,6 +2,8 @@ package com.silva.chetax.schedule.center.inv.entity;
 
 import com.baomidou.mybatisplus.annotation.IdType;
 import com.baomidou.mybatisplus.annotation.TableId;
+import com.baomidou.mybatisplus.annotation.TableName;
+
 import java.io.Serializable;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
@@ -16,6 +18,7 @@ import lombok.EqualsAndHashCode;
  */
 @Data
 @EqualsAndHashCode(callSuper = false)
+@TableName("inv_product")
 public class Product implements Serializable {
 
     private static final long serialVersionUID = 1L;
@@ -25,7 +28,7 @@ public class Product implements Serializable {
 
     private String name;
 
-    private Long num;
+    private Long inventoryNum;
 
 
 }

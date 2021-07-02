@@ -8,7 +8,7 @@ import com.baomidou.mybatisplus.core.mapper.BaseMapper;
  *  Mapper 接口
  * </p>
  *
- * @author jobob
+ * @author litinglong
  * @since 2021-06-27
  */
 public interface ScheduleInfoMapper extends BaseMapper<ScheduleInfo> {

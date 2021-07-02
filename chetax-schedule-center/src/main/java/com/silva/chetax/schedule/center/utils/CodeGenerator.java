@@ -48,7 +48,7 @@ public class CodeGenerator {
      // 全局配置
      GlobalConfig gc = new GlobalConfig();
      //String projectPath = System.getProperty("user.dir");
-     String projectPath = "F:\\project_hub\\chetax\\chetax-schedule-center";
+     String projectPath = "D:\\litinglong\\eclipse-workspace\\chetax\\chetax-schedule-center";
      gc.setOutputDir(projectPath + "/src/main/java");
      gc.setAuthor("litinglong");
      gc.setOpen(false);
