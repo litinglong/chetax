@@ -3,6 +3,7 @@ import Router from 'vue-router'
 import HelloWorld from '@/components/HelloWorld'
 import ChetaxTest from '@/components/ChetaxTest'
 import SearchIndexPage from '@/components/SearchIndexPage'
+import SysScheduleInfoList from '@/components/SysScheduleInfoList'
 
 Vue.use(Router)
 
@@ -27,6 +28,11 @@ export default new Router({
       path: '/SearchIndexPage',
       name: 'SearchIndexPage',
       component: SearchIndexPage
+    },
+    {
+      path: '/SysScheduleInfoList',
+      name: 'SysScheduleInfoList',
+      component: SysScheduleInfoList
     }
   ]
 })
