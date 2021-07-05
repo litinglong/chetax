@@ -23,7 +23,7 @@ import lombok.EqualsAndHashCode;
 @EqualsAndHashCode(callSuper = false)
 @TableName("sys_schedule_info")
 @AllArgsConstructor
-public class ScheduleInfo implements Serializable {
+public class SysScheduleInfoEntity implements Serializable {
 
     private static final long serialVersionUID = 1L;
 
@@ -38,7 +38,7 @@ public class ScheduleInfo implements Serializable {
      * 请求体
      */
     @TableField("request_body")
-    private String requestbody;
+    private String requestBody;
 
     /**
      * 周期表达式

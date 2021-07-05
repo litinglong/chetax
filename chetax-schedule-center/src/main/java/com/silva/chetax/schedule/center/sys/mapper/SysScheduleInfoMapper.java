@@ -1,6 +1,6 @@
 package com.silva.chetax.schedule.center.sys.mapper;
 
-import com.silva.chetax.schedule.center.sys.entity.ScheduleInfo;
+import com.silva.chetax.schedule.center.sys.entity.SysScheduleInfoEntity;
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 
 /**
@@ -11,6 +11,6 @@ import com.baomidou.mybatisplus.core.mapper.BaseMapper;
  * @author litinglong
  * @since 2021-06-27
  */
-public interface ScheduleInfoMapper extends BaseMapper<ScheduleInfo> {
+public interface SysScheduleInfoMapper extends BaseMapper<SysScheduleInfoEntity> {
 
 }

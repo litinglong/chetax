@@ -2,6 +2,7 @@ package com.silva.chetax.schedule.center.sys.service.impl;
 
 import java.math.BigDecimal;
 import java.util.List;
+import java.util.Map;
 
 import javax.annotation.PostConstruct;
 
@@ -16,20 +17,27 @@ import org.quartz.SchedulerException;
 import org.quartz.TriggerBuilder;
 import org.quartz.TriggerKey;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpEntity;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
 import org.springframework.scheduling.quartz.SchedulerFactoryBean;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.client.RestTemplate;
 
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
-import com.silva.chetax.schedule.center.sys.entity.ScheduleInfo;
+import com.google.common.collect.Maps;
+import com.silva.chetax.schedule.center.sys.entity.SysScheduleInfoEntity;
 import com.silva.chetax.schedule.center.sys.enums.ScheduleConcurrentTagEnum;
 import com.silva.chetax.schedule.center.sys.enums.ScheduleStatusEnum;
-import com.silva.chetax.schedule.center.sys.job.HttpDCEJob;
-import com.silva.chetax.schedule.center.sys.job.HttpJob;
-import com.silva.chetax.schedule.center.sys.mapper.ScheduleInfoMapper;
-import com.silva.chetax.schedule.center.sys.service.IScheduleInfoService;
+import com.silva.chetax.schedule.center.sys.job.HttpDceTask;
+import com.silva.chetax.schedule.center.sys.job.HttpTask;
+import com.silva.chetax.schedule.center.sys.mapper.SysScheduleInfoMapper;
+import com.silva.chetax.schedule.center.sys.service.ISysScheduleInfoService;
 
 import lombok.extern.slf4j.Slf4j;
 
@@ -43,25 +51,39 @@ import lombok.extern.slf4j.Slf4j;
  */
 @Service
 @Slf4j
-public class ScheduleInfoServiceImpl extends ServiceImpl<ScheduleInfoMapper, ScheduleInfo> implements IScheduleInfoService {
+public class SysScheduleInfoServiceImpl extends ServiceImpl<SysScheduleInfoMapper, SysScheduleInfoEntity> implements ISysScheduleInfoService {
 	@Autowired
 	private SchedulerFactoryBean schedulerFactoryBean;
 	@PostConstruct
 	public void init() throws Exception {
 //		// 这里获取任务信息数据
-		List<ScheduleInfo> sysJobs = this.list();
-		for (ScheduleInfo job : sysJobs) {
-			addJob(job);
+		List<SysScheduleInfoEntity> sysJobs = this.list();
+		for (SysScheduleInfoEntity job : sysJobs) {
+			startJob(job);
 		}
 	}
+	public SysScheduleInfoEntity getScheduleInfoById(BigDecimal id) {
+		return this.getById(id);
+	}
 	
+	public void deleteScheduleInfoById(BigDecimal id) {
+		SysScheduleInfoEntity scheduleInfo = this.getById(id);
+		if(scheduleInfo != null) {
+			try {
+				stopJob(scheduleInfo);
+			} catch (SchedulerException e) {
+			}
+			this.removeById(id);
+		}
+		
+	}
 	/**
 	 * 添加任务
 	 * 
 	 * @param scheduleJob
 	 * @throws SchedulerException
 	 */
-	public void addJob(ScheduleInfo scheduleInfo) throws SchedulerException {
+	public void startJob(SysScheduleInfoEntity scheduleInfo) throws SchedulerException {
 		if (scheduleInfo == null || ScheduleStatusEnum.SHUTDOWN.getCode().equals(scheduleInfo.getStatus())) {
 			return;
 		}
@@ -72,7 +94,7 @@ public class ScheduleInfoServiceImpl extends ServiceImpl<ScheduleInfoMapper, Sch
 
 		// 不存在，创建一个
 		if (null == trigger) {
-			Class<? extends Job> clazz = ScheduleConcurrentTagEnum.concurrent.getCode().equals(scheduleInfo.getConcurrentTag()) ? HttpJob.class : HttpDCEJob.class;
+			Class<? extends Job> clazz = ScheduleConcurrentTagEnum.concurrent.getCode().equals(scheduleInfo.getConcurrentTag()) ? HttpTask.class : HttpDceTask.class;
 			JobDetail jobDetail = JobBuilder.newJob(clazz).withIdentity(scheduleInfo.getJobName(), scheduleInfo.getGroupName()).build();
 			jobDetail.getJobDataMap().put("scheduleInfo", scheduleInfo);
 			CronScheduleBuilder scheduleBuilder = CronScheduleBuilder.cronSchedule(scheduleInfo.getCron());
@@ -88,12 +110,12 @@ public class ScheduleInfoServiceImpl extends ServiceImpl<ScheduleInfoMapper, Sch
 		}
 	}
 	@Transactional(readOnly = false)
-	public void insertAndAddJob(ScheduleInfo sysJob){
+	public void insertAndAddJob(SysScheduleInfoEntity sysJob){
 //        if(checkIsBeanExsit(sysJob)){
-        	if(checkIsCronRight(sysJob)){
+        	if(checkIsCronRight(sysJob.getCron())){
         		save(sysJob);
         		try {
-					addJob(sysJob);
+					startJob(sysJob);
 				} catch (SchedulerException e) {
 				}
         		
@@ -106,9 +128,9 @@ public class ScheduleInfoServiceImpl extends ServiceImpl<ScheduleInfoMapper, Sch
 //        }
 	}
 	
-	private boolean checkIsCronRight(ScheduleInfo scheduleInfo){
+	private boolean checkIsCronRight(String cron){
 		try {
-			CronScheduleBuilder.cronSchedule(scheduleInfo.getCron());
+			CronScheduleBuilder.cronSchedule(cron);
 		} catch (Exception e) {
 			return false;
 		}
@@ -132,17 +154,41 @@ public class ScheduleInfoServiceImpl extends ServiceImpl<ScheduleInfoMapper, Sch
 //		return true;
 //	}
 	
-	public PageInfo<ScheduleInfo> findPage(int pageNum, int pageSize) {
+	public PageInfo<SysScheduleInfoEntity> findPage(int pageNum, int pageSize) {
 		PageHelper.startPage(pageNum, pageSize);
-		List<ScheduleInfo> sysJobs = this.baseMapper.selectList(null);
-		PageInfo<ScheduleInfo> page = new PageInfo<ScheduleInfo>(sysJobs);
+		List<SysScheduleInfoEntity> sysJobs = this.baseMapper.selectList(null);
+		PageInfo<SysScheduleInfoEntity> page = new PageInfo<SysScheduleInfoEntity>(sysJobs);
 		return page;
 	}
 
-	public void executeJob(ScheduleInfo sysJob) throws SchedulerException {
-		Scheduler scheduler = schedulerFactoryBean.getScheduler();
-		JobKey jobKey = JobKey.jobKey(sysJob.getJobName(), sysJob.getGroupName());
-		scheduler.triggerJob(jobKey);
+//	public void executeJob(BigDecimal id) throws SchedulerException {
+//		ScheduleInfo ScheduleInfo = this.getById(id);
+//		if (ScheduleInfo == null) {
+//			return;
+//		}
+//		Scheduler scheduler = schedulerFactoryBean.getScheduler();
+//		JobKey jobKey = JobKey.jobKey(ScheduleInfo.getJobName(), ScheduleInfo.getGroupName());
+//		scheduler.triggerJob(jobKey);
+//		
+//	}
+	public void executeById(BigDecimal id) throws SchedulerException {
+		SysScheduleInfoEntity scheduleInfo = this.getById(id);
+		if (scheduleInfo == null) {
+			return;
+		}
+		doExecuteJob(scheduleInfo);
+	}
+	
+	public void doExecuteJob(SysScheduleInfoEntity ScheduleInfo){
+		if (ScheduleInfo == null) {
+			return;
+		}
+        RestTemplate restTemplate = new RestTemplate();
+        HttpHeaders headers = new HttpHeaders();
+		headers.setContentType(MediaType.APPLICATION_JSON);
+        HttpEntity<String> requestEntity = new HttpEntity<String>(ScheduleInfo.getRequestBody(), headers);
+        ResponseEntity<String> responseEntity = restTemplate.postForEntity(ScheduleInfo.getUrl(), requestEntity, String.class, "");
+        log.info("url >> {} >> {}", ScheduleInfo.getUrl(), responseEntity.getBody());
 	}
 	/**
 	 * 删除一个job
@@ -150,10 +196,14 @@ public class ScheduleInfoServiceImpl extends ServiceImpl<ScheduleInfoMapper, Sch
 	 * @param scheduleJob
 	 * @throws SchedulerException
 	 */
-	public void deleteJob(ScheduleInfo scheduleInfo) throws SchedulerException {
+	public void stopJob(SysScheduleInfoEntity scheduleInfo) throws SchedulerException {
 		Scheduler scheduler = schedulerFactoryBean.getScheduler();
 		JobKey jobKey = JobKey.jobKey(scheduleInfo.getJobName(), scheduleInfo.getGroupName());
-		scheduler.deleteJob(jobKey);
+		TriggerKey triggerKey = TriggerKey.triggerKey(scheduleInfo.getJobName(), scheduleInfo.getGroupName());
+		CronTrigger trigger = (CronTrigger) scheduler.getTrigger(triggerKey);
+		if (null != trigger) {
+			scheduler.deleteJob(jobKey);
+		}
 	}
 	
 	/**
@@ -162,19 +212,20 @@ public class ScheduleInfoServiceImpl extends ServiceImpl<ScheduleInfoMapper, Sch
 	 * @throws SchedulerException
 	 */
 	@Transactional(readOnly = false)
-	public void changeStatus(BigDecimal id, String cmd) throws SchedulerException {
-		ScheduleInfo job = this.getById(id);
+	public void changeStatus(BigDecimal id) throws SchedulerException {
+		SysScheduleInfoEntity job = this.getById(id);
 		if (job == null) {
 			return;
 		}
-		if ("stop".equals(cmd)) {
-			deleteJob(job);
+		if (ScheduleStatusEnum.RUNNING.getCode().equals(job.getStatus())) {
 			job.setStatus(ScheduleStatusEnum.SHUTDOWN.getCode());
-		} else if ("start".equals(cmd)) {
+			this.updateById(job);
+			stopJob(job);
+		} else if (ScheduleStatusEnum.SHUTDOWN.getCode().equals(job.getStatus())) {
 			job.setStatus(ScheduleStatusEnum.RUNNING.getCode());
-			addJob(job);
+			this.updateById(job);
+			startJob(job);
 		}
-		save(job);
 	}
 	
 	/**
@@ -183,7 +234,7 @@ public class ScheduleInfoServiceImpl extends ServiceImpl<ScheduleInfoMapper, Sch
 	 * @param scheduleJob
 	 * @throws SchedulerException
 	 */
-	public void updateJobCron(ScheduleInfo scheduleInfo) throws SchedulerException {
+	public void updateJobCron(SysScheduleInfoEntity scheduleInfo) throws SchedulerException {
 		Scheduler scheduler = schedulerFactoryBean.getScheduler();
 		TriggerKey triggerKey = TriggerKey.triggerKey(scheduleInfo.getJobName(), scheduleInfo.getGroupName());
 		CronTrigger trigger = (CronTrigger) scheduler.getTrigger(triggerKey);
@@ -193,17 +244,16 @@ public class ScheduleInfoServiceImpl extends ServiceImpl<ScheduleInfoMapper, Sch
 	}
 	
 	@Transactional(readOnly = false)
-	public void updateScheduleInfoCron(ScheduleInfo recieve){
-		if(checkIsCronRight(recieve)){
-			ScheduleInfo sysJob = this.getById(recieve.getId());
+	public void updateScheduleInfoCron(BigDecimal id,String cron){
+		if(checkIsCronRight(cron)){
+			SysScheduleInfoEntity sysJob = this.getById(id);
 			if(sysJob!=null){
-				sysJob.setCron(recieve.getCron());
-				save(sysJob);
+				sysJob.setCron(cron);
+				this.updateById(sysJob);
 				if(ScheduleStatusEnum.RUNNING.getCode().equals(sysJob.getStatus())){
 					try {
 						updateJobCron(sysJob);
 					} catch (SchedulerException e) {
-						e.printStackTrace();
 					}
 				}
 			}else{
