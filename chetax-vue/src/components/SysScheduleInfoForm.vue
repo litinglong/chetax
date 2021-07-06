@@ -13,14 +13,8 @@
       <el-form-item label="描述">
         <el-input v-model="form.description"></el-input>
       </el-form-item>
-      <el-form-item label="链接">
-        <el-input v-model="form.url"></el-input>
-      </el-form-item>
-      <el-form-item label="cron">
+      <el-form-item label="CRON表达式">
         <el-input v-model="form.cron"></el-input>
-      </el-form-item>
-      <el-form-item label="请求参数">
-        <el-input v-model="form.requestBody"></el-input>
       </el-form-item>
       <el-form-item label="是否并发">
         <el-select v-model="form.concurrentTag" placeholder="请选择是否并发">
@@ -34,6 +28,12 @@
           <el-option label="运行中" value="1"></el-option>
         </el-select>
       </el-form-item>
+      <el-form-item label="任务链接">
+        <el-input v-model="form.url"></el-input>
+      </el-form-item>
+      <el-form-item label="请求参数">
+        <el-input v-model="form.requestBody"></el-input>
+      </el-form-item>
     </el-form>
   </div>
 </template>
@@ -44,6 +44,7 @@ export default {
   name: 'SysScheduleInfoForm',
   data () {
     return {
+      operation: 'view',
       form: {
         id: '',
         jobName: '',

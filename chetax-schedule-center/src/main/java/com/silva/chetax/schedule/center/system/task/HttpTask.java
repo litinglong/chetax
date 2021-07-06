@@ -1,12 +1,12 @@
-package com.silva.chetax.schedule.center.sys.job;
+package com.silva.chetax.schedule.center.system.task;
 
 import org.quartz.JobExecutionContext;
 import org.quartz.JobExecutionException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.scheduling.quartz.QuartzJobBean;
 
-import com.silva.chetax.schedule.center.sys.entity.SysScheduleInfoEntity;
-import com.silva.chetax.schedule.center.sys.service.ISysScheduleInfoService;
+import com.silva.chetax.schedule.center.system.entity.SysScheduleInfoEntity;
+import com.silva.chetax.schedule.center.system.service.ISysScheduleInfoService;
 
 import lombok.extern.slf4j.Slf4j;
 

@@ -1,30 +1,12 @@
-package com.silva.chetax.schedule.center.sys.service;
-
-import com.silva.chetax.schedule.center.sys.entity.SysScheduleInfoEntity;
-import com.silva.chetax.schedule.center.sys.enums.ScheduleConcurrentTagEnum;
-import com.silva.chetax.schedule.center.sys.enums.ScheduleStatusEnum;
-import com.silva.chetax.schedule.center.sys.job.HttpDceTask;
-import com.silva.chetax.schedule.center.sys.job.HttpTask;
+package com.silva.chetax.schedule.center.system.service;
 
 import java.math.BigDecimal;
-import java.util.List;
 
-import org.quartz.CronScheduleBuilder;
-import org.quartz.CronTrigger;
-import org.quartz.Job;
-import org.quartz.JobBuilder;
-import org.quartz.JobDetail;
-import org.quartz.JobKey;
-import org.quartz.Scheduler;
 import org.quartz.SchedulerException;
-import org.quartz.TriggerBuilder;
-import org.quartz.TriggerKey;
-import org.springframework.transaction.annotation.Transactional;
-import org.springframework.web.bind.annotation.PathVariable;
 
 import com.baomidou.mybatisplus.extension.service.IService;
-import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
+import com.silva.chetax.schedule.center.system.entity.SysScheduleInfoEntity;
 
 /**
  * <p>
@@ -47,7 +29,7 @@ public interface ISysScheduleInfoService extends IService<SysScheduleInfoEntity>
 	void insertAndAddJob(SysScheduleInfoEntity sysJob);
 	void insertSysScheduleInfoEntity(SysScheduleInfoEntity sysScheduleInfoEntity);
 	
-	PageInfo<SysScheduleInfoEntity> findPage(int pageNum, int pageSize);
+	PageInfo<SysScheduleInfoEntity> findSysScheduleInfoPage(int pageNum, int pageSize, SysScheduleInfoEntity sysScheduleInfoEntity);
 
 	void executeById(BigDecimal id) throws SchedulerException;
 	void doExecuteJob(SysScheduleInfoEntity ScheduleInfo);

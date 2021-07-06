@@ -9,7 +9,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.github.pagehelper.PageInfo;
-import com.silva.chetax.schedule.center.system.entity.SysScheduleResult;
+import com.silva.chetax.schedule.center.system.entity.SysScheduleResultEntity;
 import com.silva.chetax.schedule.center.system.service.ISysScheduleResultService;
 
 /**
@@ -26,7 +26,7 @@ public class SysScheduleResultController {
 	@Autowired
 	ISysScheduleResultService iSysScheduleResultService;
 	@PostMapping("findSysScheduleResultPage/{pageNum}/{pageSize}")
-	public PageInfo<SysScheduleResult> findSysScheduleResultPage(@PathVariable("pageNum")int pageNum,
+	public PageInfo<SysScheduleResultEntity> findSysScheduleResultPage(@PathVariable("pageNum")int pageNum,
 			@PathVariable("pageSize") int pageSize,@RequestParam("id") Long id){
 		return iSysScheduleResultService.findSysScheduleResultPage(pageNum,pageSize,id);
 	}

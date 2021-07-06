@@ -2,7 +2,7 @@ package com.silva.chetax.schedule.center.system.service;
 
 import com.baomidou.mybatisplus.extension.service.IService;
 import com.github.pagehelper.PageInfo;
-import com.silva.chetax.schedule.center.system.entity.SysScheduleResult;
+import com.silva.chetax.schedule.center.system.entity.SysScheduleResultEntity;
 
 /**
  * <p>
@@ -12,6 +12,6 @@ import com.silva.chetax.schedule.center.system.entity.SysScheduleResult;
  * @author litinglong
  * @since 2021-07-06
  */
-public interface ISysScheduleResultService extends IService<SysScheduleResult> {
-	PageInfo<SysScheduleResult> findSysScheduleResultPage(int pageNum, int pageSize, Long id);
+public interface ISysScheduleResultService extends IService<SysScheduleResultEntity> {
+	PageInfo<SysScheduleResultEntity> findSysScheduleResultPage(int pageNum, int pageSize, Long id);
 }

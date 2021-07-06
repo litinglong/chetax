@@ -2,13 +2,13 @@
   <div class="block">
     <el-form ref="form" :model="form" :inline="true">
       <el-form-item label="名称">
-        <el-input v-model="form.name"></el-input>
+        <el-input v-model="form.jobName"></el-input>
       </el-form-item>
       <el-form-item label="分组">
-        <el-input v-model="form.name"></el-input>
+        <el-input v-model="form.groupName"></el-input>
       </el-form-item>
       <el-form-item label="描述">
-        <el-input v-model="form.name"></el-input>
+        <el-input v-model="form.description"></el-input>
       </el-form-item>
       <el-form-item label="是否并发">
         <el-select v-model="form.concurrentTag" placeholder="请选择是否并发">
@@ -25,8 +25,8 @@
         </el-select>
       </el-form-item>
       <el-form-item>
-        <el-button type="primary" @click="refrashTable">搜索</el-button>
-        <el-button>重置</el-button>
+        <el-button type="primary" @click="refrashTable" :loading="searchingTag">搜索</el-button>
+        <el-button @click="resetSearchCondition">重置</el-button>
         <el-button type="primary" icon="el-icon-edit" @click="dialogFormVisible3 = true">新增</el-button>
       </el-form-item>
     </el-form>
@@ -46,13 +46,15 @@
           <span style="margin-left: 10px">{{ scope.row.concurrentTag === 1 ? '是' : '否' }}</span>
         </template>
       </el-table-column>
-      <el-table-column label="状态" width="120">
+      <el-table-column prop="cron" label="CRON表达式" width="160"></el-table-column>
+      <el-table-column prop="url" label="链接" width="360">
         <template slot-scope="scope">
-          <span style="margin-left: 10px">{{ scope.row.status === 1 ? '运行中' : '已停止' }}</span>
+          <el-input
+            v-model="scope.row.url"
+            :disabled="true">
+          </el-input>
         </template>
       </el-table-column>
-      <el-table-column prop="cron" label="CRON表达式" width="160"></el-table-column>
-      <el-table-column prop="url" label="链接" width="240"></el-table-column>
       <el-table-column fixed="right" label="操作" width="480">
         <template slot-scope="scope">
           <el-button @click="handleClick(scope.row,'view')" type="primary" size="small">查看</el-button>
@@ -75,30 +77,39 @@
       :hide-on-single-page="this.page.pageSize === this.page.pageSizes[0]">
     </el-pagination>
     <el-dialog title="查看调度详情" :visible.sync="dialogFormVisible">
-      <el-form :model="currentRow">
-        <el-form-item label="名称：" :label-width="40">
-          <span style="margin-left: 10px">{{ currentRow.jobName }}</span>
+      <el-form ref="form" :model="currentRow" :inline="true" disabled>
+        <el-form-item label="主键" v-if="false">
+          <el-input v-model="currentRow.id"></el-input>
         </el-form-item>
-        <el-form-item label="分组：" :label-width="40">
-          <span style="margin-left: 10px">{{ currentRow.groupName }}</span>
+        <el-form-item label="名称">
+          <el-input v-model="currentRow.jobName"></el-input>
         </el-form-item>
-        <el-form-item label="摘要：" :label-width="40">
-          <span style="margin-left: 10px">{{ currentRow.description }}</span>
+        <el-form-item label="分组">
+          <el-input v-model="currentRow.groupName"></el-input>
         </el-form-item>
-        <el-form-item label="CRON表达式：" :label-width="40">
-          <span style="margin-left: 10px">{{ currentRow.cron }}</span>
+        <el-form-item label="描述">
+          <el-input v-model="currentRow.description"></el-input>
         </el-form-item>
-        <el-form-item label="链接：" :label-width="40">
-          <span style="margin-left: 10px">{{ currentRow.url }}</span>
+        <el-form-item label="CRON表达式">
+          <el-input v-model="currentRow.cron"></el-input>
         </el-form-item>
-        <el-form-item label="输入参数：" :label-width="40">
-          <span style="margin-left: 10px">{{ currentRow.requestBody }}</span>
+        <el-form-item label="是否并发">
+          <el-select v-model="currentRow.concurrentTag" placeholder="请选择是否并发">
+            <el-option label="非并发" value="0"></el-option>
+            <el-option label="并发" value="1"></el-option>
+          </el-select>
         </el-form-item>
-        <el-form-item label="是否并发：" :label-width="40">
-          <span style="margin-left: 10px">{{ currentRow.concurrentTag === 1 ? '是' : '否' }}</span>
+        <el-form-item label="运行状态">
+          <el-select v-model="currentRow.status" placeholder="请选择运行状态">
+            <el-option label="未运行" value="0"></el-option>
+            <el-option label="运行中" value="1"></el-option>
+          </el-select>
         </el-form-item>
-        <el-form-item label="状态：" :label-width="40">
-          <span style="margin-left: 10px">{{ currentRow.status === 1 ? '运行中' : '已停止' }}</span>
+        <el-form-item label="任务链接">
+          <el-input v-model="currentRow.url"></el-input>
+        </el-form-item>
+        <el-form-item label="请求参数">
+          <el-input v-model="currentRow.requestBody"></el-input>
         </el-form-item>
       </el-form>
       <div slot="footer" class="dialog-footer">
@@ -148,6 +159,7 @@ export default {
   },
   data () {
     return {
+      searchingTag: false,
       dialogFormVisible: false,
       dialogFormVisible2: false,
       dialogFormVisible3: false,
@@ -175,9 +187,9 @@ export default {
         total: 0
       },
       form: {
-        jobName: '',
-        groupName: '',
-        description: '',
+        jobName: null,
+        groupName: null,
+        description: null,
         status: '',
         concurrentTag: ''
       }
@@ -259,13 +271,25 @@ export default {
     },
     refrashTable () {
       var _this = this
-      var url = `/schedule-apis/sys/scheduleInfoController/findPage/${this.page.currentPage}/${this.page.pageSize}`
-      Axios.post(url).then((response) => {
+      var url = `/schedule-apis/sys/scheduleInfoController/findSysScheduleInfoPage/${this.page.currentPage}/${this.page.pageSize}`
+      _this.searchingTag = true
+      Axios.post(url, _this.form).then((response) => {
         _this.tableData = response.data.list
         _this.page.total = response.data.total
+        _this.searchingTag = false
       }).catch((error) => {
         console.log(error)
+        _this.searchingTag = false
       })
+    },
+    resetSearchCondition () {
+      this.form = {
+        jobName: null,
+        groupName: null,
+        description: null,
+        status: '',
+        concurrentTag: ''
+      }
     },
     tableRowClassName ({row, rowIndex}) {
       if (row.status === 1) {

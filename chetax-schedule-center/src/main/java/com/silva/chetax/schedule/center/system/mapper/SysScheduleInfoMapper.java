@@ -1,7 +1,7 @@
-package com.silva.chetax.schedule.center.sys.mapper;
+package com.silva.chetax.schedule.center.system.mapper;
 
-import com.silva.chetax.schedule.center.sys.entity.SysScheduleInfoEntity;
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
+import com.silva.chetax.schedule.center.system.entity.SysScheduleInfoEntity;
 
 /**
  * <p>

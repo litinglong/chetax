@@ -1,4 +1,4 @@
-package com.silva.chetax.schedule.center.sys.job;
+package com.silva.chetax.schedule.center.system.task;
 
 import org.quartz.DisallowConcurrentExecution;
 

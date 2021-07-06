@@ -1,4 +1,4 @@
-package com.silva.chetax.schedule.center.sys.enums;
+package com.silva.chetax.schedule.center.system.enums;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;

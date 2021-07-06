@@ -1,4 +1,4 @@
-package com.silva.chetax.schedule.center.sys.controller;
+package com.silva.chetax.schedule.center.system.controller;
 
 
 import java.math.BigDecimal;
@@ -14,8 +14,8 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.github.pagehelper.PageInfo;
-import com.silva.chetax.schedule.center.sys.entity.SysScheduleInfoEntity;
-import com.silva.chetax.schedule.center.sys.service.ISysScheduleInfoService;
+import com.silva.chetax.schedule.center.system.entity.SysScheduleInfoEntity;
+import com.silva.chetax.schedule.center.system.service.ISysScheduleInfoService;
 
 import lombok.extern.slf4j.Slf4j;
 
@@ -47,13 +47,12 @@ public class SysScheduleInfoController {
 	@PostMapping("insertSysScheduleInfoEntity")
 	public void insertSysScheduleInfoEntity(@RequestBody SysScheduleInfoEntity scheduleInfo){
 		iScheduleInfoService.insertSysScheduleInfoEntity(scheduleInfo);
-		log.info("11");
 	}
 	
-	@PostMapping("findPage/{pageNum}/{pageSize}")
-	public PageInfo<SysScheduleInfoEntity> findPage(@PathVariable("pageNum") int pageNum,
-			@PathVariable("pageSize")  int pageSize){
-		PageInfo<SysScheduleInfoEntity> pageInfo = iScheduleInfoService.findPage(pageNum,pageSize);
+	@PostMapping("findSysScheduleInfoPage/{pageNum}/{pageSize}")
+	public PageInfo<SysScheduleInfoEntity> findSysScheduleInfoPage(@PathVariable("pageNum") int pageNum,
+			@PathVariable("pageSize")  int pageSize, @RequestBody SysScheduleInfoEntity sysScheduleInfoEntity){
+		PageInfo<SysScheduleInfoEntity> pageInfo = iScheduleInfoService.findSysScheduleInfoPage(pageNum, pageSize, sysScheduleInfoEntity);
 		return pageInfo;
 	}
 	

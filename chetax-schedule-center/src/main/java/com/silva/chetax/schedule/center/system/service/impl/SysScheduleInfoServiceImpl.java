@@ -1,4 +1,4 @@
-package com.silva.chetax.schedule.center.sys.service.impl;
+package com.silva.chetax.schedule.center.system.service.impl;
 
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
@@ -26,18 +26,22 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.client.RestTemplate;
 
+import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
+import com.baomidou.mybatisplus.core.toolkit.ObjectUtils;
+import com.baomidou.mybatisplus.core.toolkit.StringUtils;
+import com.baomidou.mybatisplus.core.toolkit.Wrappers;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
-import com.silva.chetax.schedule.center.sys.entity.SysScheduleInfoEntity;
-import com.silva.chetax.schedule.center.sys.enums.ScheduleConcurrentTagEnum;
-import com.silva.chetax.schedule.center.sys.enums.ScheduleStatusEnum;
-import com.silva.chetax.schedule.center.sys.job.HttpDceTask;
-import com.silva.chetax.schedule.center.sys.job.HttpTask;
-import com.silva.chetax.schedule.center.sys.mapper.SysScheduleInfoMapper;
-import com.silva.chetax.schedule.center.sys.service.ISysScheduleInfoService;
-import com.silva.chetax.schedule.center.system.entity.SysScheduleResult;
+import com.silva.chetax.schedule.center.system.entity.SysScheduleInfoEntity;
+import com.silva.chetax.schedule.center.system.entity.SysScheduleResultEntity;
+import com.silva.chetax.schedule.center.system.enums.ScheduleConcurrentTagEnum;
+import com.silva.chetax.schedule.center.system.enums.ScheduleStatusEnum;
+import com.silva.chetax.schedule.center.system.mapper.SysScheduleInfoMapper;
+import com.silva.chetax.schedule.center.system.service.ISysScheduleInfoService;
 import com.silva.chetax.schedule.center.system.service.ISysScheduleResultService;
+import com.silva.chetax.schedule.center.system.task.HttpDceTask;
+import com.silva.chetax.schedule.center.system.task.HttpTask;
 
 import lombok.extern.slf4j.Slf4j;
 
@@ -168,9 +172,28 @@ public class SysScheduleInfoServiceImpl extends ServiceImpl<SysScheduleInfoMappe
 //		return true;
 //	}
 	
-	public PageInfo<SysScheduleInfoEntity> findPage(int pageNum, int pageSize) {
+	public PageInfo<SysScheduleInfoEntity> findSysScheduleInfoPage(int pageNum, int pageSize, SysScheduleInfoEntity sysScheduleInfoEntity) {
 		PageHelper.startPage(pageNum, pageSize);
-		List<SysScheduleInfoEntity> sysJobs = this.baseMapper.selectList(null);
+		
+		LambdaQueryWrapper<SysScheduleInfoEntity> wrapper = Wrappers.<SysScheduleInfoEntity>lambdaQuery();
+		if(StringUtils.isNotBlank(sysScheduleInfoEntity.getJobName())) {
+			wrapper.likeRight(SysScheduleInfoEntity::getJobName, sysScheduleInfoEntity.getJobName());
+		}
+		if(StringUtils.isNotBlank(sysScheduleInfoEntity.getGroupName())) {
+			wrapper.likeRight(SysScheduleInfoEntity::getGroupName, sysScheduleInfoEntity.getGroupName());
+		}
+		if(StringUtils.isNotBlank(sysScheduleInfoEntity.getDescription())) {
+			wrapper.likeRight(SysScheduleInfoEntity::getDescription, sysScheduleInfoEntity.getDescription());
+		}
+		
+		if(ObjectUtils.isNotNull(sysScheduleInfoEntity.getConcurrentTag())) {
+			wrapper.eq(SysScheduleInfoEntity::getConcurrentTag, sysScheduleInfoEntity.getConcurrentTag());
+		}
+		if(ObjectUtils.isNotNull(sysScheduleInfoEntity.getStatus())) {
+			wrapper.eq(SysScheduleInfoEntity::getStatus, sysScheduleInfoEntity.getStatus());
+		}
+		wrapper.orderByDesc(SysScheduleInfoEntity::getCreateTime);
+		List<SysScheduleInfoEntity> sysJobs = this.baseMapper.selectList(wrapper);
 		PageInfo<SysScheduleInfoEntity> page = new PageInfo<SysScheduleInfoEntity>(sysJobs);
 		return page;
 	}
@@ -197,9 +220,9 @@ public class SysScheduleInfoServiceImpl extends ServiceImpl<SysScheduleInfoMappe
 		if (scheduleInfo == null) {
 			return;
 		}
-		SysScheduleResult sysScheduleResult = new SysScheduleResult();
-		
-		sysScheduleResult.setStartTime(LocalDateTime.now());
+		SysScheduleResultEntity sysScheduleResult = new SysScheduleResultEntity();
+		LocalDateTime startTime = LocalDateTime.now();
+		sysScheduleResult.setStartTime(startTime);
 		sysScheduleResult.setRequestBody(scheduleInfo.getRequestBody());
 		sysScheduleResult.setSysScheduleInfoId(scheduleInfo.getId());
 		sysScheduleResult.setUrl(scheduleInfo.getUrl());
@@ -209,12 +232,20 @@ public class SysScheduleInfoServiceImpl extends ServiceImpl<SysScheduleInfoMappe
 		headers.setContentType(MediaType.APPLICATION_JSON);
         HttpEntity<String> requestEntity = new HttpEntity<String>(scheduleInfo.getRequestBody(), headers);
         ResponseEntity<String> responseEntity = restTemplate.postForEntity(scheduleInfo.getUrl(), requestEntity, String.class, "");
+        LocalDateTime endTime = LocalDateTime.now();
         log.info("url >> {} >> {}", scheduleInfo.getUrl(), responseEntity.getBody());
         sysScheduleResult.setResultMsg(responseEntity.getBody());
 		sysScheduleResult.setExceptionMsg(null);
-		sysScheduleResult.setEndTime(LocalDateTime.now());
+		sysScheduleResult.setEndTime(endTime);
 		iSysScheduleResultService.updateById(sysScheduleResult);
 	}
+//	public static void main(String[] args) {
+//
+//	//获取秒数
+//	Long second = LocalDateTime.now().toEpochSecond(ZoneOffset.of("+8"));
+//	//获取毫秒数
+//	Long milliSecond = LocalDateTime.now().toInstant(ZoneOffset.of("+8")).toEpochMilli();
+//	}
 	/**
 	 * 删除一个job
 	 * 

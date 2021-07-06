@@ -1,18 +1,17 @@
 package com.silva.chetax.schedule.center.system.service.impl;
 
-import com.silva.chetax.schedule.center.sys.entity.SysScheduleInfoEntity;
-import com.silva.chetax.schedule.center.system.entity.SysScheduleResult;
-import com.silva.chetax.schedule.center.system.mapper.SysScheduleResultMapper;
-import com.silva.chetax.schedule.center.system.service.ISysScheduleResultService;
+import java.util.List;
+
+import org.springframework.stereotype.Service;
+
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.core.toolkit.Wrappers;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
-
-import java.util.List;
-
-import org.springframework.stereotype.Service;
+import com.silva.chetax.schedule.center.system.entity.SysScheduleResultEntity;
+import com.silva.chetax.schedule.center.system.mapper.SysScheduleResultMapper;
+import com.silva.chetax.schedule.center.system.service.ISysScheduleResultService;
 
 /**
  * <p>
@@ -23,18 +22,18 @@ import org.springframework.stereotype.Service;
  * @since 2021-07-06
  */
 @Service
-public class SysScheduleResultServiceImpl extends ServiceImpl<SysScheduleResultMapper, SysScheduleResult> implements ISysScheduleResultService {
+public class SysScheduleResultServiceImpl extends ServiceImpl<SysScheduleResultMapper, SysScheduleResultEntity> implements ISysScheduleResultService {
 
 	@Override
-	public PageInfo<SysScheduleResult> findSysScheduleResultPage(int pageNum, int pageSize, Long id) {
+	public PageInfo<SysScheduleResultEntity> findSysScheduleResultPage(int pageNum, int pageSize, Long id) {
 		PageHelper.startPage(pageNum, pageSize);
-		LambdaQueryWrapper<SysScheduleResult> lambdaQueryWrapper = Wrappers.<SysScheduleResult>lambdaQuery();
+		LambdaQueryWrapper<SysScheduleResultEntity> lambdaQueryWrapper = Wrappers.<SysScheduleResultEntity>lambdaQuery();
 		if(id!=null) {
-			lambdaQueryWrapper.eq(SysScheduleResult::getSysScheduleInfoId, id);
+			lambdaQueryWrapper.eq(SysScheduleResultEntity::getSysScheduleInfoId, id);
 		}
-		lambdaQueryWrapper.orderByDesc(SysScheduleResult::getStartTime);
-		List<SysScheduleResult> sysJobs = this.baseMapper.selectList(lambdaQueryWrapper);
-		PageInfo<SysScheduleResult> page = new PageInfo<SysScheduleResult>(sysJobs);
+		lambdaQueryWrapper.orderByDesc(SysScheduleResultEntity::getStartTime);
+		List<SysScheduleResultEntity> sysJobs = this.baseMapper.selectList(lambdaQueryWrapper);
+		PageInfo<SysScheduleResultEntity> page = new PageInfo<SysScheduleResultEntity>(sysJobs);
 		return page;
 	}
 
