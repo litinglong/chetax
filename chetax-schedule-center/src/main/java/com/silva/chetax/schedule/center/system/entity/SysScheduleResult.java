@@ -1,14 +1,9 @@
-package com.silva.chetax.schedule.center.sys.entity;
+package com.silva.chetax.schedule.center.system.entity;
 
-import com.baomidou.mybatisplus.annotation.TableName;
 import com.baomidou.mybatisplus.annotation.IdType;
-import com.baomidou.mybatisplus.annotation.TableField;
 import com.baomidou.mybatisplus.annotation.TableId;
-
+import java.time.LocalDateTime;
 import java.io.Serializable;
-import java.math.BigDecimal;
-
-import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 
@@ -18,38 +13,39 @@ import lombok.EqualsAndHashCode;
  * </p>
  *
  * @author litinglong
- * @since 2021-06-27
+ * @since 2021-07-06
  */
 @Data
 @EqualsAndHashCode(callSuper = false)
-@TableName("sys_schedule_info")
-@AllArgsConstructor
-public class SysScheduleInfoEntity implements Serializable {
+public class SysScheduleResult implements Serializable {
 
     private static final long serialVersionUID = 1L;
 
+    /**
+     * 主键
+     */
     @TableId(value = "id", type = IdType.AUTO)
     private Long id;
+
     /**
-     * 服务url
+     * 服务URL
      */
     private String url;
 
     /**
-     * 请求体
+     * 输入参数
      */
-    @TableField("request_body")
     private String requestBody;
 
     /**
-     * 周期表达式
+     * 异常信息
      */
-    private String cron;
+    private String exceptionMsg;
 
     /**
-     * 任务状态
+     * 结果信息
      */
-    private Integer status;
+    private String resultMsg;
 
     private String createTime;
 
@@ -58,8 +54,21 @@ public class SysScheduleInfoEntity implements Serializable {
     private String updateTime;
 
     private String updateUser;
-    private String groupName;
-    private String jobName;
-    private String description;
-    private Integer concurrentTag;
+
+    /**
+     * 开始时间
+     */
+    private LocalDateTime startTime;
+
+    /**
+     * 结束时间
+     */
+    private LocalDateTime endTime;
+
+    /**
+     * 关联的调度计划主键
+     */
+    private Long sysScheduleInfoId;
+
+
 }

@@ -45,6 +45,7 @@ public interface ISysScheduleInfoService extends IService<SysScheduleInfoEntity>
 	 */
 	void startJob(SysScheduleInfoEntity scheduleInfo) throws SchedulerException;
 	void insertAndAddJob(SysScheduleInfoEntity sysJob);
+	void insertSysScheduleInfoEntity(SysScheduleInfoEntity sysScheduleInfoEntity);
 	
 	PageInfo<SysScheduleInfoEntity> findPage(int pageNum, int pageSize);
 

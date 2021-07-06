@@ -1,8 +1,8 @@
 package com.silva.chetax.schedule.center.sys.service.impl;
 
 import java.math.BigDecimal;
+import java.time.LocalDateTime;
 import java.util.List;
-import java.util.Map;
 
 import javax.annotation.PostConstruct;
 
@@ -24,13 +24,11 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.scheduling.quartz.SchedulerFactoryBean;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.client.RestTemplate;
 
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
-import com.google.common.collect.Maps;
 import com.silva.chetax.schedule.center.sys.entity.SysScheduleInfoEntity;
 import com.silva.chetax.schedule.center.sys.enums.ScheduleConcurrentTagEnum;
 import com.silva.chetax.schedule.center.sys.enums.ScheduleStatusEnum;
@@ -38,6 +36,8 @@ import com.silva.chetax.schedule.center.sys.job.HttpDceTask;
 import com.silva.chetax.schedule.center.sys.job.HttpTask;
 import com.silva.chetax.schedule.center.sys.mapper.SysScheduleInfoMapper;
 import com.silva.chetax.schedule.center.sys.service.ISysScheduleInfoService;
+import com.silva.chetax.schedule.center.system.entity.SysScheduleResult;
+import com.silva.chetax.schedule.center.system.service.ISysScheduleResultService;
 
 import lombok.extern.slf4j.Slf4j;
 
@@ -54,6 +54,9 @@ import lombok.extern.slf4j.Slf4j;
 public class SysScheduleInfoServiceImpl extends ServiceImpl<SysScheduleInfoMapper, SysScheduleInfoEntity> implements ISysScheduleInfoService {
 	@Autowired
 	private SchedulerFactoryBean schedulerFactoryBean;
+	@Autowired
+	private ISysScheduleResultService iSysScheduleResultService;
+	
 	@PostConstruct
 	public void init() throws Exception {
 //		// 这里获取任务信息数据
@@ -128,6 +131,17 @@ public class SysScheduleInfoServiceImpl extends ServiceImpl<SysScheduleInfoMappe
 //        }
 	}
 	
+	public void insertSysScheduleInfoEntity(SysScheduleInfoEntity sysScheduleInfoEntity){
+      	if(checkIsCronRight(sysScheduleInfoEntity.getCron())){
+      		this.save(sysScheduleInfoEntity);
+      		try {
+				startJob(sysScheduleInfoEntity);
+			} catch (SchedulerException e) {
+			}
+      		
+          }
+	}
+	
 	private boolean checkIsCronRight(String cron){
 		try {
 			CronScheduleBuilder.cronSchedule(cron);
@@ -179,16 +193,27 @@ public class SysScheduleInfoServiceImpl extends ServiceImpl<SysScheduleInfoMappe
 		doExecuteJob(scheduleInfo);
 	}
 	
-	public void doExecuteJob(SysScheduleInfoEntity ScheduleInfo){
-		if (ScheduleInfo == null) {
+	public void doExecuteJob(SysScheduleInfoEntity scheduleInfo){
+		if (scheduleInfo == null) {
 			return;
 		}
+		SysScheduleResult sysScheduleResult = new SysScheduleResult();
+		
+		sysScheduleResult.setStartTime(LocalDateTime.now());
+		sysScheduleResult.setRequestBody(scheduleInfo.getRequestBody());
+		sysScheduleResult.setSysScheduleInfoId(scheduleInfo.getId());
+		sysScheduleResult.setUrl(scheduleInfo.getUrl());
+		iSysScheduleResultService.save(sysScheduleResult);
         RestTemplate restTemplate = new RestTemplate();
         HttpHeaders headers = new HttpHeaders();
 		headers.setContentType(MediaType.APPLICATION_JSON);
-        HttpEntity<String> requestEntity = new HttpEntity<String>(ScheduleInfo.getRequestBody(), headers);
-        ResponseEntity<String> responseEntity = restTemplate.postForEntity(ScheduleInfo.getUrl(), requestEntity, String.class, "");
-        log.info("url >> {} >> {}", ScheduleInfo.getUrl(), responseEntity.getBody());
+        HttpEntity<String> requestEntity = new HttpEntity<String>(scheduleInfo.getRequestBody(), headers);
+        ResponseEntity<String> responseEntity = restTemplate.postForEntity(scheduleInfo.getUrl(), requestEntity, String.class, "");
+        log.info("url >> {} >> {}", scheduleInfo.getUrl(), responseEntity.getBody());
+        sysScheduleResult.setResultMsg(responseEntity.getBody());
+		sysScheduleResult.setExceptionMsg(null);
+		sysScheduleResult.setEndTime(LocalDateTime.now());
+		iSysScheduleResultService.updateById(sysScheduleResult);
 	}
 	/**
 	 * 删除一个job

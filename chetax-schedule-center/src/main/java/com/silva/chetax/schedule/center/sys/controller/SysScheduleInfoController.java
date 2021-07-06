@@ -17,6 +17,8 @@ import com.github.pagehelper.PageInfo;
 import com.silva.chetax.schedule.center.sys.entity.SysScheduleInfoEntity;
 import com.silva.chetax.schedule.center.sys.service.ISysScheduleInfoService;
 
+import lombok.extern.slf4j.Slf4j;
+
 /**
  * <p>
  *  前端控制器
@@ -27,41 +29,46 @@ import com.silva.chetax.schedule.center.sys.service.ISysScheduleInfoService;
  */
 @RestController
 @RequestMapping("/sys/scheduleInfoController")
+@Slf4j
 public class SysScheduleInfoController {
 	@Autowired
 	ISysScheduleInfoService iScheduleInfoService;
 	
 	@GetMapping("getScheduleInfoById/{id}")
-	SysScheduleInfoEntity getScheduleInfoById(@PathVariable("id") BigDecimal id){
+	public SysScheduleInfoEntity getScheduleInfoById(@PathVariable("id") BigDecimal id){
 		return iScheduleInfoService.getScheduleInfoById(id);
 	}
 	
 	@GetMapping("deleteScheduleInfoById/{id}")
-	void deleteScheduleInfoById(@PathVariable("id") BigDecimal id) throws SchedulerException{
+	public void deleteScheduleInfoById(@PathVariable("id") BigDecimal id) throws SchedulerException{
 		iScheduleInfoService.deleteScheduleInfoById(id);
 	}
 	
-	@PostMapping("insertAndAddJob")
-	void insertAndAddJob(@RequestBody SysScheduleInfoEntity scheduleInfo){
-		iScheduleInfoService.insertAndAddJob(scheduleInfo);
+	@PostMapping("insertSysScheduleInfoEntity")
+	public void insertSysScheduleInfoEntity(@RequestBody SysScheduleInfoEntity scheduleInfo){
+		iScheduleInfoService.insertSysScheduleInfoEntity(scheduleInfo);
+		log.info("11");
 	}
+	
 	@PostMapping("findPage/{pageNum}/{pageSize}")
-	PageInfo<SysScheduleInfoEntity> findPage(@PathVariable("pageNum") int pageNum,
+	public PageInfo<SysScheduleInfoEntity> findPage(@PathVariable("pageNum") int pageNum,
 			@PathVariable("pageSize")  int pageSize){
 		PageInfo<SysScheduleInfoEntity> pageInfo = iScheduleInfoService.findPage(pageNum,pageSize);
 		return pageInfo;
 	}
+	
 	@GetMapping("executeJob/{id}")
-	void executeJob(@PathVariable("id") BigDecimal id) throws SchedulerException{
+	public void executeJob(@PathVariable("id") BigDecimal id) throws SchedulerException{
 		iScheduleInfoService.executeById(id);
 	}
 	
 	@GetMapping("changeStatus/{id}")
-	void changeStatus(@PathVariable("id") BigDecimal id) throws SchedulerException{
+	public void changeStatus(@PathVariable("id") BigDecimal id) throws SchedulerException{
 		iScheduleInfoService.changeStatus(id);
 	}
+	
 	@PostMapping("updateScheduleInfoCron/{id}")
-	void updateScheduleInfoCron(@PathVariable("id") BigDecimal id, @RequestParam("cron") String cron){
+	public void updateScheduleInfoCron(@PathVariable("id") BigDecimal id, @RequestParam("cron") String cron){
 		iScheduleInfoService.updateScheduleInfoCron(id,cron);
 	}
 }
