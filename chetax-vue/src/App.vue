@@ -1,7 +1,7 @@
 <template>
   <div id="app">
-    <el-row :gutter="40">
-      <el-col :span="18">
+    <el-row :gutter="80">
+      <el-col :span="23">
         <div class="grid-content bg-purple">
           <img src="./assets/search_logo.png">
           <router-view/>
