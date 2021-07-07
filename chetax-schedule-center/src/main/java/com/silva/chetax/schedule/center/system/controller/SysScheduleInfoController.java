@@ -5,6 +5,8 @@ import java.math.BigDecimal;
 
 import org.quartz.SchedulerException;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.validation.BindingResult;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -43,10 +45,11 @@ public class SysScheduleInfoController {
 	public void deleteScheduleInfoById(@PathVariable("id") BigDecimal id) throws SchedulerException{
 		iScheduleInfoService.deleteScheduleInfoById(id);
 	}
-	
+	//https://blog.csdn.net/weixin_42236404/article/details/105653432
 	@PostMapping("insertSysScheduleInfoEntity")
-	public void insertSysScheduleInfoEntity(@RequestBody SysScheduleInfoEntity scheduleInfo){
+	public String insertSysScheduleInfoEntity(@Validated @RequestBody SysScheduleInfoEntity scheduleInfo, BindingResult bindingResult){
 		iScheduleInfoService.insertSysScheduleInfoEntity(scheduleInfo);
+		return bindingResult.getFieldError().getDefaultMessage();
 	}
 	
 	@PostMapping("findSysScheduleInfoPage/{pageNum}/{pageSize}")

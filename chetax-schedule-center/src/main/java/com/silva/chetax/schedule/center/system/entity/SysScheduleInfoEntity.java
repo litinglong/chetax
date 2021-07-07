@@ -8,6 +8,8 @@ import com.baomidou.mybatisplus.annotation.TableId;
 import java.io.Serializable;
 import java.math.BigDecimal;
 
+import javax.validation.constraints.Size;
+
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
@@ -33,6 +35,7 @@ public class SysScheduleInfoEntity implements Serializable {
     /**
      * 服务url
      */
+    @Size(max = 10, message = "zuidawei10")
     private String url;
 
     /**

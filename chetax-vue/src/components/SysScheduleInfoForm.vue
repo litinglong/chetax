@@ -1,13 +1,13 @@
 <template>
   <div class="block">
-    <el-form ref="form" :model="form" :inline="true">
+    <el-form ref="form" :model="form" :inline="true"  :rules="rules">
       <el-form-item label="主键" v-if="false">
         <el-input v-model="form.id"></el-input>
       </el-form-item>
-      <el-form-item label="名称">
+      <el-form-item label="名称" prop="jobName">
         <el-input v-model="form.jobName"></el-input>
       </el-form-item>
-      <el-form-item label="分组">
+      <el-form-item label="分组" required>
         <el-input v-model="form.groupName"></el-input>
       </el-form-item>
       <el-form-item label="描述">
@@ -55,17 +55,31 @@ export default {
         requestBody: '',
         status: '1',
         concurrentTag: '0'
+      },
+      rules: {
+        jobName: [
+          { required: true, message: '请输入活动名称', trigger: 'blur' },
+          { min: 3, max: 5, message: '长度在 3 到 5 个字符', trigger: 'blur' }
+        ]
       }
     }
   },
   methods: {
     save () {
-      var url = `/schedule-apis/sys/scheduleInfoController/insertSysScheduleInfoEntity`
       var _this = this
-      Axios.post(url, _this.form).then((response) => {
-        _this.$emit('onSaveCompleted')
-      }).catch((error) => {
-        console.log(error)
+      this.$refs['form'].validate((valid) => {
+        if (valid) {
+          var url = `/schedule-apis/sys/scheduleInfoController/insertSysScheduleInfoEntity`
+          Axios.post(url, _this.form).then((response) => {
+            debugger
+            _this.$emit('onSaveCompleted')
+          }).catch((error) => {
+            console.log(error)
+          })
+        } else {
+          console.log('error submit!!')
+          return false
+        }
       })
     }
   }
