@@ -27,7 +27,7 @@ public class SysScheduleResultController {
 	ISysScheduleResultService iSysScheduleResultService;
 	@PostMapping("findSysScheduleResultPage/{pageNum}/{pageSize}")
 	public PageInfo<SysScheduleResultEntity> findSysScheduleResultPage(@PathVariable("pageNum")int pageNum,
-			@PathVariable("pageSize") int pageSize,@RequestParam("id") Long id){
+			@PathVariable("pageSize") int pageSize,@RequestParam("id") Long id){// 2
 		return iSysScheduleResultService.findSysScheduleResultPage(pageNum,pageSize,id);
 	}
 }
