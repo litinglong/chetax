@@ -3,7 +3,7 @@ import Router from 'vue-router'
 import HelloWorld from '@/components/HelloWorld'
 import ChetaxTest from '@/components/ChetaxTest'
 import SearchIndexPage from '@/components/SearchIndexPage'
-import SysScheduleInfoList from '@/components/SysScheduleInfoList'
+import SysScheduleInfoList from 'system/SysScheduleInfoList'
 
 Vue.use(Router)
 
