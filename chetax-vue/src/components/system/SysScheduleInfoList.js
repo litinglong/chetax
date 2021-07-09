@@ -1,6 +1,7 @@
 import Axios from 'axios'
-import SysScheduleInfoForm from 'system/SysScheduleInfoForm'
-import SysScheduleResultList from 'system/SysScheduleResultList'
+import SysScheduleInfoForm from '@/components/system/SysScheduleInfoForm.vue'
+import SysScheduleResultList from '@/components/system/SysScheduleResultList.vue'
+
 export default {
   name: 'SysScheduleInfoList',
   components: {
@@ -75,6 +76,7 @@ export default {
             _this.refrashTable()
           }).catch((error) => {
             console.log(error)
+            _this.refrashTable()
           })
         }).catch(() => {
         })

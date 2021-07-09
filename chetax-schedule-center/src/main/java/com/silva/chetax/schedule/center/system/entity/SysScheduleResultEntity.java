@@ -5,6 +5,8 @@ import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
 import com.fasterxml.jackson.annotation.JsonFormat;
 
+import io.swagger.annotations.ApiModelProperty;
+
 import java.time.LocalDateTime;
 
 import org.springframework.format.annotation.DateTimeFormat;
@@ -33,6 +35,11 @@ public class SysScheduleResultEntity implements Serializable {
      */
     @TableId(value = "id", type = IdType.AUTO)
     private Long id;
+    
+    /**
+     * 关联的调度计划主键
+     */
+    private Long sysScheduleInfoId;
 
     /**
      * 服务URL
@@ -53,15 +60,6 @@ public class SysScheduleResultEntity implements Serializable {
      * 结果信息
      */
     private String resultMsg;
-
-    private String createTime;
-
-    private String createUser;
-
-    private String updateTime;
-
-    private String updateUser;
-
     /**
      * 开始时间
      */
@@ -75,11 +73,21 @@ public class SysScheduleResultEntity implements Serializable {
     @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss")
     @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss" ,timezone = "GMT+8")
     private LocalDateTime endTime;
+    
+    @ApiModelProperty(value = "任务耗时（毫秒数）")
+    private Long usedTime;
+    
+    @ApiModelProperty(value = "任务耗时(格式化后)")
+    private String usedTimeFormated;
 
-    /**
-     * 关联的调度计划主键
-     */
-    private Long sysScheduleInfoId;
+    private LocalDateTime createTime;
+
+    private String createUser;
+
+    private LocalDateTime updateTime;
+
+    private String updateUser;
+
 
 
 }

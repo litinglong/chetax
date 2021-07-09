@@ -92,7 +92,6 @@ export default {
         if (valid) {
           var url = `/schedule-apis/sys/scheduleInfoController/insertSysScheduleInfoEntity`
           Axios.post(url, _this.form).then((response) => {
-            debugger
             _this.$emit('onSaveCompleted')
           }).catch((error) => {
             console.log(error)

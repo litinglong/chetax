@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.github.pagehelper.PageInfo;
+import com.silva.chetax.schedule.center.common.response.BusinessLog;
 import com.silva.chetax.schedule.center.common.response.KingIn;
 import com.silva.chetax.schedule.center.system.entity.SysScheduleInfoEntity;
 import com.silva.chetax.schedule.center.system.entity.SysTransInfoEntity;
@@ -55,13 +56,18 @@ public class SysScheduleInfoController {
 	}
 	
 	@PostMapping("findSysScheduleInfoPage/{pageNum}/{pageSize}")
+	@BusinessLog
 	public PageInfo<SysScheduleInfoEntity> findSysScheduleInfoPage(@PathVariable("pageNum") int pageNum,
 			@PathVariable("pageSize")  int pageSize, @RequestBody SysScheduleInfoEntity sysScheduleInfoEntity,SysTransInfoEntity sysTransInfo,KingIn kingIn){
+//		int a=0;
+//				if(a==0) {
+//		throw new RuntimeException("123");}
 		PageInfo<SysScheduleInfoEntity> pageInfo = iScheduleInfoService.findSysScheduleInfoPage(pageNum, pageSize, sysScheduleInfoEntity);
 		return pageInfo;
 	}
 	
 	@GetMapping("executeJob/{id}")
+	@BusinessLog
 	public void executeJob(@PathVariable("id") BigDecimal id) throws SchedulerException{
 		iScheduleInfoService.executeById(id);
 	}

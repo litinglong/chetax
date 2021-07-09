@@ -42,6 +42,9 @@ public class SysTransInfoEntity implements Serializable {
 
     @ApiModelProperty(value = "交易输出参数")
     private String transOutput;
+    
+    @ApiModelProperty(value = "交易异常")
+    private String transException;
 
     @ApiModelProperty(value = "交易开始时间")
     private LocalDateTime transStartTime;
@@ -49,6 +52,12 @@ public class SysTransInfoEntity implements Serializable {
     @ApiModelProperty(value = "交易结束时间")
     private LocalDateTime transEndTime;
 
+    @ApiModelProperty(value = "交易耗时（毫秒数）")
+    private Long transUsedTime;
+    
+    @ApiModelProperty(value = "交易耗时(格式化后)")
+    private String transUsedTimeFormated;
+    
     @ApiModelProperty(value = "创建人")
     private String createUser;
 

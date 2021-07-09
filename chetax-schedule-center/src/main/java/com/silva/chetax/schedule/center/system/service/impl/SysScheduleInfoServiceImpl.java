@@ -6,6 +6,7 @@ import java.util.List;
 
 import javax.annotation.PostConstruct;
 
+import org.apache.commons.lang3.StringUtils;
 import org.quartz.CronScheduleBuilder;
 import org.quartz.CronTrigger;
 import org.quartz.Job;
@@ -28,7 +29,6 @@ import org.springframework.web.client.RestTemplate;
 
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.core.toolkit.ObjectUtils;
-import com.baomidou.mybatisplus.core.toolkit.StringUtils;
 import com.baomidou.mybatisplus.core.toolkit.Wrappers;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.github.pagehelper.PageHelper;
@@ -42,8 +42,11 @@ import com.silva.chetax.schedule.center.system.service.ISysScheduleInfoService;
 import com.silva.chetax.schedule.center.system.service.ISysScheduleResultService;
 import com.silva.chetax.schedule.center.system.task.HttpDceTask;
 import com.silva.chetax.schedule.center.system.task.HttpTask;
+import com.silva.chetax.schedule.center.utils.ExceptionUtils;
+import com.silva.chetax.schedule.center.utils.TimeUtils;
 
 import lombok.extern.slf4j.Slf4j;
+
 
 /**
  * <p>
@@ -118,21 +121,15 @@ public class SysScheduleInfoServiceImpl extends ServiceImpl<SysScheduleInfoMappe
 	}
 	@Transactional(readOnly = false)
 	public void insertAndAddJob(SysScheduleInfoEntity sysJob){
-//        if(checkIsBeanExsit(sysJob)){
-        	if(checkIsCronRight(sysJob.getCron())){
-        		save(sysJob);
-        		try {
-					startJob(sysJob);
-				} catch (SchedulerException e) {
-				}
-        		
-            }else{
-//            	packet.setMsg("任务调度规则不正确");
-            }
-//        }else{
-//        	packet.setErrorCode();
-//        	packet.setMsg("未设置正确的类全路径或者spring实例");
-//        }
+    	if(checkIsCronRight(sysJob.getCron())){
+    		save(sysJob);
+    		try {
+				startJob(sysJob);
+			} catch (SchedulerException e) {
+			}
+    		
+        }else{
+        }
 	}
 	
 	public void insertSysScheduleInfoEntity(SysScheduleInfoEntity sysScheduleInfoEntity){
@@ -155,22 +152,6 @@ public class SysScheduleInfoServiceImpl extends ServiceImpl<SysScheduleInfoMappe
 		return true;
 	}
 	
-//	private boolean checkIsBeanExsit(ScheduleInfo sysJob){
-//		Object obj = null;
-//		try {
-//			if (StringUtils.isNotBlank(sysJob.getSpringId())) {
-//				obj = SpringContextHolder.getBean(sysJob.getSpringId());
-//			} else {
-//				Class<?> clazz = Class.forName(sysJob.getBeanClass());
-//				obj = clazz.newInstance();
-//			}
-//		} catch (Exception e) {
-//		}
-//		if (obj == null) {
-//			return false;
-//		} 
-//		return true;
-//	}
 	
 	public PageInfo<SysScheduleInfoEntity> findSysScheduleInfoPage(int pageNum, int pageSize, SysScheduleInfoEntity sysScheduleInfoEntity) {
 		PageHelper.startPage(pageNum, pageSize);
@@ -198,16 +179,6 @@ public class SysScheduleInfoServiceImpl extends ServiceImpl<SysScheduleInfoMappe
 		return page;
 	}
 
-//	public void executeJob(BigDecimal id) throws SchedulerException {
-//		ScheduleInfo ScheduleInfo = this.getById(id);
-//		if (ScheduleInfo == null) {
-//			return;
-//		}
-//		Scheduler scheduler = schedulerFactoryBean.getScheduler();
-//		JobKey jobKey = JobKey.jobKey(ScheduleInfo.getJobName(), ScheduleInfo.getGroupName());
-//		scheduler.triggerJob(jobKey);
-//		
-//	}
 	public void executeById(BigDecimal id) throws SchedulerException {
 		SysScheduleInfoEntity scheduleInfo = this.getById(id);
 		if (scheduleInfo == null) {
@@ -226,32 +197,36 @@ public class SysScheduleInfoServiceImpl extends ServiceImpl<SysScheduleInfoMappe
 		sysScheduleResult.setRequestBody(scheduleInfo.getRequestBody());
 		sysScheduleResult.setSysScheduleInfoId(scheduleInfo.getId());
 		sysScheduleResult.setUrl(scheduleInfo.getUrl());
+		sysScheduleResult.setCreateTime(startTime);
+		sysScheduleResult.setCreateUser("-1");
 		iSysScheduleResultService.save(sysScheduleResult);
         RestTemplate restTemplate = new RestTemplate();
         HttpHeaders headers = new HttpHeaders();
 		headers.setContentType(MediaType.APPLICATION_JSON);
         HttpEntity<String> requestEntity = new HttpEntity<String>(scheduleInfo.getRequestBody(), headers);
-        ResponseEntity<String> responseEntity = restTemplate.postForEntity(scheduleInfo.getUrl(), requestEntity, String.class, "");
-        LocalDateTime endTime = LocalDateTime.now();
-        log.info("url >> {} >> {}", scheduleInfo.getUrl(), responseEntity.getBody());
-        sysScheduleResult.setResultMsg(responseEntity.getBody());
-		sysScheduleResult.setExceptionMsg(null);
-		sysScheduleResult.setEndTime(endTime);
-		iSysScheduleResultService.updateById(sysScheduleResult);
+        try {
+        	ResponseEntity<String> responseEntity = restTemplate.postForEntity(scheduleInfo.getUrl(), requestEntity, String.class, "");
+        	String responseBody = responseEntity.getBody();
+        	String responseBodySub = StringUtils.substring(responseBody, 0, 10000);
+        	sysScheduleResult.setResultMsg(responseBodySub);
+        } catch (Exception e) {
+			String exceptionString = ExceptionUtils.stackTraceToString(e);
+			String exceptionStringSub = StringUtils.substring(exceptionString, 0, 10000);
+			sysScheduleResult.setExceptionMsg(exceptionStringSub);
+		} finally {
+			LocalDateTime endTime = LocalDateTime.now();
+			sysScheduleResult.setEndTime(endTime);
+			Long usedTime = TimeUtils.usedTime(startTime, endTime);
+			String usedTimeFormated = TimeUtils.formateMs(usedTime);
+			sysScheduleResult.setUsedTimeFormated(usedTimeFormated);
+			sysScheduleResult.setUsedTime(usedTime);
+			sysScheduleResult.setUpdateTime(endTime);
+			sysScheduleResult.setUpdateUser("-1");
+			iSysScheduleResultService.updateById(sysScheduleResult);
+		}
+       
 	}
-//	public static void main(String[] args) {
-//
-//	//获取秒数
-//	Long second = LocalDateTime.now().toEpochSecond(ZoneOffset.of("+8"));
-//	//获取毫秒数
-//	Long milliSecond = LocalDateTime.now().toInstant(ZoneOffset.of("+8")).toEpochMilli();
-//	}
-	/**
-	 * 删除一个job
-	 * 
-	 * @param scheduleJob
-	 * @throws SchedulerException
-	 */
+	
 	public void stopJob(SysScheduleInfoEntity scheduleInfo) throws SchedulerException {
 		Scheduler scheduler = schedulerFactoryBean.getScheduler();
 		JobKey jobKey = JobKey.jobKey(scheduleInfo.getJobName(), scheduleInfo.getGroupName());
@@ -262,11 +237,6 @@ public class SysScheduleInfoServiceImpl extends ServiceImpl<SysScheduleInfoMappe
 		}
 	}
 	
-	/**
-	 * 更改任务状态
-	 * cmd{"stop","start"}
-	 * @throws SchedulerException
-	 */
 	@Transactional(readOnly = false)
 	public void changeStatus(BigDecimal id) throws SchedulerException {
 		SysScheduleInfoEntity job = this.getById(id);
@@ -284,12 +254,6 @@ public class SysScheduleInfoServiceImpl extends ServiceImpl<SysScheduleInfoMappe
 		}
 	}
 	
-	/**
-	 * 更新job时间表达式
-	 * 
-	 * @param scheduleJob
-	 * @throws SchedulerException
-	 */
 	public void updateJobCron(SysScheduleInfoEntity scheduleInfo) throws SchedulerException {
 		Scheduler scheduler = schedulerFactoryBean.getScheduler();
 		TriggerKey triggerKey = TriggerKey.triggerKey(scheduleInfo.getJobName(), scheduleInfo.getGroupName());
@@ -312,11 +276,7 @@ public class SysScheduleInfoServiceImpl extends ServiceImpl<SysScheduleInfoMappe
 					} catch (SchedulerException e) {
 					}
 				}
-			}else{
-//				packet.setMsg("需要调整规则的任务已不存在");
 			}
-		}else{
-//			packet.setMsg("任务调度规则不正确");
 		}
 	}
 }

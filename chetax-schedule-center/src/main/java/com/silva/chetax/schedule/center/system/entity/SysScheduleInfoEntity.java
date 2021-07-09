@@ -1,14 +1,14 @@
 package com.silva.chetax.schedule.center.system.entity;
 
-import com.baomidou.mybatisplus.annotation.TableName;
+import java.io.Serializable;
+import java.time.LocalDateTime;
+
+import javax.validation.constraints.Size;
+
 import com.baomidou.mybatisplus.annotation.IdType;
 import com.baomidou.mybatisplus.annotation.TableField;
 import com.baomidou.mybatisplus.annotation.TableId;
-
-import java.io.Serializable;
-import java.math.BigDecimal;
-
-import javax.validation.constraints.Size;
+import com.baomidou.mybatisplus.annotation.TableName;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -32,6 +32,11 @@ public class SysScheduleInfoEntity implements Serializable {
 
     @TableId(value = "id", type = IdType.AUTO)
     private Long id;
+    
+    private String groupName;
+    private String jobName;
+    private String description;
+    
     /**
      * 服务url
      */
@@ -48,21 +53,20 @@ public class SysScheduleInfoEntity implements Serializable {
      * 周期表达式
      */
     private String cron;
+    
+    private Integer concurrentTag;
 
     /**
      * 任务状态
      */
     private Integer status;
 
-    private String createTime;
+    private LocalDateTime createTime;
 
     private String createUser;
 
-    private String updateTime;
+    private LocalDateTime updateTime;
 
     private String updateUser;
-    private String groupName;
-    private String jobName;
-    private String description;
-    private Integer concurrentTag;
+    
 }

@@ -1,35 +1,48 @@
 <template>
   <div class="block">
-    <el-form ref="form" :model="form" :inline="true">
-      <el-form-item label="名称">
-        <el-input v-model="form.jobName"></el-input>
-      </el-form-item>
-      <el-form-item label="分组">
-        <el-input v-model="form.groupName"></el-input>
-      </el-form-item>
-      <el-form-item label="描述">
-        <el-input v-model="form.description"></el-input>
-      </el-form-item>
-      <el-form-item label="是否并发">
-        <el-select v-model="form.concurrentTag" placeholder="请选择是否并发">
-          <el-option label="全部" value=""></el-option>
-          <el-option label="非并发" value="0"></el-option>
-          <el-option label="并发" value="1"></el-option>
-        </el-select>
-      </el-form-item>
-      <el-form-item label="运行状态">
-        <el-select v-model="form.status" placeholder="请选择运行状态">
-          <el-option label="全部" value=""></el-option>
-          <el-option label="未运行" value="0"></el-option>
-          <el-option label="运行中" value="1"></el-option>
-        </el-select>
-      </el-form-item>
-      <el-form-item>
+    <el-collapse accordion>
+      <el-collapse-item name="1">
+        <template slot="title">
+          查询条件<i class="header-icon el-icon-info"></i>
+        </template>
+        <el-form ref="form" :model="form" :inline="true">
+          <el-form-item label="名称">
+            <el-input v-model="form.jobName"></el-input>
+          </el-form-item>
+          <el-form-item label="分组">
+            <el-input v-model="form.groupName"></el-input>
+          </el-form-item>
+          <el-form-item label="描述">
+            <el-input v-model="form.description"></el-input>
+          </el-form-item>
+          <el-form-item label="是否并发">
+            <el-select v-model="form.concurrentTag" placeholder="请选择是否并发">
+              <el-option label="全部" value=""></el-option>
+              <el-option label="非并发" value="0"></el-option>
+              <el-option label="并发" value="1"></el-option>
+            </el-select>
+          </el-form-item>
+          <el-form-item label="运行状态">
+            <el-select v-model="form.status" placeholder="请选择运行状态">
+              <el-option label="全部" value=""></el-option>
+              <el-option label="未运行" value="0"></el-option>
+              <el-option label="运行中" value="1"></el-option>
+            </el-select>
+          </el-form-item>
+        </el-form>
+      </el-collapse-item>
+    </el-collapse>
+    <br />
+    <el-row>
+      <el-col :span="12">
+        <el-button type="primary" icon="el-icon-edit" @click="dialogFormVisible3 = true">新增</el-button>
+      </el-col>
+      <el-col :span="12" style="text-align: right; font-size: 12px">
         <el-button type="primary" @click="refrashTable" :loading="searchingTag">搜索</el-button>
         <el-button @click="resetSearchCondition">重置</el-button>
-        <el-button type="primary" icon="el-icon-edit" @click="dialogFormVisible3 = true">新增</el-button>
-      </el-form-item>
-    </el-form>
+        </el-col>
+    </el-row>
+    <el-divider></el-divider>
     <el-table
       :data="tableData"
       style="width: 100%"
@@ -37,10 +50,32 @@
       border
       :row-class-name="tableRowClassName"
       max-height="450">
-      <el-table-column prop="id" label="主键" width="160"></el-table-column>
-      <el-table-column prop="jobName" label="名称" width="160"></el-table-column>
-      <el-table-column prop="groupName" label="分组" width="160"></el-table-column>
-      <el-table-column prop="description" label="摘要" width="160"></el-table-column>
+      <el-table-column type="index" :index="1" fixed="left"></el-table-column>
+      <el-table-column prop="id" label="主键" width="160" v-if="false"></el-table-column>
+      <el-table-column prop="jobName" label="名称" width="160" fixed="left">
+        <template slot-scope="scope">
+          <el-input
+            v-model="scope.row.jobName"
+            :disabled="true">
+          </el-input>
+        </template>
+      </el-table-column>
+      <el-table-column prop="groupName" label="分组" width="160">
+        <template slot-scope="scope">
+          <el-input
+            v-model="scope.row.groupName"
+            :disabled="true">
+          </el-input>
+        </template>
+      </el-table-column>
+      <el-table-column prop="description" label="摘要" width="160">
+        <template slot-scope="scope">
+          <el-input
+            v-model="scope.row.description"
+            :disabled="true">
+          </el-input>
+        </template>
+      </el-table-column>
       <el-table-column prop="concurrentTag" label="是否并发" width="120">
         <template slot-scope="scope">
           <span style="margin-left: 10px">{{ scope.row.concurrentTag === 1 ? '是' : '否' }}</span>
@@ -55,15 +90,27 @@
           </el-input>
         </template>
       </el-table-column>
-      <el-table-column fixed="right" label="操作" width="480">
+      <el-table-column label="操作" width="400" fixed="right">
         <template slot-scope="scope">
-          <el-button @click="handleClick(scope.row,'view')" type="primary" size="small">查看</el-button>
-          <el-button @click="handleClick(scope.row,'execute')" size="small">执行</el-button>
-          <el-button @click="handleClick(scope.row,'changeCron')" size="small">CRON变更</el-button>
-          <el-button @click="handleClick(scope.row,'changeStatus')" size="small" :type="scope.row.status === 1 ? 'warning' : 'success'">{{ scope.row.status === 1 ? '停止' : '开始' }}</el-button>
-          <el-button @click="handleClick(scope.row,'delete')" type="danger" size="small">删除</el-button>
-          <el-button @click="handleClick(scope.row,'result')" type="success" size="small">结果</el-button>
-        </template>
+          <el-tooltip content="查看" placement="top">
+            <el-button @click="handleClick(scope.row,'view')" type="primary" size="small" icon="el-icon-search"></el-button>
+          </el-tooltip>
+          <el-tooltip content="立即执行" placement="top">
+            <el-button @click="handleClick(scope.row,'execute')" size="small" icon="el-icon-video-play"></el-button>
+          </el-tooltip>
+          <el-tooltip :content="scope.row.status === 1 ? '运行中。点击停止运行' : '已停止。点击开始运行'" placement="top">
+            <el-button @click="handleClick(scope.row,'changeStatus')" size="small" :icon="scope.row.status === 1 ? 'el-icon-open' : 'el-icon-turn-off'" :type="scope.row.status === 1 ? 'success' : 'info'"></el-button>
+          </el-tooltip>
+          <el-tooltip content="删除" placement="top">
+            <el-button @click="handleClick(scope.row,'delete')" type="danger" size="small" icon="el-icon-delete"></el-button>
+          </el-tooltip>
+          <el-tooltip content="修改CRON表达式" placement="top">
+            <el-button @click="handleClick(scope.row,'changeCron')" size="small">CRON</el-button>
+          </el-tooltip>
+          <el-tooltip content="查看运行日志" placement="top">
+            <el-button @click="handleClick(scope.row,'result')" type="success" size="small">日志</el-button>
+          </el-tooltip>
+          </template>
       </el-table-column>
     </el-table>
     <el-pagination
@@ -145,5 +192,7 @@
     </el-dialog>
   </div>
 </template>
-<script src="system/SysScheduleInfoList.js"></script>
-<style src="system/SysScheduleInfoList.css"></style>
+<script src="@/components/system/SysScheduleInfoList.js">
+</script>
+<style src="@/components/system/SysScheduleInfoList.css">
+</style>

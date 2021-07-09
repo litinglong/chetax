@@ -6,7 +6,9 @@
       stripe
       border
       max-height="450">
-      <el-table-column prop="id" label="主键" width="80"></el-table-column>
+      <el-table-column type="index" :index="1" fixed="left"></el-table-column>
+      <el-table-column prop="id" label="主键" width="80" v-if="false"></el-table-column>
+      <el-table-column prop="usedTimeFormated" label="任务耗时" width="180"></el-table-column>
       <el-table-column prop="url" label="URL" width="560">
         <template slot-scope="scope">
           <el-input
@@ -19,9 +21,9 @@
       <el-table-column prop="endTime" label="结束时间" width="180"></el-table-column>
       <el-table-column fixed="right" label="操作" width="320">
         <template slot-scope="scope">
-          <el-button @click="handleClick(scope.row.requestBody, '输入参数')" size="small">输入参数</el-button>
-          <el-button @click="handleClick(scope.row.exceptionMsg, '异常信息')" size="small">异常信息</el-button>
-          <el-button @click="handleClick(scope.row.resultMsg, '结果信息')" size="small">结果信息</el-button>
+          <el-button @click="handleClick(scope.row.requestBody, '输入参数')" size="small" round :type="scope.row.requestBody === null ? '' : 'success'">输入参数</el-button>
+          <el-button @click="handleClick(scope.row.exceptionMsg, '异常信息')" size="small" round :type="scope.row.exceptionMsg === null ? '' : 'warning'">异常信息</el-button>
+          <el-button @click="handleClick(scope.row.resultMsg, '结果信息')" size="small" round :type="scope.row.resultMsg === null ? '' : 'success'">结果信息</el-button>
         </template>
       </el-table-column>
     </el-table>
@@ -102,11 +104,11 @@ export default {
 }
 </script>
 <style>
-  .el-table .warning-row {
-    background: oldlace;
-  }
+.el-table .warning-row {
+  background: oldlace;
+}
 
-  .el-table .success-row {
-    background: #f0f9eb;
-  }
+.el-table .success-row {
+  background: #f0f9eb;
+}
 </style>
