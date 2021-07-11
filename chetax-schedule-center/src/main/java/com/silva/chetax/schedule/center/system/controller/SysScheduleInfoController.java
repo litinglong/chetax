@@ -55,26 +55,29 @@ public class SysScheduleInfoController {
 		return bindingResult.getFieldError().getDefaultMessage();
 	}
 	
+	@PostMapping("updateSysScheduleInfoEntity")
+	public String updateSysScheduleInfoEntity(@Validated @RequestBody SysScheduleInfoEntity scheduleInfo, BindingResult bindingResult){
+		iScheduleInfoService.updateSysScheduleInfoEntity(scheduleInfo);
+		return bindingResult.getFieldError().getDefaultMessage();
+	}
+	
 	@PostMapping("findSysScheduleInfoPage/{pageNum}/{pageSize}")
 	@BusinessLog
 	public PageInfo<SysScheduleInfoEntity> findSysScheduleInfoPage(@PathVariable("pageNum") int pageNum,
 			@PathVariable("pageSize")  int pageSize, @RequestBody SysScheduleInfoEntity sysScheduleInfoEntity,SysTransInfoEntity sysTransInfo,KingIn kingIn){
-//		int a=0;
-//				if(a==0) {
-//		throw new RuntimeException("123");}
 		PageInfo<SysScheduleInfoEntity> pageInfo = iScheduleInfoService.findSysScheduleInfoPage(pageNum, pageSize, sysScheduleInfoEntity);
 		return pageInfo;
 	}
 	
-	@GetMapping("executeJob/{id}")
+	@GetMapping("executeTask/{id}")
 	@BusinessLog
-	public void executeJob(@PathVariable("id") BigDecimal id) throws SchedulerException{
+	public void executeTask(@PathVariable("id") BigDecimal id) throws SchedulerException{
 		iScheduleInfoService.executeById(id);
 	}
 	
-	@GetMapping("changeStatus/{id}")
-	public void changeStatus(@PathVariable("id") BigDecimal id) throws SchedulerException{
-		iScheduleInfoService.changeStatus(id);
+	@GetMapping("changeStatusOfSysScheduleInfo/{id}")
+	public void changeStatusOfSysScheduleInfo(@PathVariable("id") BigDecimal id) throws SchedulerException{
+		iScheduleInfoService.changeStatusOfSysScheduleInfo(id);
 	}
 	
 	@PostMapping("updateScheduleInfoCron/{id}")

@@ -79,7 +79,7 @@
 
 <script>
 
-import SingleFileConponent from '@/components/SingleFileConponent'
+import SingleFileConponent from '@/components/demo/SingleFileConponent'
 export default {
   name: 'ChetaxTest',
   data () {

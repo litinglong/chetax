@@ -52,7 +52,6 @@
 </template>
 
 <script>
-import Axios from 'axios'
 export default {
   name: 'SearchIndexPage',
   data () {
@@ -82,7 +81,7 @@ export default {
       }
       var url = '/apis/matrix/apis/searchController/search/' + this.searchCondition
       var _this = this
-      Axios.get(url).then((response) => {
+      this.$axios.get(url).then((response) => {
         console.log(_this.hasResult)
         this.resultList = response.data.hits.hits
       }).catch((error) => {

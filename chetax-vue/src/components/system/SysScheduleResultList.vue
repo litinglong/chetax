@@ -8,7 +8,6 @@
       max-height="450">
       <el-table-column type="index" :index="1" fixed="left"></el-table-column>
       <el-table-column prop="id" label="主键" width="80" v-if="false"></el-table-column>
-      <el-table-column prop="usedTimeFormated" label="任务耗时" width="180"></el-table-column>
       <el-table-column prop="url" label="URL" width="560">
         <template slot-scope="scope">
           <el-input
@@ -17,13 +16,14 @@
           </el-input>
         </template>
       </el-table-column>
+      <el-table-column prop="usedTimeFormated" label="任务耗时" width="180"></el-table-column>
       <el-table-column prop="startTime" label="开始时间" width="180"></el-table-column>
       <el-table-column prop="endTime" label="结束时间" width="180"></el-table-column>
       <el-table-column fixed="right" label="操作" width="320">
         <template slot-scope="scope">
-          <el-button @click="handleClick(scope.row.requestBody, '输入参数')" size="small" round :type="scope.row.requestBody === null ? '' : 'success'">输入参数</el-button>
-          <el-button @click="handleClick(scope.row.exceptionMsg, '异常信息')" size="small" round :type="scope.row.exceptionMsg === null ? '' : 'warning'">异常信息</el-button>
-          <el-button @click="handleClick(scope.row.resultMsg, '结果信息')" size="small" round :type="scope.row.resultMsg === null ? '' : 'success'">结果信息</el-button>
+          <el-button @click="handleClick(scope.row.requestBody, '输入参数')" size="small" round :type="scope.row.requestBody === null || scope.row.requestBody === '' ? '' : 'success'">输入参数</el-button>
+          <el-button @click="handleClick(scope.row.exceptionMsg, '异常信息')" size="small" round :type="scope.row.exceptionMsg === null || scope.row.exceptionMsg === '' ? '' : 'warning'">异常信息</el-button>
+          <el-button @click="handleClick(scope.row.resultMsg, '结果信息')" size="small" round :type="scope.row.resultMsg === null || scope.row.resultMsg === '' ? '' : 'success'">结果信息</el-button>
         </template>
       </el-table-column>
     </el-table>
@@ -38,29 +38,35 @@
       :hide-on-single-page="this.page.pageSize === this.page.pageSizes[0]">
     </el-pagination>
     <el-dialog
-      width="30%"
+      width="80%"
       :title="textareaTitle"
       :visible.sync="innerVisible"
       append-to-body>
       <el-input
         type="textarea"
-        :rows="2"
-        placeholder="请输入内容"
-        :autosize="{ minRows: 2, maxRows: 12}"
+        :autosize="{ minRows: 2, maxRows: 16}"
         v-model="textareaValue">
       </el-input>
+      <el-row>
+        <el-col :span="24" style="text-align: right; font-size: 12px">
+          <el-button @click="innerVisible = false">取消</el-button>
+        </el-col>
+      </el-row>
     </el-dialog>
   </div>
 </template>
 
 <script>
-import Axios from 'axios'
-
 export default {
   name: 'SysScheduleResultList',
+  props: {
+    curSysScheduleInfoId: {
+      type: String,
+      default: ''
+    }
+  },
   data () {
     return {
-      curSysScheduleInfoId: '',
       tableData: [],
       page: {
         currentPage: 1,
@@ -72,6 +78,9 @@ export default {
       textareaValue: '',
       textareaTitle: ''
     }
+  },
+  updated () {
+    this.refrashTable()
   },
   methods: {
     handleSizeChange (val) {
@@ -87,28 +96,20 @@ export default {
       this.textareaTitle = title
       this.innerVisible = true
     },
-    setsCurSysScheduleInfoId (val) {
-      this.curSysScheduleInfoId = val
-    },
     refrashTable () {
       var _this = this
       var url = `/schedule-apis/system/sysScheduleResultController/findSysScheduleResultPage/${this.page.currentPage}/${this.page.pageSize}?id=${this.curSysScheduleInfoId}`
-      Axios.post(url).then((response) => {
+      this.$axios.post(url).then((response) => {
         _this.tableData = response.data.list
         _this.page.total = response.data.total
       }).catch((error) => {
         console.log(error)
       })
+    },
+    clearData () {
+      this.tableData = []
+      this.page.total = 0
     }
   }
 }
 </script>
-<style>
-.el-table .warning-row {
-  background: oldlace;
-}
-
-.el-table .success-row {
-  background: #f0f9eb;
-}
-</style>

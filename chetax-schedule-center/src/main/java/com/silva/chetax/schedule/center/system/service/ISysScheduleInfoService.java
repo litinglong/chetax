@@ -28,6 +28,8 @@ public interface ISysScheduleInfoService extends IService<SysScheduleInfoEntity>
 	void startJob(SysScheduleInfoEntity scheduleInfo) throws SchedulerException;
 	void insertAndAddJob(SysScheduleInfoEntity sysJob);
 	void insertSysScheduleInfoEntity(SysScheduleInfoEntity sysScheduleInfoEntity);
+	void updateSysScheduleInfoEntity(SysScheduleInfoEntity sysScheduleInfoEntity);
+	
 	
 	PageInfo<SysScheduleInfoEntity> findSysScheduleInfoPage(int pageNum, int pageSize, SysScheduleInfoEntity sysScheduleInfoEntity);
 
@@ -46,7 +48,7 @@ public interface ISysScheduleInfoService extends IService<SysScheduleInfoEntity>
 	 * cmd{"stop","start"}
 	 * @throws SchedulerException
 	 */
-	void changeStatus(BigDecimal id) throws SchedulerException;
+	void changeStatusOfSysScheduleInfo(BigDecimal id) throws SchedulerException;
 	
 	/**
 	 * 更新job时间表达式

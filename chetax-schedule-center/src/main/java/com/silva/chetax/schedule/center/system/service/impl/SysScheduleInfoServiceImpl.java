@@ -134,13 +134,18 @@ public class SysScheduleInfoServiceImpl extends ServiceImpl<SysScheduleInfoMappe
 	
 	public void insertSysScheduleInfoEntity(SysScheduleInfoEntity sysScheduleInfoEntity){
       	if(checkIsCronRight(sysScheduleInfoEntity.getCron())){
-      		this.save(sysScheduleInfoEntity);
-      		try {
+	  		this.save(sysScheduleInfoEntity);
+	  		try {
 				startJob(sysScheduleInfoEntity);
 			} catch (SchedulerException e) {
 			}
-      		
-          }
+      	}
+	}
+	
+	public void updateSysScheduleInfoEntity(SysScheduleInfoEntity sysScheduleInfoEntity) {
+		if(checkIsCronRight(sysScheduleInfoEntity.getCron())){
+	  		this.updateById(sysScheduleInfoEntity);
+      	}
 	}
 	
 	private boolean checkIsCronRight(String cron){
@@ -238,7 +243,7 @@ public class SysScheduleInfoServiceImpl extends ServiceImpl<SysScheduleInfoMappe
 	}
 	
 	@Transactional(readOnly = false)
-	public void changeStatus(BigDecimal id) throws SchedulerException {
+	public void changeStatusOfSysScheduleInfo(BigDecimal id) throws SchedulerException {
 		SysScheduleInfoEntity job = this.getById(id);
 		if (job == null) {
 			return;
