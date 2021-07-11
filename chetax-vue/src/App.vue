@@ -1,7 +1,7 @@
 <template>
   <div id="app">
     <el-container>
-      <el-aside width="200px" style="background-color: rgb(238, 241, 246)">
+      <el-aside width="200px" style="background-color: rgb(238, 241, 246)" v-if="hideOthers">
         <el-menu :default-openeds="['1', '3']">
           <el-submenu index="1">
             <template slot="title"><i class="el-icon-message"></i>导航一</template>
@@ -51,7 +51,7 @@
         </el-menu>
       </el-aside>
       <el-container>
-        <el-header>
+        <el-header v-if="hideOthers">
           <el-breadcrumb separator="/">
             <el-breadcrumb-item :to="{ path: '/' }">首页</el-breadcrumb-item>
             <el-breadcrumb-item>活动管理</el-breadcrumb-item>
@@ -80,6 +80,7 @@ export default {
   name: 'App',
   data () {
     return {
+      hideOthers: false,
       editableTabsValue2: '2',
       editableTabs2: [{
         title: 'Tab 1',

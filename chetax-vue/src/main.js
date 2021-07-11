@@ -10,7 +10,8 @@ import Axios from 'axios'
 Vue.config.productionTip = false
 Vue.use(ElementUI)
 Vue.prototype.$axios = Axios
-
+Vue.prototype.$scheduleApis = '/schedule-apis'
+Vue.prototype.$scheduleApis = ''
 /* eslint-disable no-new */
 new Vue({
   el: '#app',

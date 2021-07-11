@@ -69,7 +69,7 @@ export default {
         cancelButtonText: '取消',
         type: 'warning'
       }).then(() => {
-        var url = `/schedule-apis/sys/scheduleInfoController/deleteScheduleInfoById/${id}`
+        var url = `${this.$scheduleApis}/system/scheduleInfoController/deleteScheduleInfoById/${id}`
         this.$axios.get(url).then((response) => {
           _this.$message({
             type: 'success',
@@ -88,7 +88,7 @@ export default {
     },
     doExecuteTask (id) {
       var _this = this
-      var url = `/schedule-apis/sys/scheduleInfoController/executeTask/${id}`
+      var url = `${this.$scheduleApis}/system/scheduleInfoController/executeTask/${id}`
       this.$axios.get(url).then((response) => {
         _this.refrashTable()
       }).catch((error) => {
@@ -102,7 +102,7 @@ export default {
     // },
     doChangeStatusOfSysScheduleInfo (id) {
       var _this = this
-      var url = `/schedule-apis/sys/scheduleInfoController/changeStatusOfSysScheduleInfo/${id}`
+      var url = `${this.$scheduleApis}/system/scheduleInfoController/changeStatusOfSysScheduleInfo/${id}`
       this.$axios.get(url).then((response) => {
         _this.refrashTable()
       }).catch((error) => {
@@ -129,7 +129,7 @@ export default {
     },
     refrashTable () {
       var _this = this
-      var url = `/schedule-apis/sys/scheduleInfoController/findSysScheduleInfoPage/${this.page.currentPage}/${this.page.pageSize}`
+      var url = `${this.$scheduleApis}/system/scheduleInfoController/findSysScheduleInfoPage/${this.page.currentPage}/${this.page.pageSize}`
       _this.checkIsSearching = true
       this.$axios.post(url, _this.form).then((response) => {
         _this.tableData = response.data.list

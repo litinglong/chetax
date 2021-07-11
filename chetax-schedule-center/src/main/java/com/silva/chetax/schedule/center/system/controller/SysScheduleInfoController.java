@@ -33,7 +33,7 @@ import lombok.extern.slf4j.Slf4j;
  * @since 2021-06-27
  */
 @RestController
-@RequestMapping("/sys/scheduleInfoController")
+@RequestMapping("/system/scheduleInfoController")
 @Slf4j
 public class SysScheduleInfoController {
 	@Autowired

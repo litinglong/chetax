@@ -98,7 +98,7 @@ export default {
     },
     refrashTable () {
       var _this = this
-      var url = `/schedule-apis/system/sysScheduleResultController/findSysScheduleResultPage/${this.page.currentPage}/${this.page.pageSize}?id=${this.curSysScheduleInfoId}`
+      var url = `${this.$scheduleApis}/system/sysScheduleResultController/findSysScheduleResultPage/${this.page.currentPage}/${this.page.pageSize}?id=${this.curSysScheduleInfoId}`
       this.$axios.post(url).then((response) => {
         _this.tableData = response.data.list
         _this.page.total = response.data.total

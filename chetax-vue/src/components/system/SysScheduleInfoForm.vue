@@ -145,7 +145,7 @@ export default {
     prepareUpdate (id) {
       this.openRecordFormDialog('【修改】', 'update')
       var _this = this
-      var url = `/schedule-apis/sys/scheduleInfoController/getScheduleInfoById/${id}`
+      var url = `${this.$scheduleApis}/system/scheduleInfoController/getScheduleInfoById/${id}`
       this.$axios.get(url).then((response) => {
         _this.form = response.data
       }).catch((error) => {
@@ -155,7 +155,7 @@ export default {
     prepareView (id) {
       this.openRecordFormDialog('【查看】', 'view')
       var _this = this
-      var url = `/schedule-apis/sys/scheduleInfoController/getScheduleInfoById/${id}`
+      var url = `${this.$scheduleApis}/system/scheduleInfoController/getScheduleInfoById/${id}`
       this.$axios.get(url).then((response) => {
         _this.form = response.data
       }).catch((error) => {
@@ -180,7 +180,7 @@ export default {
     },
     handleConfirmInsert () {
       var _this = this
-      var url = `/schedule-apis/sys/scheduleInfoController/insertSysScheduleInfoEntity`
+      var url = `${this.$scheduleApis}/system/scheduleInfoController/insertSysScheduleInfoEntity`
       this.$axios.post(url, _this.form).then((response) => {
         console.log(response)
         _this.closeRecordFormDialog()
@@ -191,7 +191,7 @@ export default {
     },
     handleConfirmUpdate () {
       var _this = this
-      var url = `/schedule-apis/sys/scheduleInfoController/updateSysScheduleInfoEntity`
+      var url = `${this.$scheduleApis}/system/scheduleInfoController/updateSysScheduleInfoEntity`
       this.$axios.post(url, _this.form).then((response) => {
         console.log(response)
         _this.closeRecordFormDialog()
