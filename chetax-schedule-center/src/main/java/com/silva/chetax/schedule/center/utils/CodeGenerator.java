@@ -1,5 +1,6 @@
 package com.silva.chetax.schedule.center.utils;
 
+import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
@@ -12,10 +13,13 @@ import com.baomidou.mybatisplus.generator.InjectionConfig;
 import com.baomidou.mybatisplus.generator.config.DataSourceConfig;
 import com.baomidou.mybatisplus.generator.config.FileOutConfig;
 import com.baomidou.mybatisplus.generator.config.GlobalConfig;
+import com.baomidou.mybatisplus.generator.config.IFileCreate;
 import com.baomidou.mybatisplus.generator.config.PackageConfig;
 import com.baomidou.mybatisplus.generator.config.StrategyConfig;
 import com.baomidou.mybatisplus.generator.config.TemplateConfig;
+import com.baomidou.mybatisplus.generator.config.builder.ConfigBuilder;
 import com.baomidou.mybatisplus.generator.config.po.TableInfo;
+import com.baomidou.mybatisplus.generator.config.rules.FileType;
 import com.baomidou.mybatisplus.generator.config.rules.NamingStrategy;
 import com.baomidou.mybatisplus.generator.engine.FreemarkerTemplateEngine;
 
@@ -48,7 +52,7 @@ public class CodeGenerator {
      // 全局配置
      GlobalConfig gc = new GlobalConfig();
      //String projectPath = System.getProperty("user.dir");
-     String projectPath = "D:\\litinglong\\eclipse-workspace\\chetax\\chetax-schedule-center";
+     String projectPath = "F:\\project_hub\\chetax\\chetax-schedule-center";
      gc.setOutputDir(projectPath + "/src/main/java");
      gc.setAuthor("litinglong");
      gc.setOpen(false);
@@ -79,7 +83,7 @@ public class CodeGenerator {
      };
 
      // 如果模板引擎是 freemarker
-     String templatePath = "/templates/mapper.xml.ftl";
+     String templatePath = "/templates/mapperx.xml.ftl";
      // 如果模板引擎是 velocity
      // String templatePath = "/templates/mapper.xml.vm";
 
@@ -90,24 +94,24 @@ public class CodeGenerator {
          @Override
          public String outputFile(TableInfo tableInfo) {
              // 自定义输出文件名 ， 如果你 Entity 设置了前后缀、此处注意 xml 的名称会跟着发生变化！！
-             return projectPath + "/src/main/resources/mapper/" + pc.getModuleName()
-                     + "/" + tableInfo.getEntityName() + "Mapper" + StringPool.DOT_XML;
+             return projectPath + "/src/main/resources/test/" + pc.getModuleName()
+                     + "/" + tableInfo.getEntityName() + "Mapperx" + StringPool.DOT_XML;
          }
      });
      
-//     cfg.setFileCreate(new IFileCreate() {
-//         @Override
-//         public boolean isCreate(ConfigBuilder configBuilder, FileType fileType, String filePath) {
-//             // 判断自定义文件夹是否需要创建
-//             checkDir("调用默认方法创建的目录，自定义目录用");
-//             if (fileType == FileType.MAPPER) {
-//                 // 已经生成 mapper 文件判断存在，不想重新生成返回 false
-//                 return !new File(filePath).exists();
-//             }
-//             // 允许生成模板文件
-//             return true;
-//         }
-//     });
+     cfg.setFileCreate(new IFileCreate() {
+         @Override
+         public boolean isCreate(ConfigBuilder configBuilder, FileType fileType, String filePath) {
+             // 判断自定义文件夹是否需要创建
+             checkDir(filePath);
+             if (fileType == FileType.MAPPER) {
+                 // 已经生成 mapper 文件判断存在，不想重新生成返回 false
+                 return !new File(filePath).exists();
+             }
+             // 允许生成模板文件
+             return true;
+         }
+     });
      
      cfg.setFileOutConfigList(focList);
      mpg.setCfg(cfg);
