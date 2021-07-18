@@ -20,7 +20,7 @@ import com.silva.chetax.schedule.center.test.service.ITstTest1Service;
 @Service
 public class TstTest1ServiceImpl extends ServiceImpl<TstTest1Mapper, TstTest1> implements ITstTest1Service {
 	
-	@Transactional(propagation = Propagation.REQUIRES_NEW) 
+	@Transactional(rollbackFor = Exception.class)
 	public int updateSomething() {
 		return this.baseMapper.updateSomething();
 	}

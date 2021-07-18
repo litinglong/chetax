@@ -9,7 +9,7 @@ package com.silva.chetax.schedule.center.test.service;
  * @since 2021-07-12
  */
 public interface ITstTest2Service{
-	int updateSomething1();
+//	int updateSomething1();
 	
-	int updateSomething2();
+//	int updateSomething2();
 }
